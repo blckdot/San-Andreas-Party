@@ -1,0 +1,174 @@
+<!DOCTYPE html ">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" data-lt-installed="true"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 	<title>San Andreas Party Scripting: Functions</title>
+    <meta http-equiv="content-language" content="en">
+   	<style type="text/css" id="internal-style">
+   		   		@import url(http://d3g0gp89917ko0.cloudfront.net/v--3e3a6f7dbcc9/common--theme/base/css/style.css);
+   		   		@import url(http://d3g0gp89917ko0.cloudfront.net/v--3e3a6f7dbcc9/common--theme/flannel-ocean/css/style.css);
+   		   		@import url(/common--theme/base/css/print.css?0);
+    </style>
+    <style type="text/css" media="print">
+	    @import url(/common--theme/base/css/print2.css?0);
+    </style>
+</head>
+
+  <body id="html-body" class="print-body">
+	
+		<div id="content-wrap">
+			<div id="main-content">
+				<div id="action-area-top"></div>
+				<div id="page-title">
+					Functions
+				</div>
+								
+				<div id="page-content">
+					
+<p>Here's a list of functions witch you will be able to use when <strong>SAP 0.4</strong> comes out</p>
+<p><strong>AddToConsole</strong><br>
+Print(Str : String);</p>
+<p><strong>SendMessageToPlayer</strong><br>
+SendMessageToPlayer(PlayerID : Integer; Mssg : String);</p>
+<p><strong>SendMessageToAll</strong><br>
+SendMessageToAll(Mssg : String);</p>
+<p><strong>SendMessageToAllExceptPlayer</strong><br>
+SendMessageToAllExceptPlayer(PlayerID : Integer; Mssg : String);</p>
+<p><strong>SetPlayerSkin</strong><br>
+SetPlayerSkin(PlayerID, SkinID : Integer);</p>
+<p><strong>GivePlayerWeapon</strong><br>
+GivePlayerWeapon(PlayerID, WeaponID, Ammo : Integer);</p>
+<p><strong>SetPlayerPos</strong><br>
+SetPlayerPos(PlayerID : Integer; X, Y, Z : Single);</p>
+<p><strong>SetPlayerRotation</strong><br>
+SetPlayerRotation(PlayerID : Integer; Value : Single);</p>
+<p><strong>SetPlayerArmour</strong><br>
+SetPlayerArmour(PlayerID : Integer; Value : Single);</p>
+<p><strong>SetPlayerHealth</strong><br>
+SetPlayerHealth(PlayerID : Integer; Value : Single);</p>
+<p><strong>SetPlayerWeather</strong><br>
+SetPlayerWeather(PlayerID, WeatherID : Integer);</p>
+<p><strong>SetGameTime</strong><br>
+SetGameTime(Hour, Minute : Integer);</p>
+<p><strong>SetGravity</strong><br>
+SetGravity(Value : Single);</p>
+<p><strong>SetWaterWalk</strong><br>
+SetWaterWalk(Value : Boolean);</p>
+<p><strong>IRCJoin</strong><br>
+IRCJoin(Channel, Password : String);</p>
+<p><strong>IRCPart</strong><br>
+IRCPart(Channel, Reason : String);</p>
+<p><strong>IRCNotice</strong><br>
+IRCNotice(Channel, Mssg : String);</p>
+<p><strong>IRCAction</strong><br>
+IRCAction(Channel, Mssg : String);</p>
+<p><strong>IRCRaw</strong><br>
+IRCRaw( Mssg : String);</p>
+<p><strong>SetPlayerFlags</strong><br>
+SetPlayerFlags(PlayerID : Integer; Value : Integer);</p>
+<p><strong>SetPlayerMoney</strong><br>
+SetPlayerMoney(PlayerID : Integer; Value : Integer);</p>
+<p><strong>AddObject</strong><br>
+CreateObject(ModelID : Integer; PosX, PosY, PosZ, RotX, RotY, RotZ : Single);</p>
+<p><strong>AddObjectEx</strong><br>
+CreateObjectEx(ModelID : Integer; PosX, PosY, PosZ, RotX, RotY, RotZ : Single): Integer;</p>
+<p><strong>GetPlayerName</strong><br>
+GetPlayerName(PlayerID : Integer): String;</p>
+<p><strong>GetPlayerPing</strong><br>
+GetPlayerPing(PlayerID : Integer): Integer;</p>
+<p><strong>IsInteger</strong><br>
+IsInteger(Str: String): Boolean;</p>
+<p><strong>IsFloat</strong><br>
+IsFloat(Str: String): Boolean;</p>
+<p><strong>GetTickCountFromServer</strong><br>
+GetTickCount(): Integer;</p>
+<p><strong>IsPlayerIngame</strong><br>
+IsPlayerIngame(PlayerID : Integer): Boolean;</p>
+<p><strong>IsPlayerConnected</strong><br>
+IsPlayerConnected(PlayerID : Integer): Boolean;</p>
+<p><strong>GetPlayerSkin</strong><br>
+GetPlayerSkin(PlayerID : Integer): Integer;</p>
+<p><strong>GetPlayerPosX</strong><br>
+GetPlayerPosX(PlayerID : Integer): Single;</p>
+<p><strong>GetPlayerPosY</strong><br>
+GetPlayerPosY(PlayerID : Integer): Single;</p>
+<p><strong>GetPlayerPosZ</strong><br>
+GetPlayerPosZ(PlayerID : Integer): Single;</p>
+<p><strong>GetPlayerRotation</strong><br>
+GetPlayerRotation(PlayerID : Integer): Single;</p>
+<p><strong>GetPlayerFlags</strong><br>
+GetPlayerFlags(PlayerID : Integer): Integer;</p>
+<p><strong>GetPlayerMoney</strong><br>
+GetPlayerMoney(PlayerID : Integer): Integer;</p>
+<p><strong>IRCGetHostname</strong><br>
+IRCGetHostname(Nickname : String): String;</p>
+<p><strong>StrToFloatFix</strong><br>
+StrToFloatFix(Str: String): Single;</p>
+<p><strong>CopyBetween</strong><br>
+CopyBetween(Source, bs, es : String): String;</p>
+<p><strong>CopyAfter</strong><br>
+CopyAfter(Source, bs : String): String;</p>
+<p><strong>CopyBefore</strong><br>
+CopyBefore(Source, bs : String): String;</p>
+<p><strong>CreateExplosion</strong><br>
+CreateExplosion(X, Y, Z : Single);</p>
+<p><strong>CreateSparks</strong><br>
+CreateSparks(PosX, PosY, PosZ, RotX, RotY, RotZ : Single; Density : Integer);</p>
+<p><strong>PointCameraAt</strong><br>
+PointCameraAt(PlayerID : Integer; X, Y, Z : Single);</p>
+<p><strong>SetCamera</strong><br>
+SetCamera(PlayerID : Integer; X, Y, Z : Single);</p>
+<p><strong>PlaySound</strong><br>
+PlaySound(PlayerID, SoundID : Integer);</p>
+<p><strong>RestoreCamera</strong><br>
+RestoreCamera(PlayerID: Integer);</p>
+<p><strong>AllowPlayerToJump</strong><br>
+AllowPlayerToJump(PlayerID : Integer; Toggle : Boolean);</p>
+<p><strong>AllowPlayerToShoot</strong><br>
+AllowPlayerToShoot(PlayerID : Integer; Toggle : Boolean);</p>
+<p><strong>AllowPlayerToChangeWeapon</strong><br>
+AllowPlayerToChangeWeapon(PlayerID : Integer; Toggle : Boolean);</p>
+<p><strong>SetPlayerCrouch</strong><br>
+SetPlayerCrouch(PlayerID : Integer; Toggle : Boolean);</p>
+<p><strong>UndoLastWeaponDamage</strong><br>
+UndoLastWeaponDamage(PlayerID : Integer);</p>
+<p><strong>SetPlayerArmedWeapon</strong><br>
+SetPlayerArmedWeapon(PlayerID, WeaponID : Integer);</p>
+<p><strong>SetPlayerHUD</strong><br>
+SetPlayerHUD(PlayerID : Integer; Enabled : Boolean);</p>
+<p><strong>SetPlayerHUDGrey</strong><br>
+SetPlayerRadarGrey(PlayerID : Integer; Enabled : Boolean);</p>
+<p><strong>SetPlayerRadar</strong><br>
+SetPlayerRadar(PlayerID : Integer; Enabled : Boolean);</p>
+<p><strong>SetPlayerWidescreen</strong><br>
+SetPlayerWidescreen(PlayerID : Integer; Enabled : Boolean);</p>
+<p><strong>SetPlayerColor</strong><br>
+SetPlayerColor(PlayerID, Color : Integer);</p>
+<p><strong>AllowPlayerToCrouch</strong><br>
+AllowPlayerToCrouch(PlayerID : Integer; Toggle : Boolean);</p>
+<p><strong>DeleteObject</strong><br>
+DestroyObject(UniqueID : Integer);</p>
+<p><strong>FreezePlayer</strong><br>
+FreezePlayer(PlayerID : Integer; Toggle : Boolean);</p>
+<p><strong>GetDeathReason</strong><br>
+GetDeathReason(ReasonID : Integer): String;</p>
+<p><strong>SetObjectPosition</strong><br>
+SetObjectPos(ObjectID : Integer; X, Y, Z : Single);</p>
+<p><strong>SetObjectMove</strong><br>
+MoveObject(ObjectID : Integer; X, Y, Z : Single);</p>
+<p><strong>Timer</strong><br>
+Timer(Seconds : Integer; Execute : String);</p>
+<p><strong>SetPlayerMoneyFormat</strong><br>
+SetPlayerMoneyFormat(PlayerID : Integer; Format : String);</p>
+<p><strong>Thanks to Ywa for list.</strong></p>
+				</div>
+				<div id="page-info">
+					page revision: 4, last edited: <span class="odate time_1189302018 format_%25e%20%25b%20%25Y%2C%20%25H%3A%25M%20%28%25O%20ago%29" style="display: inline;">9 Sep 2007, 04:40 (5030 days ago)</span>
+				</div>
+				<div id="action-area" style="display: none"></div>
+			</div>
+		</div>
+ 		<hr>
+ 	</div>
+ 	
+ 	<div style="display:none" id="dummy-ondomready-block"></div>
+
+<div id="odialog-hovertips" style="position: absolute; z-index: 100; top: 0px; width: 100%;"></div></body></html>
