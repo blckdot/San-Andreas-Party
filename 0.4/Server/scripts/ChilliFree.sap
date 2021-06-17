@@ -1,0 +1,235 @@
+type
+  TSplitArray = array [0 .. 100] of String;
+
+var
+  NeedSpawn : array[0 .. 32] of Boolean;
+
+
+
+function Split(const Source, Delimiter: String): TSplitArray;
+var
+  iCount:     Integer;
+  iPos:       Integer;
+  iLength:    Integer;
+  sTemp:      String;
+  aSplit:     TSplitArray;
+begin
+  sTemp   := Source;
+  iCount  := 0;
+  iLength := Length(Delimiter) - 1;
+  repeat
+    iPos := Pos(Delimiter, sTemp);
+     if iPos = 0 then
+      break
+    else begin
+      iCount := iCount+1;
+      aSplit[iCount - 1] := Copy(sTemp, 1, iPos - 1);
+      Delete(sTemp, 1, iPos + iLength);
+    end;
+  until False;
+  if Length(sTemp) > 0 then begin
+    iCount := iCount+1;
+    aSplit[iCount - 1] := sTemp;
+  end;
+  Result := aSplit;
+end;
+
+
+procedure OnServerStart();
+begin
+
+//Cars: 
+
+CreateVehicle(584,-2128.0806,-122.9949,36.3434,179.7078,-1,-1); // petrol
+CreateVehicle(584,-2118.6121,-123.7269,36.3397,177.6419,-1,-1); // petrol
+CreateVehicle(450,-2117.3359,-218.1263,36.3360,182.8726,-1,-1); // trailer
+CreateVehicle(450,-2105.8445,-264.0429,36.3374,177.3389,-1,-1); // trailer
+CreateVehicle(435,-2102.0181,-218.4931,36.3392,176.1076,-1,-1); // trailer1
+CreateVehicle(515,-2172.2231,-219.5561,36.3238,89.1174,-1,-1); // roadtrain
+CreateVehicle(515,-2171.1865,-212.8129,36.3306,85.7175,-1,-1); // roadtrain
+CreateVehicle(403,-2157.0232,-198.0158,35.9271,0.0124,-1,-1); // linerunner
+CreateVehicle(403,-2182.9019,-201.8380,35.9327,88.2667,-1,-1); // linerunner
+CreateVehicle(514,-2150.5925,-172.1941,35.9198,265.7103,-1,-1); // tanker
+CreateVehicle(514,-2153.8352,-155.7935,36.1483,176.3809,-1,-1); // tanker
+CreateVehicle(573,-2336.5830,-1660.1434,484.3535,92.1147,-1,-1); // dune
+CreateVehicle(573,-2352.1824,-1638.6692,484.3536,24.0771,-1,1); // dune
+CreateVehicle(573,-2353.2927,-1618.9224,484.3029,3.2807,-1,-1); // dune
+CreateVehicle(573,-2344.5620,-1598.7621,484.2845,258.1864,-1,-1); // dune
+CreateVehicle(522,-2326.8164,-1629.8135,483.2670,73.9898,-1,-1); // NRG
+CreateVehicle(522,-2321.2004,-1620.4329,483.2772,338.5213,-1,-1); // NRG
+CreateVehicle(522,-2326.8992,-1609.3214,483.3079,36.6738,-1,-1); // NRG
+CreateVehicle(522,-2317.7463,-1602.1398,483.4457,243.9866,-1,-1); // NRG
+
+  SetGravity(0.006);
+
+  print('* ChilliFree loaded');
+  print('* Made by: Sebihunter');
+end;
+
+
+
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  print('* '+GetPlayerName(PlayerID)+' has joined ChilliFree (ID: '+IntToStr(PlayerID)+')');
+end;
+
+procedure OnPlayerPart(PlayerID, Reason : Integer);
+var
+  ReasonStr : String;
+begin
+  if (Reason = 0) then
+    ReasonStr := 'has left ChilliFree (disconnected)'
+  Else if (Reason = 1) then
+    ReasonStr := 'has left ChilliFree (timeout)'
+  Else
+    ReasonStr := 'Unknown Reason'
+  print('* '+GetPlayerName(PlayerID)+' Parted (ID: '+IntToStr(PlayerID)+') (Reason: '+ReasonStr+')');
+end;
+
+function OnPlayerText(PlayerID : Integer; Text : String): Integer;
+begin
+  print(GetPlayerName(PlayerID)+': '+Text);
+  result := 1;
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd : TSplitArray;
+  Mssg : String;
+  i, i2 : integer;
+  PosX, PosY, PosZ : Single;
+begin
+  //print('COMMAND: '+GetPlayerName(PlayerID)+': '+Command);
+
+  Cmd := Split(Command, ' ');
+  if (Cmd[0] = '/ping') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s ping is '+IntToStr(GetPlayerPing(PlayerID));
+    SendMessageToAll(Mssg);
+    print(Mssg);
+  end
+  else if (Cmd[0] = '/skin') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Skin ID '+Cmd[1];
+      SetPlayerSkin(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/cluckinweapon') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Weapon '+Cmd[1];
+      GivePlayerWeapon(PlayerID, StrToInt(Cmd[1]), 500);
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/cluckintime') then
+  begin
+    if (IsInteger(Cmd[1])) AND (IsInteger(Cmd[2])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set the time to '+Cmd[1]+':'+Cmd[2];
+      SetGameTime(StrToInt(Cmd[1]), StrToInt(Cmd[2]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/cluckinweather') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' changed weather to id '+Cmd[1];
+      SetGameWeather(StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/cluckinmoney') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now $'+Cmd[1];
+      SetPlayerMoney(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/kill') then
+  begin
+    SetPlayerHealth(PlayerID, 0.0);
+  end
+  Else if (Cmd[0] = '/spawn') Then
+  Begin
+    SetPlayerPos(PlayerID, -2314.3533,-1608.0551,485.8593);
+  End
+  else if (Cmd[0] = '/to') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      if (i = PlayerID) Then
+        SendMessageToPlayer(PlayerID,'*** You can''t teleport to yourself')
+      else if (IsPlayerConnected(i)) AND (IsPlayerIngame(i)) then
+      begin
+        Mssg := GetPlayerName(PlayerID)+' teleported to '+GetPlayerName(i);
+        SetPlayerPos(PlayerID, GetPlayerPosX(i), GetPlayerPosY(i), GetPlayerPosZ(i)+2.0);
+        SendMessageToAll(Mssg);
+        print(Mssg);
+      end;
+    end;
+  end
+  Else if(Cmd[0] = '/avehicle') Then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i2 := StrToInt(Cmd[1]);
+      PosX := GetPlayerPosX(PlayerID) + 2.0;
+      PosY := GetPlayerPosY(PlayerID) + 2.0;
+      PosZ := GetPlayerPosZ(PlayerID) + 1.5;
+      i := CreateVehicleEx(i2,PosX,PosY,PosZ,0.0,-1,-1);
+      SendMessageToAll('* '+GetPlayerName(PlayerID)+' spawned a '+ GetVehicleName(i2) +' (ID: '+ IntToStr(i) +')');
+    end;
+  end;
+end;
+
+procedure OnPlayerStartedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := false;
+  Mssg := '* '+GetPlayerName(PlayerID)+' started San Andreas Party';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+
+procedure OnPlayerClosedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := False;
+  Mssg := '* '+GetPlayerName(PlayerID)+' closed San Andreas Party';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+
+procedure OnPlayerDeath(PlayerID, KillerID, WeaponID : Integer);
+begin
+  If (KillerID > 0) Then
+    SendMessageToAll('* '+ GetPlayerName(KillerID) +' killed '+ GetPlayerName(PlayerID) +' ('+ GetDeathReason(WeaponID) +')')
+  Else
+    SendMessageToAll('* '+ GetPlayerName(PlayerID) +' died');
+end;
+
+procedure OnPlayerSpawned(PlayerID : Integer);
+begin
+  NeedSpawn[PlayerID] := True;
+  SetPlayerPos(PlayerID, -2314.3533,-1608.0551,485.8593);
+  GivePlayerWeapon(PlayerID,35,2000);
+end;
+
+begin
+end.

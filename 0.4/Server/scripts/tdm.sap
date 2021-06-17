@@ -1,0 +1,242 @@
+type
+  TSplitArray = array [0 .. 100] of String;
+
+var
+  NeedSpawn : array[0 .. 32] of Boolean;
+
+
+
+function Split(const Source, Delimiter: String): TSplitArray;
+var
+  iCount:     Integer;
+  iPos:       Integer;
+  iLength:    Integer;
+  sTemp:      String;
+  aSplit:     TSplitArray;
+begin
+  sTemp   := Source;
+  iCount  := 0;
+  iLength := Length(Delimiter) - 1;
+  repeat
+    iPos := Pos(Delimiter, sTemp);
+     if iPos = 0 then
+      break
+    else begin
+      iCount := iCount+1;
+      aSplit[iCount - 1] := Copy(sTemp, 1, iPos - 1);
+      Delete(sTemp, 1, iPos + iLength);
+    end;
+  until False;
+  if Length(sTemp) > 0 then begin
+    iCount := iCount+1;
+    aSplit[iCount - 1] := sTemp;
+  end;
+  Result := aSplit;
+end;
+
+
+procedure OnServerStart();
+begin
+CreateObject(8355, -1241.557617, 237.640656, 17.075361, 0, 82.5059, 45.5501);
+CreateObject(1634, -1118.700317, 329.477722, 2.258255, 0, 0, 40.3935);
+CreateObject(1634, -1115.664307, 332.079926, 2.263158, 0, 0, 40.3935);
+CreateObject(1634, -1112.820679, 334.662018, 2.304667, 0, 0, 43.8313);
+CreateObject(1503, -1053.411743, 429.430542, 13.758751, 0, 0, 317.8876);
+CreateObject(1503, -1066.726074, 443.119110, 13.733290, 0, 0, 317.8876);
+CreateObject(1660, -1163.732056, 346.163757, 12.669916, 0, 0, 42.9718);
+CreateObject(1660, -1144.307129, 328.438812, 12.694920, 0, 0, 225.1725);
+CreateObject(1697, -1143.197754, 350.310394, 13.051880, 0, 0, 314.4499);
+CreateObject(1697, -1146.440308, 347.143158, 13.033443, 0, 0, 134.9316);
+CreateObject(3364, -1204.297485, 310.203644, 13.054451, 0, 0, 73.0521);
+CreateObject(3364, -1182.855591, 292.461395, 13.004456, 0, 0, 15.4699);
+CreateObject(1225, -1119.388062, 330.093109, 3.959720, 0, 0, 0);
+CreateObject(1225, -1117.544434, 328.452698, 2.808971, 0, 0, 0);
+CreateObject(1225, -1116.078979, 326.639984, 1.923537, 0, 0, 0);
+CreateObject(1225, -1113.415527, 329.398590, 2.046769, 0, 0, 0);
+CreateObject(1225, -1110.748901, 331.639130, 2.050213, 0, 0, 0);
+CreateObject(1225, -1115.172852, 330.974609, 2.966729, 0, 0, 0);
+CreateObject(1225, -1116.822144, 332.356323, 3.988822, 0, 0, 0);
+CreateObject(1225, -1112.111328, 333.560059, 2.956141, 0, 0, 0);
+CreateObject(1225, -1113.525879, 335.100372, 3.948925, 0, 0, 0);
+CreateObject(2780, -1144.856567, 348.582336, 11.445095, 0, 0, 0);
+CreateObject(3267, -1031.526733, 435.412903, 13.000080, 0, 0, 84.2248);
+CreateObject(3267, -1054.494141, 467.715881, 13.057320, 0, 0, 213.0363);
+CreateObject(3374, -1069.508423, 423.126923, 14.653915, 0, 0, 0);
+CreateObject(3374, -1054.100952, 438.646881, 14.719780, 0, 0, 0);
+CreateObject(3374, -1038.713623, 453.947784, 14.502794, 0, 0, 0);
+CreateObject(3374, -1235.437744, 274.597076, 14.542416, 0, 0, 0);
+CreateObject(3374, -1224.404663, 272.368347, 14.642414, 0, 0, 0);
+CreateObject(3374, -1214.826050, 268.641449, 14.642414, 0, 0, 0);
+CreateObject(3374, -1219.533081, 283.939758, 14.642414, 0, 0, 0);
+CreateObject(3374, -1208.053345, 296.297119, 14.642414, 0, 0, 0);
+CreateObject(3374, -1205.067383, 284.014099, 14.642414, 0, 0, 0);
+CreateObject(3374, -1197.152954, 270.365784, 14.642414, 0, 0, 0);
+CreateObject(3374, -1193.703125, 300.163422, 14.642414, 0, 0, 0);
+CreateObject(3374, -1213.742188, 316.375488, 14.711933, 0, 0, 0);
+CreateObject(3374, -1177.237305, 282.483429, 15.040852, 0, 0, 0);
+CreateObject(3374, -1211.216064, 252.492554, 14.914684, 0, 0, 0);
+CreateObject(3374, -1231.768066, 296.719543, 14.880886, 0, 0, 0);
+CreateObject(3374, -1246.144165, 284.865967, 14.642414, 0, 0, 0);
+CreateObject(1634, -1161.079712, 374.833191, 4.258255, 17.1887, 0, 224.209);
+CreateObject(1634, -1163.939819, 372.085236, 4.235417, 17.1887, 0, 224.209);
+CreateObject(1634, -1166.826294, 369.302795, 4.228136, 17.1887, 0, 224.209);
+CreateObject(1225, -1162.374634, 376.479889, 3.870214, 0, 0, 0);
+CreateObject(1225, -1160.888794, 374.711853, 5.909333, 0, 0, 0);
+CreateObject(1225, -1165.654663, 373.456787, 3.768048, 0, 0, 0);
+CreateObject(1225, -1163.835327, 372.016907, 5.794316, 0, 0, 0);
+CreateObject(1225, -1168.422729, 370.930176, 3.677166, 0, 0, 0);
+CreateObject(1225, -1166.555176, 369.245575, 5.888481, 0, 0, 0);
+CreateObject(1225, -1165.344238, 376.347137, 2.397254, 0, 0, 0);
+CreateObject(1225, -1163.022583, 378.657593, 2.361222, 0, 0, 0);
+CreateObject(1225, -1168.214111, 373.429718, 2.451214, 0, 0, 0);
+CreateObject(1225, -1170.684570, 371.356140, 2.293069, 0, 0, 0);
+CreateObject(8355, -1025.577881, 478.587982, 36.623802, 0, 87.6625, 44.6907);
+CreateObject(8355, -1047.191040, 407.226044, 36.786278, 0, 87.6625, 315.3093);
+CreateObject(8355, -1144.244507, 309.359436, 36.775673, 0, 87.6625, 315.3093);
+CreateObject(8355, -1240.647461, 212.211823, 36.859310, 0, 87.6625, 315.3093);
+CreateObject(8355, -1090.924805, 442.143311, 36.630753, 0, 87.6625, 134.9316);
+CreateObject(8355, -1188.397583, 344.890472, 36.633278, 0, 87.6625, 134.9316);
+CreateObject(8355, -1268.545288, 264.929993, 36.696056, 0, 87.6625, 134.9316);
+
+//Spawnpoints: 
+CreateVehicle(406, -1079.596069, 413.039581, 17.793982, 132, -1, -1); //DUMP
+CreateVehicle(457, -1255.197021, 259.998993, 13.877786, 315, -1, -1); //spawnpoint (1)
+CreateVehicle(457, -1255.226563, 256.785248, 13.877786, 315, -1, -1); //spawnpoint (2)
+CreateVehicle(457, -1250.726074, 256.585052, 13.877786, 315, -1, -1); //spawnpoint (3)
+CreateVehicle(457, -1250.976563, 252.785248, 13.877786, 315, -1, -1); //spawnpoint (4)
+CreateVehicle(457, -1247.476563, 252.235260, 13.877786, 315, -1, -1); //spawnpoint (5)
+CreateVehicle(457, -1246.899536, 247.992722, 13.877786, 315, -1, -1); //spawnpoint (6)
+CreateVehicle(457, -1243.249146, 248.742722, 13.877786, 315, -1, -1); //spawnpoint (7)
+CreateVehicle(457, -1243.699341, 244.992722, 13.877786, 315, -1, -1); //spawnpoint (8)
+CreateVehicle(457, -1238.899536, 244.492722, 13.877786, 315, -1, -1); //spawnpoint (9)
+CreateVehicle(457, -1239.354980, 240.038025, 13.877786, 315, -1, -1); //spawnpoint (10)
+{ CreateVehicle(457, -1234.604980, 240.538025, 13.877786, 315, -1, -1); //spawnpoint (11)
+CreateVehicle(457, -1233.354980, 235.538025, 13.877786, 315, -1, -1); //spawnpoint (12)
+CreateVehicle(457, -1247.632568, 255.556000, 13.877786, 315, -1, -1); //spawnpoint (13)
+CreateVehicle(457, -1251.132568, 259.806000, 13.877786, 315, -1, -1); //spawnpoint (14)
+CreateVehicle(457, -1244.382568, 251.806000, 13.877786, 315, -1, -1); //spawnpoint (15)
+CreateVehicle(457, -1239.632568, 248.306000, 13.877786, 315, -1, -1); //spawnpoint (16)
+CreateVehicle(457, -1235.824463, 243.618912, 13.877786, 315, -1, -1); //spawnpoint (17)
+CreateVehicle(457, -1230.074463, 238.868912, 13.877786, 315, -1, -1); //spawnpoint (18)
+CreateVehicle(457, -1241.796997, 242.480225, 13.877786, 315, -1, -1); //spawnpoint (19)
+CreateVehicle(457, -1236.296997, 236.730225, 13.877786, 315, -1, -1); //spawnpoint (20)
+CreateVehicle(457, -1249.296997, 249.480225, 13.877786, 315, -1, -1); //spawnpoint (21)
+CreateVehicle(457, -1254.072021, 254.230225, 13.877786, 315, -1, -1); //spawnpoint (22)
+CreateVehicle(457, -1257.505859, 257.670166, 13.877786, 315, -1, -1); //spawnpoint (23)
+CreateVehicle(457, -1252.718628, 262.587860, 13.877786, 315, -1, -1); //spawnpoint (24) }
+
+  Timer(3,'SpawnDude');
+end;
+
+
+
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  print('* '+GetPlayerName(PlayerID)+' joined the server (ID: '+IntToStr(PlayerID)+')');
+end;
+
+procedure OnPlayerPart(PlayerID, Reason : Integer);
+var
+  ReasonStr : String;
+begin
+  if (Reason = 0) then
+    ReasonStr := 'Disconnected'
+  Else if (Reason = 1) then
+    ReasonStr := 'Timed Out'
+  Else
+    ReasonStr := 'Unknown Reason'
+  print('* '+GetPlayerName(PlayerID)+' left the server (ID: '+IntToStr(PlayerID)+') (Reason: '+ReasonStr+')');
+end;
+
+function OnPlayerText(PlayerID : Integer; Text : String): Integer;
+begin
+  print(GetPlayerName(PlayerID)+': '+Text);
+  result := 1;
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd : TSplitArray;
+  Mssg : String;
+  i, l0l : integer;
+  PosX, PosY, PosZ : Single;
+begin
+  //print('COMMAND: '+GetPlayerName(PlayerID)+': '+Command);
+
+  Cmd := Split(Command, ' ');
+  if (Cmd[0] = '/ping') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s ping is '+IntToStr(GetPlayerPing(PlayerID));
+    SendMessageToAll(Mssg);
+    print(Mssg);
+  end
+  else if (Cmd[0] = '/kill') then
+  begin
+    SetPlayerHealth(PlayerID, 0.0);
+  end;
+end;
+
+procedure OnPlayerStartedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := false;
+  Mssg := '* '+GetPlayerName(PlayerID)+' started the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+
+procedure OnPlayerClosedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := False;
+  Mssg := '* '+GetPlayerName(PlayerID)+' closed the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+
+procedure OnPlayerDeath(PlayerID, KillerID, WeaponID : Integer);
+begin
+  If (KillerID > 0) Then
+    SendMessageToAll('* '+ GetPlayerName(KillerID) +' killed '+ GetPlayerName(PlayerID) +' ('+ GetDeathReason(WeaponID) +')')
+  Else
+    SendMessageToAll('* '+ GetPlayerName(PlayerID) +' died');
+  //SetCamera(PlayerID,0.0,0.0,10.0);
+end;
+
+procedure OnPlayerSpawned(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  SetPlayerPos(PlayerID, -1255.226563, 256.785248, 13.877786);
+  SetPlayerSkin(PlayerID, 214);
+  Mssg := '* '+GetPlayerName(PlayerID)+' spawned';
+  SendMessageToAll(Mssg);
+end;
+
+procedure SpawnDude();
+var
+  i : Integer;
+  PosX, PosY, PosZ : Single;
+begin
+  For i := 1 To 31 Do
+  Begin
+    PosX := GetPlayerPosX(i);
+    PosY := GetPlayerPosY(i);
+    PosZ := GetPlayerPosZ(i);
+    If (PosX > -100.0) and (PosX < 100.0) Then
+    Begin
+	// Doe niks
+    End
+    Else
+    Begin
+      If (PosZ < 10.0) Then
+	SetPlayerHealth(i,0.0);
+    End;
+  End;
+  Timer(2,'SpawnDude');
+end;
+
+begin
+end.

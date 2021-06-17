@@ -1,0 +1,353 @@
+type
+  TSplitArray = array [0 .. 100] of String;
+
+var
+  NeedSpawn : array[0 .. 32] of Boolean;
+
+
+
+function Split(const Source, Delimiter: String): TSplitArray;
+var
+  iCount:     Integer;
+  iPos:       Integer;
+  iLength:    Integer;
+  sTemp:      String;
+  aSplit:     TSplitArray;
+begin
+  sTemp   := Source;
+  iCount  := 0;
+  iLength := Length(Delimiter) - 1;
+  repeat
+    iPos := Pos(Delimiter, sTemp);
+     if iPos = 0 then
+      break
+    else begin
+      iCount := iCount+1;
+      aSplit[iCount - 1] := Copy(sTemp, 1, iPos - 1);
+      Delete(sTemp, 1, iPos + iLength);
+    end;
+  until False;
+  if Length(sTemp) > 0 then begin
+    iCount := iCount+1;
+    aSplit[iCount - 1] := sTemp;
+  end;
+  Result := aSplit;
+end;
+
+
+procedure OnServerStart();
+begin
+
+end;
+
+
+
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  print('* '+GetPlayerName(PlayerID)+' Joined (ID: '+IntToStr(PlayerID)+')');
+end;
+
+procedure OnPlayerPart(PlayerID, Reason : Integer);
+var
+  ReasonStr : String;
+begin
+  if (Reason = 0) then
+    ReasonStr := 'Disconnected'
+  Else if (Reason = 1) then
+    ReasonStr := 'Timed Out'
+  Else
+    ReasonStr := 'Unknown Reason'
+  print('* '+GetPlayerName(PlayerID)+' Parted (ID: '+IntToStr(PlayerID)+') (Reason: '+ReasonStr+')');
+end;
+
+function OnPlayerText(PlayerID : Integer; Text : String): Integer;
+begin
+  print(GetPlayerName(PlayerID)+': '+Text);
+  result := 1;
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd : TSplitArray;
+  Mssg : String;
+  i, l0l : integer;
+  PosX, PosY, PosZ : Single;
+begin
+  //print('COMMAND: '+GetPlayerName(PlayerID)+': '+Command);
+
+  Cmd := Split(Command, ' ');
+  if (Cmd[0] = '/ping') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s ping is '+IntToStr(GetPlayerPing(PlayerID));
+    SendMessageToAll(Mssg);
+    print(Mssg);
+  end
+  else if (Cmd[0] = '/askin') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Skin ID '+Cmd[1];
+      SetPlayerSkin(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/armour') or (Cmd[0] = '/armor') Then
+  begin
+    SetPlayerArmour(PlayerID,1000.0);
+    Mssg := GetPlayerName(PlayerID)+' got now full armour!';
+    SendMessageToAll(Mssg);
+  end
+  else if (Cmd[0] = '/weapon') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Weapon '+Cmd[1];
+      GivePlayerWeapon(PlayerID, StrToInt(Cmd[1]), 500);
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/time') then
+  begin
+    if (IsInteger(Cmd[1])) AND (IsInteger(Cmd[2])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set the time to '+Cmd[1]+':'+Cmd[2];
+      SetGameTime(StrToInt(Cmd[1]), StrToInt(Cmd[2]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/weather') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has changed the weather to '+Cmd[1];
+      SetGameWeather(StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/money') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now $'+Cmd[1];
+      SetPlayerMoney(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/flags') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now the flags '+Cmd[1];
+      SetPlayerFlags(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/kill') then
+  begin
+    SetPlayerHealth(PlayerID, 0.0);
+  end
+  else if (Cmd[0] = '/north') then
+  begin
+    SetPlayerRotation(PlayerID, 0.0);
+  end
+  else if (Cmd[0] = '/ww') then
+  begin
+    if (Cmd[1] = 'on') then
+    begin
+      SetWaterWalk(True);
+      Mssg := GetPlayerName(PlayerID)+' turned Waterwalk on';
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end
+    else if (Cmd[1] = 'off') then
+    begin
+      SetWaterWalk(False);
+      Mssg := GetPlayerName(PlayerID)+' turned Waterwalk off';
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/fly') then
+  begin
+    if (Cmd[1] = 'on') then
+    begin
+      SetFlyingCars(True);
+      Mssg := GetPlayerName(PlayerID)+' turned flying cars on';
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end
+    else if (Cmd[1] = 'off') then
+    begin
+      SetFlyingCars(False);
+      Mssg := GetPlayerName(PlayerID)+' turned flying cars off';
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/gravity') then
+  begin
+    if (isFloat(Cmd[1])) then
+    begin
+      SetGravity(StrToFloatFix(Cmd[1])); 
+      Mssg := GetPlayerName(PlayerID)+' setted the gravity to '+Cmd[1];
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  Else if(Cmd[0] = '/haybale') Then
+  begin
+    PosX := GetPlayerPosX(PlayerID);
+    PosY := GetPlayerPosY(PlayerID);
+    PosZ := GetPlayerPosZ(PlayerID);
+    i := CreateObjectEx(3374,PosX,PosY,PosZ,0.0,0.0,0.0);
+    PosZ := PosZ + 5.0;
+    SetPlayerPos(PlayerID,PosX,PosY,PosZ);
+    Mssg := '* '+GetPlayerName(PlayerID)+' spawned a haybale (ObjectID: '+ IntToStr(i) +')';
+    SendMessageToAll(Mssg);
+  end
+  Else if(Cmd[0] = '/uvehicle') Then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      l0l := StrToInt(Cmd[1]);
+      PosX := GetPlayerPosX(PlayerID) + 2.0;
+      PosY := GetPlayerPosY(PlayerID) + 2.0;
+      PosZ := GetPlayerPosZ(PlayerID) + 1.5;
+      i := CreateVehicleEx(StrToInt(Cmd[1]),PosX,PosY,PosZ,0.0,-1,-1);
+      SendMessageToAll('* '+GetPlayerName(PlayerID)+' spawned a '+ GetVehicleName(l0l) +' (ID: '+ IntToStr(i) +')');
+    end;
+  end
+  Else if(Cmd[0] = '/do') Then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      DestroyObject(i);
+      SendMessageToAll('* '+GetPlayerName(PlayerID)+' deleted object '+ IntToStr(i));
+    end;
+  end
+  Else if(Cmd[0] = '/dv') Then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      //DestroyVehicle(i);
+      SendMessageToAll('* '+GetPlayerName(PlayerID)+' deleted vehicle '+ IntToStr(i));
+    end;
+  end
+  Else if(Cmd[0] = '/hudoff') Then
+  begin
+    SetPlayerHUD(PlayerID,False);
+  end
+  Else if(Cmd[0] = '/hudon') Then
+  begin
+    SetPlayerHUD(PlayerID,True);
+  end
+  Else if(Cmd[0] = '/radaroff') Then
+  begin
+    SetPlayerRadar(PlayerID,False);
+  end
+  Else if(Cmd[0] = '/radaron') Then
+  begin
+    SetPlayerRadar(PlayerID,True);
+  end
+  Else if(Cmd[0] = '/boom') Then
+  begin
+    PosX := GetPlayerPosX(PlayerID);
+    PosY := GetPlayerPosY(PlayerID);
+    PosZ := GetPlayerPosZ(PlayerID);
+    //PosZ := PosZ + 5.0;
+    CreateExplosion(PosX,PosY,PosZ);
+  end
+  Else if (Cmd[0] = '/objto') Then
+  Begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      SetObjectPos(i,10.0,0.0,10.0);
+      Mssg := '* '+GetPlayerName(PlayerID)+' teleported object '+ IntToStr(i) +' to position 10.0 0.0 10.0';
+      SendMessageToAll(Mssg);
+    end;
+  End
+  Else if (Cmd[0] = '/objmove') Then
+  Begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      MoveObject(i,GetObjectPosX(i),GetObjectPosY(i),GetObjectPosZ(i)+10.0);
+      Mssg := '* '+GetPlayerName(PlayerID)+' moved object '+ IntToStr(i) +' up';
+      SendMessageToAll(Mssg);
+    end;
+  End
+  Else If (Cmd[0] = '/zero') Then
+  Begin
+    SetPlayerPos(PlayerID,0.0,0.0,3.0);
+  End
+  else if (Cmd[0] = '/to') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      if (i = PlayerID) Then
+        SendMessageToPlayer(PlayerID,'*** You can''t teleport to yourself')
+      else if (IsPlayerConnected(i)) AND (IsPlayerIngame(i)) then
+      begin
+        Mssg := GetPlayerName(PlayerID)+' teleported to '+GetPlayerName(i);
+        SetPlayerPos(PlayerID, GetPlayerPosX(i), GetPlayerPosY(i), GetPlayerPosZ(i)+2.0);
+        SendMessageToAll(Mssg);
+        print(Mssg);
+      end;
+    end;
+  end;
+end;
+
+procedure OnPlayerStartedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := false;
+  Mssg := '* '+GetPlayerName(PlayerID)+' started the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+
+procedure OnPlayerClosedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := False;
+  Mssg := '* '+GetPlayerName(PlayerID)+' closed the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+
+procedure OnPlayerDeath(PlayerID, KillerID, WeaponID : Integer);
+begin
+  If (KillerID > 0) Then
+    SendMessageToAll('* '+ GetPlayerName(KillerID) +' killed '+ GetPlayerName(PlayerID) +' ('+ GetDeathReason(WeaponID) +')')
+  Else
+    SendMessageToAll('* '+ GetPlayerName(PlayerID) +' died');
+  //SetCamera(PlayerID,0.0,0.0,10.0);
+end;
+
+procedure OnPlayerSpawned(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  //SetPlayerSkin(PlayerID, 213);
+  //SetPlayerPos(PlayerID, 1911.674,-2551.968,13.194); // Airport
+  //SetPlayerPos(PlayerID, 1958.3783,1343.1572,15.3746); // Las Venturas
+  Mssg := '* '+GetPlayerName(PlayerID)+' spawned';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+  //SetPlayerMoneyFormat(PlayerID,'O RLY?');
+end;
+
+begin
+end.

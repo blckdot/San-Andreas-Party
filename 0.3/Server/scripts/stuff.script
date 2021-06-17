@@ -1,0 +1,649 @@
+Var
+  WaterWalk, Fly, Jump, Shoot : Boolean;
+  FirstSpawn : array[1..21] of Boolean;
+  BombX : Array[1..21] of Single;
+  BombY : Array[1..21] of Single;
+  BombZ : Array[1..21] of Single;
+  BomX, BomY, BomZ : Single;
+
+procedure OnStart();
+begin
+  WaterWalk := False;
+  Fly := False;
+  Jump := True;
+  Shoot := True;
+  
+  CreateSpawn(1911.674,-2551.968,13.194,90.0);
+CreateVehicle(583,1911.599,-2542.806,13.194,90.0,-1,-1);
+CreateVehicle(583,1911.230,-2532.449,13.194,90.0,-1,-1);
+CreateVehicle(583,1915.582,-2551.830,13.194,90.0,-1,-1);
+CreateVehicle(583,1915.825,-2542.639,13.194,90.0,-1,-1);
+CreateVehicle(583,1915.925,-2532.157,13.194,90.0,-1,-1);
+CreateVehicle(583,1919.838,-2551.317,13.194,90.0,-1,-1);
+CreateVehicle(583,1920.098,-2542.402,13.194,90.0,-1,-1);
+CreateVehicle(583,1920.093,-2532.217,13.194,90.0,-1,-1);
+CreateVehicle(583,1924.146,-2551.480,13.194,90.0,-1,-1);
+CreateVehicle(583,1924.776,-2542.294,13.194,90.0,-1,-1);
+CreateVehicle(583,1924.767,-2532.320,13.194,90.0,-1,-1);
+CreateVehicle(583,1929.403,-2532.390,13.194,90.0,-1,-1);
+CreateVehicle(583,1930.365,-2542.026,13.194,90.0,-1,-1);
+CreateVehicle(583,1929.038,-2551.344,13.194,90.0,-1,-1);
+CreateVehicle(583,1912.007,-2547.528,13.194,90.0,-1,-1);
+CreateVehicle(583,1912.143,-2537.143,13.194,90.0,-1,-1);
+CreateVehicle(583,1916.591,-2547.631,13.194,90.0,-1,-1);
+CreateVehicle(583,1917.211,-2537.082,13.194,90.0,-1,-1);
+CreateVehicle(583,1921.599,-2547.612,13.194,90.0,-1,-1);
+CreateVehicle(583,1922.448,-2537.056,13.194,90.0,-1,-1);
+CreateVehicle(583,1927.317,-2547.403,13.194,90.0,-1,-1);
+CreateVehicle(583,1928.301,-2536.957,13.194,90.0,-1,-1);
+CreateObject(8838,1861.795,-2543.164,14.716,0.0,0.0,0.0);
+CreateObject(8838,1862.641,-2549.957,14.722,0.0,0.0,-10.313);
+CreateObject(8838,1862.111,-2536.549,14.736,0.0,0.0,11.173);
+CreateObject(978,1896.294,-2554.629,14.340,0.002,0.007,-2.578);
+CreateObject(978,1894.423,-2554.567,15.149,0.002,0.007,-2.578);
+CreateObject(978,1885.644,-2554.698,16.697,0.001,0.0,0.859);
+CreateObject(978,1876.723,-2554.350,16.718,0.001,0.0,-5.157);
+CreateObject(978,1867.810,-2553.182,16.618,0.001,0.0,-9.454);
+CreateObject(978,1859.055,-2551.604,16.518,0.001,0.0,-10.313);
+CreateObject(978,1850.797,-2548.778,16.493,0.001,0.0,-26.643);
+CreateObject(978,1896.251,-2545.042,14.170,0.002,0.007,-3.438);
+CreateObject(978,1894.023,-2544.996,15.008,0.002,0.007,-3.438);
+CreateObject(978,1885.450,-2545.015,16.617,0.001,0.0,0.859);
+CreateObject(978,1876.281,-2545.174,16.737,0.001,0.0,0.859);
+CreateObject(978,1867.031,-2545.490,16.762,0.001,0.0,0.859);
+CreateObject(978,1859.956,-2545.692,16.712,0.001,0.0,0.859);
+CreateObject(978,1896.259,-2535.026,13.849,0.002,0.007,-3.438);
+CreateObject(978,1894.249,-2534.998,14.762,0.002,0.007,-3.438);
+CreateObject(978,1885.684,-2534.980,16.625,0.001,0.0,0.859);
+CreateObject(978,1876.367,-2536.053,16.757,0.001,0.0,12.032);
+CreateObject(978,1867.359,-2537.897,16.907,0.001,0.0,11.173);
+CreateObject(978,1860.170,-2539.335,17.057,0.001,0.0,12.032);
+CreateObject(979,1897.149,-2531.421,13.587,0.0,-0.007,-179.622);
+CreateObject(979,1894.150,-2531.418,14.802,0.0,-0.007,-179.622);
+CreateObject(979,1885.566,-2531.458,16.575,0.001,0.0,-179.622);
+CreateObject(979,1876.357,-2531.817,16.657,0.001,0.0,-175.325);
+CreateObject(979,1867.083,-2533.091,16.682,0.001,0.0,-169.309);
+CreateObject(979,1858.818,-2534.637,16.757,0.001,0.0,-169.309);
+CreateObject(979,1851.037,-2537.535,16.782,0.001,0.0,-152.120);
+CreateObject(979,1886.099,-2541.325,16.792,0.001,0.0,-179.622);
+CreateObject(979,1877.981,-2541.161,16.812,0.001,0.0,-183.060);
+CreateObject(979,1868.801,-2540.907,16.837,0.001,0.0,-180.482);
+CreateObject(979,1860.206,-2540.457,16.837,0.0,0.0,-182.201);
+CreateObject(979,1859.731,-2546.870,16.693,0.0,0.0,-191.654);
+CreateObject(979,1867.499,-2548.489,16.793,0.0,0.0,-191.654);
+CreateObject(979,1876.189,-2550.312,16.893,0.0,0.0,-191.654);
+CreateObject(979,1885.315,-2551.158,17.032,0.0,0.0,-179.622);
+CreateObject(979,1894.128,-2550.976,15.302,-0.001,-0.007,-179.622);
+CreateObject(979,1897.911,-2550.899,13.596,-0.001,-0.007,-179.622);
+CreateObject(979,1894.550,-2541.248,14.923,0.001,-0.007,-179.622);
+CreateObject(979,1897.032,-2541.284,13.915,0.001,-0.007,-179.622);
+CreateObject(978,1849.006,-2547.745,16.486,0.001,0.0,-28.361);
+CreateObject(979,1849.067,-2538.551,16.887,0.001,0.0,-152.120);
+CreateObject(987,1845.633,-2548.774,16.272,0.0,-0.055,-90.241);
+CreateObject(987,1838.246,-2537.312,15.947,0.0,-0.055,90.241);
+CreateObject(8838,1821.700,-2542.916,14.391,0.0,0.0,0.0);
+CreateObject(987,1837.022,-2546.028,16.297,0.0,-0.055,-177.903);
+CreateObject(987,1838.144,-2528.262,16.222,0.0,-0.055,90.241);
+CreateObject(987,1845.589,-2539.290,16.422,0.0,-0.055,-87.663);
+CreateObject(979,1833.553,-2540.678,16.362,0.001,0.0,-180.482);
+CreateObject(979,1829.045,-2541.079,16.362,0.001,0.0,-170.168);
+CreateObject(978,1833.675,-2545.160,16.337,0.001,0.0,0.859);
+CreateObject(978,1828.708,-2544.750,16.337,0.001,0.0,-6.875);
+CreateObject(978,1819.679,-2544.316,16.212,0.001,0.0,0.859);
+CreateObject(978,1810.804,-2544.394,16.237,0.001,0.0,0.859);
+CreateObject(978,1809.579,-2544.379,16.280,0.001,0.0,0.859);
+CreateObject(979,1820.628,-2541.845,16.587,0.001,0.0,-180.482);
+CreateObject(979,1813.121,-2541.788,16.762,0.001,0.0,-180.482);
+CreateObject(979,1809.611,-2541.771,16.773,0.001,0.0,-180.482);
+CreateObject(8838,1791.308,-2542.791,7.016,0.0,-0.008,0.0);
+CreateObject(8838,1813.650,-2542.864,12.412,0.0,0.0,0.0);
+CreateObject(978,1801.264,-2544.550,15.591,0.001,-0.005,0.859);
+CreateObject(979,1801.704,-2541.345,15.383,0.001,0.004,-182.201);
+CreateObject(991,1793.751,-2544.486,13.762,0.0,0.0,0.0);
+CreateObject(991,1787.109,-2544.460,13.762,0.0,0.0,0.0);
+CreateObject(991,1795.277,-2541.103,13.762,0.0,0.0,0.0);
+CreateObject(991,1785.467,-2540.715,13.762,0.0,0.0,0.0);
+CreateObject(991,1785.520,-2544.448,13.762,0.0,0.0,0.0);
+CreateObject(991,1779.911,-2544.474,13.762,0.0,0.0,0.0);
+CreateObject(991,1779.611,-2540.739,13.762,0.0,0.0,0.0);
+CreateObject(991,1792.150,-2537.834,13.762,0.0,0.0,-91.100);
+CreateObject(991,1792.302,-2531.337,13.762,0.0,0.0,-91.100);
+CreateObject(991,1792.442,-2524.869,13.762,0.0,0.0,-91.100);
+CreateObject(991,1788.773,-2529.816,13.762,0.0,0.0,-91.100);
+CreateObject(991,1788.902,-2525.062,13.762,0.0,0.0,-91.100);
+CreateObject(8838,1772.044,-2535.562,12.366,0.0,0.0,0.0);
+CreateObject(991,1788.651,-2539.447,11.612,-0.001,0.027,-89.381);
+CreateObject(991,1788.614,-2537.252,11.612,-0.001,0.027,-89.381);
+CreateObject(8838,1777.748,-2535.563,15.091,0.0,0.006,0.0);
+CreateObject(8838,1746.479,-2535.427,28.809,0.0,0.008,0.0);
+CreateObject(8838,1720.201,-2535.441,46.526,0.0,-0.013,-178.763);
+CreateObject(8838,1693.196,-2536.183,52.102,0.0,-0.005,1.719);
+CreateObject(8838,1667.948,-2537.100,46.256,-0.001,-0.003,1.719);
+CreateObject(8838,1637.321,-2538.495,35.522,-0.001,-0.009,1.719);
+CreateObject(8838,1765.360,-2535.522,19.892,0.0,0.007,0.0);
+CreateObject(969,1708.647,-2533.209,58.790,0.004,0.006,-182.201);
+CreateObject(969,1700.522,-2533.491,56.079,0.004,0.006,-182.201);
+CreateObject(969,1692.323,-2533.864,53.429,0.004,0.006,-182.201);
+CreateObject(969,1708.326,-2538.022,58.823,-0.001,0.006,-177.044);
+CreateObject(969,1699.843,-2538.182,56.057,-0.001,0.006,-175.325);
+CreateObject(969,1691.595,-2538.615,53.219,-0.001,0.006,-175.325);
+CreateObject(969,1682.838,-2538.964,50.907,-0.001,0.003,-177.903);
+CreateObject(969,1673.789,-2539.318,49.199,0.0,0.003,-178.763);
+CreateObject(969,1665.115,-2539.532,47.579,-0.001,0.003,-177.044);
+CreateObject(969,1660.027,-2539.875,46.637,-0.001,0.003,-177.903);
+CreateObject(969,1684.146,-2533.974,50.915,0.007,0.003,-182.201);
+CreateObject(969,1675.286,-2534.264,49.214,0.007,0.003,-182.201);
+CreateObject(969,1666.429,-2534.620,47.604,0.007,0.003,-182.201);
+CreateObject(969,1658.901,-2534.841,46.232,0.007,0.003,-182.201);
+CreateObject(991,1638.142,-2598.124,13.762,0.0,0.0,-200.249);
+CreateObject(8838,1619.443,-2533.429,26.839,0.0,-0.001,-89.381);
+CreateObject(8838,1619.080,-2502.108,19.725,0.0,-0.007,-89.381);
+CreateObject(8838,1618.893,-2486.519,13.035,0.0,-0.007,-89.381);
+CreateObject(969,1643.267,-2540.209,40.886,0.001,-0.009,6.016);
+CreateObject(969,1636.400,-2540.847,36.839,0.001,-0.009,6.016);
+CreateObject(969,1629.067,-2541.314,32.625,0.001,-0.009,6.016);
+CreateObject(969,1622.638,-2541.724,29.611,0.001,-0.009,6.016);
+CreateObject(969,1643.329,-2535.578,40.361,-0.004,-0.009,-2.578);
+CreateObject(969,1635.502,-2536.149,36.167,-0.004,-0.009,-2.578);
+CreateObject(969,1628.060,-2536.819,32.116,-0.004,-0.009,-2.578);
+CreateObject(969,1623.206,-2536.979,29.537,-0.004,-0.009,-3.438);
+CreateObject(8838,1614.678,-2533.924,26.864,0.0,-0.001,-89.381);
+CreateObject(969,1612.223,-2535.791,28.625,0.0,0.0,-88.522);
+CreateObject(8838,1614.142,-2502.482,19.899,0.0,-0.007,-89.381);
+CreateObject(8838,1613.803,-2483.631,11.499,0.0,-0.007,-89.381);
+CreateObject(991,1612.584,-2533.031,29.570,0.0,0.0,-270.723);
+CreateObject(991,1612.587,-2526.671,29.283,0.0,0.0,-270.723);
+CreateObject(991,1612.683,-2520.517,29.006,0.0,0.0,-270.723);
+CreateObject(991,1621.800,-2520.097,28.973,0.0,0.0,-269.004);
+CreateObject(991,1621.749,-2526.622,29.281,0.0,0.0,-269.004);
+CreateObject(991,1621.862,-2533.210,29.341,0.0,0.0,-269.004);
+CreateObject(991,1614.644,-2548.750,30.295,0.0,0.0,-341.197);
+CreateObject(991,1619.243,-2546.245,30.145,0.0,0.0,-312.835);
+CreateObject(991,1621.372,-2519.176,28.852,0.0,0.0,-226.032);
+CreateObject(991,1613.461,-2519.635,28.888,0.0,0.0,-304.241);
+CreateObject(8838,1641.446,-2538.450,31.619,-0.001,0.001,1.719);
+CreateObject(991,1612.342,-2538.749,32.741,0.0,0.0,-268.144);
+CreateObject(991,1612.395,-2540.784,32.688,0.0,0.0,-268.144);
+CreateObject(8838,1870.596,-2543.702,13.591,-0.026,-0.002,-91.960);
+CreateObject(8838,1861.628,-2528.996,14.066,-0.026,-0.006,-17.189);
+CreateObject(8838,1857.502,-2558.422,14.941,-0.027,-0.018,-234.626);
+CreateObject(8838,1848.496,-2546.346,13.441,-0.027,-0.018,-329.164);
+CreateObject(8838,1816.654,-2544.740,14.066,-0.027,-0.018,-239.783);
+CreateObject(8838,1816.866,-2540.766,14.066,-0.027,-0.018,-419.405);
+CreateObject(8838,1771.945,-2533.443,14.066,-0.027,-0.018,-419.405);
+CreateObject(8838,1771.838,-2538.324,14.066,-0.027,-0.018,-235.486);
+CreateObject(8838,1613.760,-2489.838,15.384,0.0,-0.004,-89.381);
+CreateObject(8838,1618.663,-2483.603,13.779,0.0,-0.004,-89.381);
+CreateObject(3996,1615.111,-2763.608,-1.590,0.0,0.0,-86.803);
+CreateObject(3996,1641.119,-2839.111,-2.840,0.0,0.0,-174.466);
+CreateObject(8838,1595.621,-2547.766,27.486,0.0,0.0,1.719);
+CreateObject(8838,1595.683,-2551.709,30.536,-0.026,0.0,1.719);
+CreateObject(991,1620.354,-2545.050,30.106,0.0,0.0,-295.646);
+CreateObject(991,1617.942,-2547.232,30.159,0.0,-0.001,-331.743);
+CreateObject(8838,1595.692,-2543.772,30.536,-0.026,0.0,-178.763);
+CreateObject(8838,1562.644,-2548.965,27.486,0.0,0.0,1.719);
+CreateObject(8838,1563.423,-2552.678,30.536,-0.026,0.0,1.719);
+CreateObject(8838,1563.040,-2544.770,30.536,-0.026,0.0,-177.903);
+CreateObject(8838,1529.824,-2549.772,27.770,0.0,0.0,1.719);
+CreateObject(8838,1551.140,-2547.027,34.594,-0.028,-0.004,-100.554);
+CreateObject(8838,1499.217,-2550.705,20.216,0.0,-0.009,1.719);
+CreateObject(8838,1499.270,-2551.091,14.554,0.0,0.0,0.859);
+CreateObject(8838,1475.104,-2569.302,14.066,0.0,0.0,-88.522);
+CreateObject(8838,1480.978,-2547.943,14.591,0.026,0.0,1.719);
+CreateObject(987,1489.036,-2552.747,11.777,0.0,0.0,181.341);
+CreateObject(987,1472.118,-2553.436,12.547,0.0,0.0,181.341);
+CreateObject(1696,1472.091,-2583.561,16.373,0.0,-0.001,92.819);
+CreateObject(8838,1461.384,-2587.733,14.941,0.026,0.0,-178.763);
+CreateObject(8838,1438.993,-2570.041,14.666,0.028,0.0,-267.285);
+CreateObject(987,1460.313,-2553.924,12.547,0.0,0.0,138.369);
+CreateObject(987,1441.851,-2555.951,12.547,0.0,0.0,68.755);
+CreateObject(8838,1422.647,-2584.051,16.089,0.0,0.0,-359.244);
+CreateObject(1696,1427.707,-2581.006,18.551,0.001,0.0,55.863);
+CreateObject(1696,1423.096,-2586.347,18.564,0.001,0.0,129.775);
+CreateObject(1696,1416.820,-2580.448,18.624,0.001,0.0,38.675);
+CreateObject(8838,1392.717,-2584.429,17.931,0.0,0.002,-359.244);
+CreateObject(8838,1359.987,-2584.276,17.184,0.0,-0.003,-361.823);
+CreateObject(8838,1322.200,-2583.357,14.294,0.0,0.0,-361.823);
+CreateObject(8838,1308.714,-2587.902,14.308,0.0,0.0,-361.823);
+CreateObject(8838,1340.873,-2588.896,10.041,0.0,0.005,-361.823);
+CreateObject(8838,1330.216,-2583.708,13.288,0.0,0.005,-360.104);
+CreateObject(8838,1293.238,-2583.069,17.442,0.0,0.0,-361.823);
+CreateObject(8838,1261.526,-2581.845,11.198,0.0,-0.007,-362.682);
+CreateObject(4867,1199.841,-2583.053,-1.184,0.0,0.0,-2.578);
+CreateObject(8838,1244.334,-2581.452,4.442,0.0,-0.007,-362.682);
+CreateObject(8838,1241.925,-2581.184,1.601,0.0,-0.001,-360.963);
+CreateObject(8838,1197.554,-2579.548,0.801,0.0,0.0,-363.541);
+CreateObject(8171,1196.987,-2651.006,2.577,0.0,0.029,-1.719);
+CreateObject(8171,1201.382,-2508.063,0.364,0.0,0.029,-1.719);
+CreateObject(8171,1296.576,-2514.404,12.549,0.0,0.029,-110.008);
+CreateObject(8171,1311.879,-2649.534,12.377,0.0,0.029,110.867);
+CreateObject(8171,1221.151,-2674.413,10.820,0.0,0.029,89.381);
+CreateObject(1225,1182.270,-2578.955,2.044,0.0,0.0,0.0);
+CreateObject(1225,1181.588,-2578.956,2.167,0.0,0.0,0.0);
+CreateObject(1225,1180.921,-2578.888,2.283,0.0,0.0,0.0);
+CreateObject(1225,1180.242,-2578.917,2.396,0.0,0.0,0.0);
+CreateObject(1225,1179.669,-2578.870,2.528,0.0,0.0,0.0);
+CreateObject(1225,1182.385,-2577.775,2.001,0.0,0.0,0.0);
+CreateObject(1225,1181.611,-2577.784,2.160,0.0,0.0,0.0);
+CreateObject(1225,1180.996,-2577.617,2.290,0.0,0.0,0.0);
+CreateObject(1225,1180.399,-2577.616,2.416,0.0,0.0,0.0);
+CreateObject(1225,1179.657,-2577.654,2.499,0.0,0.0,0.0);
+CreateObject(8838,1379.897,-2593.377,14.541,0.0,0.004,-359.244);
+CreateObject(8838,1349.397,-2593.792,11.938,0.0,-0.007,-359.244);
+CreateObject(974,1461.507,-2583.524,17.292,-0.027,0.0,1.719);
+CreateObject(974,1449.942,-2584.113,17.268,-0.027,0.0,1.719);
+CreateObject(974,1438.598,-2583.723,17.400,-0.027,0.0,1.719);
+CreateObject(8838,1443.807,-2588.140,14.916,0.026,0.0,-178.763);
+
+  IRCSay('LVDM v0.1 loaded by Ywa');
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd, Str, Msg : String;
+  Int, Int2, i : Integer;
+  PosZ, PosY, PosX : Single;
+begin
+  Cmd := CopyBefore(Command, ' ');
+  if (IsPlayerAdmin(PlayerID)) Then
+  begin
+    if(Cmd = '/kick') Then
+    begin
+      if(IsInteger(CopyAfter(Command,' '))) Then
+      begin
+        Int := StrToInt(CopyAfter(Command,' '));
+        Msg := '* Admin '+ GetPlayerNick(PlayerID) +' kicked '+ GetPlayerNick(Int);
+        KickPlayer(Int);
+        SendTextToAll(Msg); 
+        IRCSay(Msg); 
+      end
+    end
+    if(Cmd = '/ban') Then
+    begin
+      if(IsInteger(CopyAfter(Command,' '))) Then
+      begin
+        Int := StrToInt(CopyAfter(Command,' '));
+        Msg := '* Admin '+ GetPlayerNick(PlayerID) +' banned '+ GetPlayerNick(Int);
+        BanPlayer(Int);
+        SendTextToAll(Msg); 
+        IRCSay(Msg); 
+      end
+    end
+  end
+
+{  if(Cmd = '/vehicle') Then
+  begin
+    if(IsInteger(CopyAfter(Command,' '))) Then
+    begin
+      Int2 := CreateVehicleEx(StrToInt(Str), GetPlayerPosX(PlayerID)+5.0, GetPlayerPosY(PlayerID), GetPlayerPosZ(PlayerID)+2.5, 0.0, -1, -1);
+      Msg := '* '+ GetPlayerNick(PlayerID) +' spawned a '+ GetVehicleName(Int) +' with ID '+IntToStr(Int2);
+      SendTextToAll(Msg); 
+      IRCSay(Msg);  
+    end
+  end
+  Else if(Cmd = '/dvehicle') Then
+  begin
+    if(IsInteger(CopyAfter(Command,' '))) Then
+    begin
+      DestroyVehicle(StrToInt(CopyAfter(Command,' ')));
+      Msg := '* '+ GetPlayerNick(PlayerID) +' destroyed vehicle '+ Str;
+      SendTextToAll(Msg); 
+      IRCSay(Msg);  
+    end
+  end }
+  Else if(Cmd = '/weapon') Then
+  begin
+    if(IsInteger(CopyAfter(Command,' '))) Then
+    begin
+      GivePlayerWeapon(PlayerID, StrToInt(CopyAfter(Command,' ')));
+      Msg := '* '+ GetPlayerNick(PlayerID) +' gave him/herself an '+ GetDeathReason(Int);
+      SendTextToAll(Msg); 
+      IRCSay(Msg); 
+    end
+  end
+  Else if(Cmd = '/to') Then
+  begin
+    if(IsInteger(CopyAfter(Command,' '))) Then
+    begin
+      Int := StrToInt(CopyAfter(Command,' '));
+      If (Int = PlayerID) Then
+        SendTextToPlayer(PlayerID,'* You can''t teleport to yourself')
+      Else
+      Begin
+        If (IsPlayerConnected(PlayerID) = True) Then
+        Begin
+          SetPlayerPos(PlayerID, GetPlayerPosX(Int), GetPlayerPosY(Int), GetPlayerPosZ(Int)+2.0);
+          Msg := '* '+ GetPlayerNick(PlayerID) +' teleported to '+ GetPlayerNick(Int);
+          SendTextToAll(Msg); 
+          IRCSay(Msg);
+        End
+        Else
+          SendTextToPlayer(PlayerID,'* Teleporting to '+ GetPlayerNick(Int) +' failed. Player is not connected.');
+      End
+    end
+  end
+  Else if(Cmd = '/weather') Then
+  begin
+    if(IsInteger(CopyAfter(Command,' '))) Then
+    begin
+      Int := StrToInt(CopyAfter(Command,' '));
+      SetWeather(Int);
+      Msg := '* Weather set to '+IntToStr(Int);
+      SendTextToAll(Msg); 
+      IRCSay(Msg); 
+    end
+  end
+  Else if(Cmd = '/gravity') Then
+  begin
+    if(IsInteger(CopyAfter(Command,' '))) Then
+    begin
+      Int := StrToInt(CopyAfter(Command,' '));
+      SetGravity(Int);
+      Msg := '* Gravity set to '+IntToStr(Int) +' - Default: 100';
+      SendTextToAll(Msg); 
+      IRCSay(Msg); 
+    end
+  end
+  Else if(Cmd = '/time') Then
+  begin
+    if(IsInteger(CopyAfter(Command,' '))) Then
+    begin
+      Int := StrToInt(CopyAfter(Command,' '));
+      SetTime(Int, 0);
+      Msg := '* Time set to '+IntToStr(Int)+':00';
+      SendTextToAll(Msg); 
+      IRCSay(Msg); 
+    end
+  end
+  Else if(Cmd = '/me') Then
+  begin
+    Str := CopyAfter(Command,' ');
+    Msg := '* '+GetPlayerNick(PlayerID)+' '+Str;
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  Else if(Command = '/haybale') Then
+  begin
+    CreateObject(3374,GetPlayerPosX(PlayerID),GetPlayerPosY(PlayerID),GetPlayerPosZ(PlayerID),0.0,0.0,0.0);
+    PosZ := PosZ + 5.0;
+    SetPlayerPos(PlayerID,PosX,PosY,PosZ);
+    Msg := '* '+GetPlayerNick(PlayerID)+' spawned a haybale';
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  Else if(Command = '/hands') Then
+  begin
+    SetPlayerAnimation(PlayerID,1);
+  end
+  Else if(Command = '/finger') Then
+  begin
+    SetPlayerAnimation(PlayerID,2);
+  end
+  Else if(Command = '/undo') Then
+  begin
+    UndoLastWeaponDamage(PlayerID);
+    SendTextToAll(GetPlayerNick(PlayerID)+' removed his last weapon damage.'); 
+  end
+  Else if(Command = '/ww') Then
+  begin
+    if (WaterWalk = False) Then
+    begin
+      WaterWalk := True;
+      UnderWaterWalk(WaterWalk);
+      Msg := '* Under water walk enabled';
+    end
+    Else
+    begin
+      WaterWalk := False;
+      UnderWaterWalk(WaterWalk);
+      Msg := '* Under water walk disabled';    
+    end
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  Else if(Command = '/fly') Then
+  begin
+    if (Fly = False) Then
+    begin
+      Fly := True;
+      SetFlyingVehicles(Fly);
+      Msg := '* Flying vehicles is now enabled';
+    end
+    Else
+    begin
+      Fly := False;
+      SetFlyingVehicles(Fly);
+      Msg := '* Flying vehicles is now disabled';    
+    end
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  
+  Else if(Command = '/jump') Then
+  begin
+    if (Jump = False) Then
+    begin
+      Jump := True;
+      For i := 1 To 20 Do
+        AllowPlayerToJump(i, Jump);
+      Msg := '* Jumping is now enabled';
+    end
+    Else
+    begin
+      Jump := False;
+      For i := 1 To 20 Do
+        AllowPlayerToJump(i, Jump);
+      Msg := '* Jumping is now disabled';    
+    end
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  
+  Else if(Command = '/shoot') Then
+  begin
+    if (Shoot = False) Then
+    begin
+      Shoot := True;
+      For i := 1 To 20 Do
+        AllowPlayerToShoot(i, Shoot);
+      Msg := '* Shooting is now enabled';
+    end
+    Else
+    begin
+      Shoot := False;
+      For i := 1 To 20 Do
+        AllowPlayerToJump(i, Shoot);
+      Msg := '* Shooting is now disabled';    
+    end
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  
+  Else If (Command = '/put') Then
+  Begin
+    BombX[PlayerID] := GetPlayerPosX(PlayerID);
+    BombY[PlayerID] := GetPlayerPosY(PlayerID);
+    BombZ[PlayerID] := GetPlayerPosZ(PlayerID);
+    SendTextToPlayer(PlayerID, '* Bomb planted!');
+  End
+  Else If (Command = '/boom') Then
+  Begin
+    CreateExplosion(BombX[PlayerID], BombY[PlayerID], BombZ[PlayerID]);
+    SendTextToPlayer(PlayerID, '* Bomb exploded!');
+  End
+  Else If (Command = '/') Then
+  Begin
+    BomX := GetPlayerPosX(PlayerID);
+    BomY := GetPlayerPosY(PlayerID);
+    BomZ := GetPlayerPosZ(PlayerID);
+
+    Timer(2, 'Bomb');
+    SendTextToPlayer(PlayerID, '* GTFO!');
+  End;
+end;
+
+procedure OnPlayerText(PlayerID : Integer; Text : String);
+begin
+  IRCSay('[CHAT] '+GetPlayerNick(PlayerID)+': '+Text);
+end;
+
+procedure OnConsoleMessage(Text : String);
+begin
+  SendTextToAll('* CONSOLE: '+Text);
+  IRCSay('[Console] '+Text)
+end;
+
+procedure OnIRCMessage(Nickname, Message : String);
+var
+  Tmp, PlayerList, MaxSlots : String;
+  i, count : Integer;
+begin
+  if (Message = '!players') Then
+  begin
+    count := 0;
+    PlayerList := '';
+    For i := 1 To 20 Do
+    begin
+      if (IsPlayerConnected(i) = True) Then
+      begin
+        If (PlayerList = '') Then
+          PlayerList := GetPlayerNick(i)
+        Else
+          PlayerList := PlayerList+', '+GetPlayerNick(i);
+        count := count+1;
+      end
+    end
+    MaxSlots := IntToStr(GetMaxSlots());
+    if (count = 0) Then
+      IRCSay('*** 0/'+MaxSlots+' Players')
+    Else if (count = 1) Then
+      IRCSay('*** 1/'+MaxSlots+' Player: '+PlayerList)
+    Else
+      IRCSay('*** '+IntToStr(count)+'/'+MaxSlots+' Players: '+PlayerList);
+  end
+  Else if (Message = '!about') Then
+  begin
+    IRCSay('LVDM FreeRoam by Ywa');
+  end
+  Else if (CopyBefore(Message,' ') = '!msg') Then
+  begin
+    Tmp := CopyAfter(Message, ' ');
+    If (Tmp = '') Then
+    begin
+      IRCSay('*** Syntax: !msg <action>');
+    end
+    Else
+    begin
+      SendTextToAll('[IRC] '+Nickname+': '+Tmp);
+      IRCSay('[IRC] '+Nickname+': '+Tmp);
+    end
+  end;
+end;
+
+procedure OnIRCJoin(Nickname : String);
+begin
+  SendTextToAll('* '+Nickname+' joined the IRC channel.');
+end;
+
+procedure OnIRCPart(Nickname : String);
+begin
+  SendTextToAll('* '+Nickname+' left the IRC channel.');
+end;
+
+procedure OnPlayerSpawn(PlayerID, SpawnID : Integer);
+var
+  Msg : String;
+begin
+  if (FirstSpawn[PlayerID]) Then
+  begin
+    FirstSpawn[PlayerID] := False;
+    if (IsPlayerAdmin(PlayerID)) Then
+      Msg := '* Admin '+ GetPlayerNick(PlayerID) +' joined the game and spawned on ID '+IntToStr(SpawnID)+' '
+    Else
+      Msg := '* '+ GetPlayerNick(PlayerID) +' joined the game and spawned on ID '+IntToStr(SpawnID);
+  end
+  Else
+  begin
+    if (IsPlayerAdmin(PlayerID)) Then
+      Msg := '* Admin '+ GetPlayerNick(PlayerID) +' spawned on ID '+IntToStr(SpawnID)
+    Else
+      Msg := '* '+ GetPlayerNick(PlayerID) +' spawned on ID '+IntToStr(SpawnID);
+  end;
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+  SetPlayerColor(PlayerID,1);
+  SetPlayerMoney(PlayerID, 10000);
+end;
+
+procedure OnPlayerStartGame(PlayerID : Integer);
+begin
+  FirstSpawn[PlayerID] := True;
+end;
+
+procedure OnPlayerExitGame(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+    Msg := '* Admin '+ GetPlayerNick(PlayerID) +' left the game'
+  Else
+    Msg := '* '+ GetPlayerNick(PlayerID) +' left the game';
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+procedure OnPlayerLeft(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+    Msg := '* Admin '+ GetPlayerNick(PlayerID) +' left the server'
+  Else
+    Msg := '* '+ GetPlayerNick(PlayerID) +' left the server';
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+procedure OnPlayerJoin(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+  begin
+    Msg := '* Admin '+ GetPlayerNick(PlayerID) +' joined the server';
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', you have been logged in with admin rights.');
+  end
+  Else
+  begin
+    Msg := '* '+ GetPlayerNick(PlayerID) +' joined the server';
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', welcome to this server.');
+  end;
+  SendTextToAllExceptPlayer(PlayerID, Msg);
+  IRCSay(Msg);
+  Log(Msg);
+end;
+
+procedure OnPlayerDeath(KillerID, PlayerID, ReasonID : Integer);
+var
+  Msg : String;
+begin
+  SetPlayerColor(PlayerID,-1);
+  If (KillerID = 0) or (ReasonID = 0) Then
+   begin
+    Msg := '* '+ GetPlayerNick(PlayerID) +' died';
+  end
+  Else 
+  begin
+    Msg := '* '+GetPlayerNick(KillerID)+' killed '+GetPlayerNick(PlayerID)+' ('+GetDeathReason(ReasonID)+')';
+  end
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+procedure Bomb();
+begin
+  CreateExplosion(BomX, BomY, BomZ); // BOOOOOOOOOOOOOOOOOOOOOOOOM!
+end;
+
+begin
+end.

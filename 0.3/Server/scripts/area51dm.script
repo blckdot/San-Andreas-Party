@@ -1,0 +1,349 @@
+Var
+  Kills : array[1..21] of Integer;
+  Deaths : array[1..21] of Integer;
+  Announce : String;
+  Clock : Integer;
+
+function GetScore(PlayerID : Integer): String;
+begin
+ result := IntToStr(Kills[PlayerID]-Deaths[PlayerID]);
+end;
+
+function GetScoreI(PlayerID : Integer): Integer;
+begin
+ result := Kills[PlayerID]-Deaths[PlayerID];
+end;
+
+function st(): Integer;
+var
+  i, Val : Integer;
+begin
+  Val := 0;
+  for i := 1 to 20 do
+  begin
+    If (IsPlayerConnected(i) = True) Then
+    Begin
+      If (GetScoreI(i) > Val) Then
+        Val := i; // Player ID hoogste score
+    End;
+  end;
+  result := Val;
+end;
+
+function nd(st : Integer): Integer;
+var
+  i, Val : Integer;
+begin
+  Val := 0;
+  for i := 1 to 20 do
+  begin
+    If (IsPlayerConnected(i) = True) and not (i = st) Then
+    Begin
+      If (GetScoreI(i) > Val) Then
+        Val := i; // Player ID 1na hoogste score
+    End;
+  end;
+  result := Val;
+end;
+
+function rd(st, nd : Integer): Integer;
+var
+  i, Val : Integer;
+begin
+  Val := 0;
+  for i := 1 to 20 do
+  begin
+    If (IsPlayerConnected(i) = True) and not (i = st) and not (i = nd) Then
+    Begin
+      If (GetScoreI(i) > Val) Then
+        Val := i; // Player ID 2na hoogste score
+    End;
+  end;
+  result := Val;
+end;
+
+
+
+
+function GetKills(PlayerID : Integer): String;
+begin
+ result := IntToStr(Kills[PlayerID]);
+end;
+
+function GetDeaths(PlayerID : Integer): String;
+begin
+ result := IntToStr(Deaths[PlayerID]);
+end;
+
+function IsPlayerIngame(PlayerID : Integer): boolean;
+begin
+ result := True;
+end;
+
+procedure SpawnVehicles();
+begin
+  CreateVehicle(448,222.169,1859.169,15.817,0.0,-1,-1);
+  CreateVehicle(448,219.541,1859.366,15.817,0.0,-1,-1);
+  CreateVehicle(448,217.480,1859.446,15.817,0.0,-1,-1);
+  CreateVehicle(448,215.736,1859.457,15.817,0.0,-1,-1);
+  CreateVehicle(448,213.974,1859.575,15.817,0.0,-1,-1);
+  
+  CreateVehicle(462,184.894,2085.763,22.319,0.0,-1,-1);
+  CreateVehicle(462,186.333,2085.922,22.319,0.0,-1,-1);
+  CreateVehicle(462,187.593,2086.011,22.319,0.0,-1,-1);
+end;
+
+procedure SpawnObjects();
+begin
+  CreateObject(972,93.229,1925.555,15.900,0.0,0.0,0.0);
+  CreateObject(972,341.675,1800.049,17.197,0.0,3.438,-56.723);
+  CreateObject(972,261.426,1795.768,21.212,90.241,-98.835,189.076);
+  CreateObject(972,254.239,1795.696,21.176,90.241,-98.835,189.076);
+  CreateObject(972,108.681,1806.665,19.538,90.241,-98.835,189.076);
+  CreateObject(972,111.550,1810.848,19.262,90.241,-98.835,279.317);
+  CreateObject(972,99.608,1902.064,27.120,90.241,-98.835,279.317);
+  CreateObject(972,99.627,1894.700,27.485,90.241,-98.835,279.317);
+  CreateObject(972,160.288,1944.710,27.956,90.241,-98.835,9.557);
+  CreateObject(972,167.799,1944.773,27.962,90.241,-98.835,9.557);
+  CreateObject(6052,263.425,1863.541,19.388,0.0,0.0,0.0);
+  CreateObject(6052,278.834,1861.985,24.288,0.0,0.859,97.976);
+  CreateObject(6052,294.253,1882.336,24.263,0.0,0.859,277.598);
+  CreateObject(6052,312.285,1880.235,19.138,0.0,0.0,188.217);
+  CreateObject(6052,310.258,1899.064,18.813,-1.719,0.859,281.036);
+  CreateObject(1443,158.833,1905.300,18.392,0.0,0.0,91.100);
+  CreateObject(1443,159.135,1901.769,18.397,0.0,0.0,85.944);
+  CreateObject(2773,219.575,1872.504,12.658,0.0,0.0,0.0);
+  CreateObject(978,214.269,1875.307,12.512,0.0,0.0,0.0);
+  CreateObject(3268,295.349,2023.795,16.641,0.0,0.0,0.0);
+  CreateObject(3743,279.568,1905.711,21.382,-6.875,-0.859,90.241);
+  CreateObject(3168,312.733,1844.590,16.995,0.0,0.0,118.602);
+  CreateObject(3168,313.631,1835.391,16.995,0.0,0.0,118.602);
+  CreateObject(3168,312.975,1816.233,18.270,0.0,91.100,44.691);
+  CreateObject(3243,261.844,1807.469,32.934,0.0,0.0,-103.132);
+  CreateObject(3243,112.928,1814.441,32.934,0.0,0.0,-103.132);
+  CreateObject(3243,103.259,1901.459,32.934,0.0,0.0,-103.132);
+  CreateObject(3243,161.879,1933.119,32.934,0.0,0.0,-103.132);
+  CreateObject(3243,233.432,1934.873,32.934,0.0,0.0,-103.132);
+  CreateObject(3243,266.846,1895.007,32.934,0.0,0.0,-103.132);
+  CreateObject(918,263.645,1898.568,29.426,0.0,0.0,0.0);
+  CreateObject(918,301.868,1891.277,22.451,0.0,0.0,0.0);
+  CreateObject(1225,258.468,1810.326,29.460,0.0,0.0,0.0);
+  CreateObject(1225,208.805,1875.337,12.553,0.0,0.0,0.0);
+  CreateObject(1225,209.779,1874.077,12.553,0.0,0.0,0.0);
+end;
+
+procedure SpawnPickups();
+begin
+  // none
+end;
+
+procedure TimerRun();
+var 
+  i : integer;
+  Reset : Integer;
+  FirstScore, FirstName, SecondScore, SecondName, ThirdScore, ThirdName : String;
+  FirstID, SecondID, ThirdID : Integer;
+begin
+  Clock := Clock - 1;
+  If (Clock = -1) Then
+  Begin
+  	FirstScore := '--';
+  	FirstName := '------';
+    SecondScore := '--';
+    SecondName := '------';
+    ThirdScore := '--';
+    ThirdName := '------';
+    FirstID := st();
+    If (FirstID > 0) Then
+    Begin
+      FirstScore := GetScore(FirstID);
+    	FirstName := GetPlayerNick(FirstID);
+     	SecondID := nd(FirstID);
+     	If (SecondID > 0) Then
+		  Begin
+     		SecondScore := GetScore(SecondID);
+     		SecondName := GetPlayerNick(SecondID);
+    		ThirdID := rd(FirstID,SecondID);
+    		If (ThirdID > 0) Then
+    		Begin
+    			ThirdScore := GetScore(ThirdID);
+    			ThirdName := GetPlayerNick(ThirdID);
+		    End
+		  End
+	  End   
+    DisplayTextAll(5, ' ~n~ ~n~1. '+FirstName+' ('+FirstScore+') ~n~2. '+SecondName+' ('+SecondScore+') ~n~3. '+ThirdName+' ('+ThirdScore+')', 6000);
+    //KillPlayer(i);
+  	For i := 1 To 20 Do
+  	Begin
+      Kills[i] := 0;
+      Deaths[i] := 0;
+    End;
+    Clock := 30;
+  End
+  Else
+  Begin
+    For i := 1 To 20 Do
+    Begin
+      If (IsPlayerIngame(i) = True) Then
+        DisplayTextPlayer(i,5, ' ~n~ ~n~ ~n~ ~n~ ~n~ ~n~ ~n~ '+Announce+' ~n~ ~n~ ~r~Score: ~w~'+GetScore(i)+'~n~~r~Ratio: ~w~'+GetKills(i)+'~r~/~w~'+GetDeaths(i), 6000);
+    End;
+  End;
+  Announce := '';
+  Timer(4, 'TimerRun');
+end;
+
+procedure SpawnPoints();
+begin
+  //SetWeapon(8); // Katana
+  //SetWeapon(22); // Colt
+  //SetWeapon(25);  // Shotgun 
+  //SetWeapon(31); // M4
+  //SetWeapon(18); // Molotov
+  CreateSpawn(100.819183, 1921.233032, 17.282516,0.0);
+  CreateSpawn(269.170013, 2036.176392, 16.640625,0.0);
+  CreateSpawn(277.850281, 1861.424072, 7.757813,0.0);
+  CreateSpawn(211.720825, 1812.437622, 20.867188,0.0);
+end;
+
+procedure OnUserCommand(PlayerID : Integer; Cmd : String);
+var
+  Tmp, Comm : String;
+begin
+  Comm := CopyBefore(Cmd, ' ');
+  if(Comm = '/me') Then
+  begin
+    Tmp := CopyAfter(Cmd, ' ');
+    If (Tmp = '') Then
+    begin
+      SendTextToPlayer(PlayerID, '*** Syntax: /me <action>');
+    end
+    Else
+    begin
+      SendTextToAll('** '+GetPlayerNick(PlayerID)+' '+Tmp);
+    end
+  end
+end;
+
+procedure OnPlayerSpawn(PID, SID : Integer);
+begin
+  GivePlayerWeapon(PID,22);
+  GivePlayerWeapon(PID,25);
+  GivePlayerWeapon(PID,31);
+  GivePlayerWeapon(PID,18);
+end;
+
+procedure OnAdminCommand(PlayerID : Integer; Cmd : String);
+var
+  Comm, Tmp, Tmp2 : String;
+  Tmp3 : Integer;
+begin
+  Comm := CopyBefore(Cmd, ' ');
+  if(IsPlayerAdmin(PlayerID) = True) Then
+  begin
+    if(Comm = '/kick') Then
+    begin
+      Tmp := CopyAfter(Cmd, ' ');
+      Tmp3 := GetPlayerID(Tmp);
+      if (Tmp3 = 0) Then
+      begin
+        SendTextToPlayer(PlayerID, 'Player not found');
+      end
+      Else
+      begin
+        Tmp2 := GetPlayerNick(PlayerID);
+        KickPlayer(Tmp3);
+        SendTextToAll('* Player '+Tmp+' has been kicked by admin '+Tmp2+'.');
+      end
+    end
+    Else if(Comm = '/ban') Then
+    begin
+      Tmp := CopyAfter(Cmd, ' ');
+      Tmp3 := GetPlayerID(Tmp);
+      if (Tmp3 = 0) Then
+      begin
+        SendTextToPlayer(PlayerID, 'Player not found');
+      end
+      Else
+      begin
+        Tmp2 := GetPlayerNick(PlayerID);
+        BanPlayer(Tmp3);
+        SendTextToAll('* Player '+Tmp+' has been banned by admin '+Tmp2+'.');
+      end
+    end
+    Else if(Comm = '/ann') Then
+    begin
+      Tmp := CopyAfter(Cmd, ' ');
+      If (Tmp = '') Then
+      begin
+        SendTextToPlayer(PlayerID, '*** Syntax: /ann <message>');
+      end
+      Else
+      begin
+        Announce := Tmp;
+      end
+    end
+  end
+end;
+
+procedure OnStart();
+begin
+  SpawnPoints();
+  //Debug('* Spawnpoints loaded!');
+  SpawnVehicles();
+  //Debug('* Vehicles loaded!');
+  SpawnObjects();
+  //Debug('* Objects loaded!');
+  SpawnPickups();
+  //Debug('* Pickups loaded!');
+  Timer(4, 'TimerRun');
+  Clock := 30; // 180
+  Log('* Gamemode started! Ready for players!');
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Cmd : String);
+begin
+  OnAdminCommand(PlayerID, Cmd);
+  OnUserCommand(PlayerID, Cmd);
+end;
+
+procedure OnPlayerStartGame(PlayerID : Integer);
+begin
+  SendTextToAll('Player '+GetPlayerNick(PlayerID)+' joined the arena!');
+end;
+
+procedure OnPlayerExitGame(PlayerID : Integer);
+begin
+  SendTextToAll('Player '+GetPlayerNick(PlayerID)+' left the arena!');
+end;
+
+
+procedure OnPlayerDeath(KillerID, PlayerID, ReasonID : Integer);
+begin
+  If (KillerID = 0) or (ReasonID = 0) Then
+   begin
+    SendTextToAll('- '+ GetPlayerNick(PlayerID) +' died');
+    Deaths[PlayerID] := Deaths[PlayerID]+1;
+  end
+  Else 
+  begin
+    SendTextToAll('- '+GetPlayerNick(KillerID)+' killed '+GetPlayerNick(PlayerID)+' ('+GetDeathReason(ReasonID)+')');
+    Deaths[PlayerID] := Deaths[PlayerID]+1;
+    Kills[KillerID] := Kills[KillerID]+1;
+  end
+end;
+
+procedure OnPlayerLeft(PlayerID : Integer);
+begin
+  Kills[PlayerID] := 0;
+  Deaths[PlayerID] := 0;
+end;
+
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  Kills[PlayerID] := 0;
+  Deaths[PlayerID] := 0;
+end;
+
+
+begin
+end.

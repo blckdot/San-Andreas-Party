@@ -1,0 +1,425 @@
+procedure OnStart();
+begin
+  //SetWeapon(27,351);
+  //SetWeapon(34,358);
+  //SetWeapon(27,351); // Shotgun (SPAS-12)
+  //SetWeapon(35,359); // Rocket Launcher
+  SetWeapon(29,353); // MP5
+  CreateSpawn(0.0,0.0,5.0,0.0);
+  CreateSpawn(-143.87300 , 1177.88000 , 18.79880 , 0.0);
+CreateVehicle(520,1061.25,-302.862,73.9922,177.736);
+CreateVehicle(520,1071.8,-303.593,73.9922,178.604);
+CreateVehicle(520,1082.84,-302.937,73.9922,177.109);
+CreateVehicle(596,1528.84,-1683.76,5.855,271.248);
+CreateVehicle(523,1548.06,-1681.08,13.5158,92.8382);
+CreateVehicle(523,-2178.29,-2364.07,30.3507,140.693);
+CreateVehicle(523,615.322,-588.26,17.2329,268.889);
+CreateVehicle(597,-1574.31,706.077,-5.5169,270.856);
+CreateVehicle(597,-1639.05,654.025,-5.5169,93.25);
+CreateVehicle(523,-1612.66,732.933,-5.5166,15.0322);
+CreateVehicle(497,-1680.38,705.179,30.6016,82.7294);
+CreateVehicle(598,-1400.4,2631.31,55.4795,90.4317);
+CreateVehicle(523,-1400.91,2644,55.4113,270.74);
+CreateVehicle(598,2273.86,2459.68,10.5457,0.0952);
+CreateVehicle(523,2293.85,2426.57,10.5419,176.253);
+CreateVehicle(598,2268.23,2474.33,2.9993,0.0689);
+CreateVehicle(597,-1582.13,651.683,6.9102,356.24);
+CreateVehicle(523,2255.74,2477.22,10.8203,173.564);
+CreateVehicle(598,2291.2,2443.13,10.8203,355.299);
+CreateVehicle(601,2312.28,2431.83,3.2734,177.793);
+CreateVehicle(601,-1574.18,722.425,-5.2421,266.271);
+CreateVehicle(492,2510.15,-1669.57,13.1669,178.719);
+CreateVehicle(412,2480.69,-1749.33,13.2712,181.005);
+CreateVehicle(481,2235.21,-1723.6,13.2777,271.4);
+CreateVehicle(567,2296.3,-1630.49,14.4393,357.682);
+CreateVehicle(600,2159.35,-1805.51,13.103,89.1969);
+CreateVehicle(448,2096.97,-1794.98,13.1132,175.68);
+CreateVehicle(412,2265.6,-1889.22,13.1402,270.685);
+CreateVehicle(422,2306.16,-1990.82,13.2834,359.209);
+CreateVehicle(550,2654.03,-1440.14,30.1935,35.3287);
+CreateVehicle(531,2333.33,-1040.43,52.2759,90.01);
+CreateVehicle(410,2026.87,-1130.57,24.377,90.8384);
+CreateVehicle(492,1935.45,-1118.38,26.2059,355.833);
+CreateVehicle(422,1676.02,-1106.87,23.6308,268.869);
+CreateVehicle(492,1766.55,-1069.99,23.6853,359.438);
+CreateVehicle(496,1935.6,-1073.42,24.2296,350.709);
+CreateVehicle(412,2149.13,-1250.97,24.8052,178.495);
+CreateVehicle(420,2160.84,-1187.45,23.6299,267.762);
+CreateVehicle(541,2915.71,-878.332,10.857,182.57);
+CreateVehicle(416,2032.55,-1446.17,17.2254,95.5725);
+CreateVehicle(492,1292.37,-1644.1,13.1862,176.785);
+CreateVehicle(541,1263.32,-2012.14,59.0507,1.3726);
+CreateVehicle(567,2684.9,-2019.24,13.2627,179.684);
+CreateVehicle(593,1908.31,-2298.58,13.2695,277.974);
+CreateVehicle(519,1632.81,-2452.67,13.282,183.952);
+CreateVehicle(485,1932.36,-2637.4,13.2694,331.979);
+CreateVehicle(485,2143.01,-2428.61,13.2735,131.909);
+CreateVehicle(454,2715.7,-2311.2,0.0012,269.305);
+CreateVehicle(420,1084.53,-1757.86,13.345,89.4026);
+CreateVehicle(424,462.957,-1773.79,5.549,85.9681);
+CreateVehicle(496,166.38,-1342.32,69.608,1.0253);
+CreateVehicle(480,688.788,-1074.68,49.417,241.953);
+CreateVehicle(445,860.361,-848.717,77.2438,25.4181);
+CreateVehicle(424,1254.18,-804.57,84.1406,178.821);
+CreateVehicle(469,1291.6,-788.1,96.4608,177.098);
+CreateVehicle(487,1545.12,-1353.1,330.192,269.04);
+CreateVehicle(539,719.5,-1636.9,-0.7429,184.186);
+CreateVehicle(522,1081.42,-1289,13.2737,91.7221);
+CreateVehicle(407,1750.13,-1453.09,13.5468,265.24);
+CreateVehicle(416,1177.96,-1308.88,13.8198,266.645);
+CreateVehicle(516,499.575,-1463.87,17.8236,145.99);
+CreateVehicle(410,2254.82,-117.605,26.6735,180.517);
+CreateVehicle(478,2446.05,11.4639,26.2101,89.5745);
+CreateVehicle(473,2098.44,-108.275,-0.4833,35.4944);
+CreateVehicle(468,1290.54,139.045,20.1847,128.979);
+CreateVehicle(531,-79.0131,74.4096,2.8408,154.277);
+CreateVehicle(478,287.862,-54.2235,1.3013,359.944);
+CreateVehicle(600,-1006.82,-666.586,32.0078,270.19);
+CreateVehicle(531,-285.084,-1398.76,11.7356,47.3577);
+CreateVehicle(468,-1530.24,-2751.32,48.5391,348.666);
+CreateVehicle(468,-2042.02,-2528.28,30.625,186.199);
+CreateVehicle(541,887.805,-24.513,63.2448,147.831);
+CreateVehicle(496,1110.05,-307.078,73.9922,88.1453);
+CreateVehicle(478,687.652,-556.643,16.3358,356.842);
+CreateVehicle(407,795.084,-609.025,16.3358,271.104);
+CreateVehicle(510,-2264.72,-1688.67,480.824,219.434);
+CreateVehicle(593,-1368.24,-488.457,14.8884,239.255);
+CreateVehicle(593,-1434.97,-522.767,14.9048,180.185);
+CreateVehicle(487,-1269.06,-610.526,14.8816,276.208);
+CreateVehicle(519,-1330.46,-212.371,14.8732,323.619);
+CreateVehicle(519,-1685.15,-284.726,14.8781,314.734);
+CreateVehicle(522,-1687.52,87.047,3.5546,314.476);
+CreateVehicle(530,-1699.7,6.7885,3.2778,351.477);
+CreateVehicle(473,-1413.27,285.942,-0.5856,258.302);
+CreateVehicle(516,-2218.35,292.706,35.1171,359.739);
+CreateVehicle(407,-2040.66,56.5033,28.1156,268.311);
+CreateVehicle(496,-2224.47,-75.5843,34.9651,92.0934);
+CreateVehicle(457,-2660.04,-289.602,7.1833,314.803);
+CreateVehicle(550,-2773.83,-312.569,6.7638,181.867);
+CreateVehicle(457,-2292.07,-299.697,55.4739,52.0433);
+CreateVehicle(410,-2483.67,418.808,27.506,318.513);
+CreateVehicle(600,-2754.65,399.573,3.953,2.6098);
+CreateVehicle(600,-2839.11,925.464,43.7799,93.765);
+CreateVehicle(409,-2630.7,1376.53,6.8524,2.8462);
+CreateVehicle(567,-2643.7,1334.53,6.9015,1.3679);
+CreateVehicle(493,-1719.13,1436.75,-0.312,348.777);
+CreateVehicle(480,-1637.29,1297.03,6.7592,313.34);
+CreateVehicle(454,-1571.12,1262.66,-0.7702,267.76);
+CreateVehicle(541,-1696.45,938.619,24.5361,91.9008);
+CreateVehicle(550,-1996.52,776.997,45.0951,179.131);
+CreateVehicle(445,-2124.69,650.252,52.0914,89.9243);
+CreateVehicle(541,-2214.47,496.806,34.897,127.678);
+CreateVehicle(496,-2151.7,960.653,79.6481,1.5289);
+CreateVehicle(480,-2041.25,1185.9,45.0914,269.775);
+CreateVehicle(444,-1773.62,1203.15,24.8493,87.5419);
+CreateVehicle(522,-2432.03,953.219,45.0211,102.513);
+CreateVehicle(445,-2407.94,741.406,34.7402,1.7723);
+CreateVehicle(416,-2632.88,623.35,14.1772,173.208);
+CreateVehicle(541,-2471.42,1138.32,55.4523,0.5278);
+CreateVehicle(480,-2539.31,938.953,64.1715,92.382);
+CreateVehicle(496,-2599.16,-7.0974,3.9767,178.781);
+CreateVehicle(480,-2717.9,-124.297,4.0626,88.9998);
+CreateVehicle(473,-2947.59,511.54,-0.5803,86.0195);
+CreateVehicle(454,-2983.32,499.583,-0.8123,1.1054);
+CreateVehicle(480,-2463.4,477.3,29.8234,295.189);
+CreateVehicle(437,-2382.12,-590.107,132.84,304.092);
+CreateVehicle(480,-2134.78,-950.052,32.0233,265.018);
+CreateVehicle(470,-1330.15,446.285,7.1875,358.148);
+CreateVehicle(410,-2628.1,2266.55,7.8927,2.6689);
+CreateVehicle(493,-2609.13,2225.44,-0.5723,232.93);
+CreateVehicle(541,-2520.29,2336.05,4.63,271.252);
+CreateVehicle(469,-2227.91,2326.77,7.5468,182.066);
+CreateVehicle(473,-2237.38,2397.36,-0.4117,44.535);
+CreateVehicle(454,-2242.31,2437.38,-0.6392,219.04);
+CreateVehicle(454,-2322.17,2314.29,-0.5526,177.887);
+CreateVehicle(468,-2455.06,2490.38,15.8871,154.895);
+CreateVehicle(463,-1929.57,2367.92,49.1666,110.933);
+CreateVehicle(539,-2069.34,2366.23,-0.7091,60.5884);
+CreateVehicle(468,-768.284,1604.5,26.8425,269.581);
+CreateVehicle(478,-823.419,1543.45,26.8395,93.4548);
+CreateVehicle(444,-685.988,953.639,11.8633,268.973);
+CreateVehicle(473,-638.277,861.833,-0.5018,311.968);
+CreateVehicle(478,-1542.29,2689.78,55.5606,358.321);
+CreateVehicle(416,-1519.55,2525.83,55.4155,0.2151);
+CreateVehicle(539,-899.719,2702.14,42.1242,117.571);
+CreateVehicle(496,-222.997,2595.14,62.4289,178.415);
+CreateVehicle(468,-195.373,2774.57,61.6031,269.246);
+CreateVehicle(420,-520.685,2574.6,53.1394,89.5901);
+CreateVehicle(478,-520.332,2612.47,53.138,270.493);
+CreateVehicle(468,616.101,1661.33,6.7158,61.9085);
+CreateVehicle(600,711.343,1946.34,5.2631,358.774);
+CreateVehicle(478,-1.6419,1119.56,19.4827,359.586);
+CreateVehicle(468,-215.903,1214.33,19.4671,4.9713);
+CreateVehicle(416,-333.378,1062.81,19.4647,270.062);
+CreateVehicle(424,-96.736,1220.9,19.4629,0.5752);
+CreateVehicle(478,-85.1764,1339.45,10.5178,11.4264);
+CreateVehicle(424,-17.3791,2355.81,23.8568,178.252);
+CreateVehicle(493,-630.759,1808.42,-0.5388,157.071);
+CreateVehicle(473,-425.655,1161.82,-0.5027,183.319);
+CreateVehicle(410,-291.416,1312.68,53.9017,262.95);
+CreateVehicle(468,-330.292,1514.28,75.0792,359.031);
+CreateVehicle(468,838.87,871.25,13.024,143.62);
+CreateVehicle(470,276.704,2024.02,17.6406,269.343);
+CreateVehicle(593,326.686,2543.84,16.8069,177.129);
+CreateVehicle(487,386.102,2540.59,16.5391,176.816);
+CreateVehicle(463,419.453,2533.24,16.5757,85.3448);
+CreateVehicle(493,2293.31,513.749,-0.5109,90.0119);
+CreateVehicle(493,2358.64,517.076,-0.6687,269.217);
+CreateVehicle(600,2249.08,695.919,11.0768,181.5);
+CreateVehicle(445,2084.52,692.081,11.1756,0.5917);
+CreateVehicle(473,1627.01,571.104,-0.5799,263.835);
+CreateVehicle(496,1412.98,765.519,10.5433,88.7869);
+CreateVehicle(415,1059.45,1050.61,10.0012,310.678);
+CreateVehicle(410,2648.51,734.346,10.5459,272.603);
+CreateVehicle(567,2394.01,988.898,10.5432,91.6232);
+CreateVehicle(541,1881.94,960.28,10.546,88.9786);
+CreateVehicle(522,1882.25,1064.08,10.5429,87.5613);
+CreateVehicle(530,1725.86,909.916,10.546,0.5246);
+CreateVehicle(492,1379.29,1038.46,10.5445,90.6016);
+CreateVehicle(480,2037.48,1181.18,10.4693,359.194);
+CreateVehicle(496,1868.13,1445.15,10.5452,85.932);
+CreateVehicle(485,1651.41,1535.73,10.5022,1.9816);
+CreateVehicle(593,1277.4,1323.33,10.544,270.157);
+CreateVehicle(593,1280.32,1361.23,10.5448,271.62);
+CreateVehicle(593,1319.41,1469.2,10.544,232.152);
+CreateVehicle(519,1341.82,1684.35,10.5441,268.757);
+CreateVehicle(487,1339.91,1787.81,10.5451,268.574);
+CreateVehicle(522,1154.78,1365.39,10.5111,93.5964);
+CreateVehicle(541,1025.64,1755.93,10.543,92.2317);
+CreateVehicle(410,989.721,2037.87,11.1086,94.3895);
+CreateVehicle(541,1114.24,2306.92,16.7187,263.046);
+CreateVehicle(463,1272.7,2603.04,10.5497,180.308);
+CreateVehicle(457,1422.33,2830.36,10.5454,89.4004);
+CreateVehicle(457,1469.32,2878.85,10.5459,358.978);
+CreateVehicle(445,1664.08,2811.04,10.5445,2.0118);
+CreateVehicle(480,1725.65,2701.54,10.5468,180.523);
+CreateVehicle(468,1887.82,2785.45,10.5591,134.965);
+CreateVehicle(448,2141.93,2799.38,10.5457,91.0915);
+CreateVehicle(470,2541.42,2747.46,10.8203,179.863);
+CreateVehicle(448,2756.27,2468.5,10.5982,25.3064);
+CreateVehicle(420,2840.82,2345.71,10.5466,269.099);
+CreateVehicle(541,2834.66,2026.82,10.5441,358.248);
+CreateVehicle(448,2783.76,1457.99,10.5579,236.266);
+CreateVehicle(550,2831.77,1268.89,10.4977,88.347);
+CreateVehicle(496,2602.28,1217.47,10.4699,181.051);
+CreateVehicle(480,2448.4,1067.75,10.4665,92.4998);
+CreateVehicle(409,2074.63,1156.79,10.3965,176.8);
+CreateVehicle(480,2038.19,1341.53,10.468,359.958);
+CreateVehicle(600,1690.73,2053.19,11.078,91.6636);
+CreateVehicle(541,1684.86,2203.05,10.5436,175.735);
+CreateVehicle(550,1901.48,2158.86,10.5467,180.314);
+CreateVehicle(416,1592.15,1820.22,10.543,2.6582);
+CreateVehicle(480,2102.72,2095.3,10.5431,269.806);
+CreateVehicle(448,2104.57,2207.26,10.5466,183.758);
+CreateVehicle(445,1980.61,2446.32,10.5452,86.2941);
+CreateVehicle(541,2104.64,2393.32,14.8409,89.5029);
+CreateVehicle(487,2093.25,2415.09,74.5785,89.4276);
+CreateVehicle(541,2360.84,2180.28,10.4363,179.077);
+CreateVehicle(409,2132.54,1813.89,10.4661,155.321);
+CreateVehicle(480,2295.74,1517.5,16.9433,358.668);
+CreateVehicle(481,1854.91,2344.11,10.9799,266.248);
+CreateVehicle(415,1967.2,2262.83,14.9841,357.718);
+CreateVehicle(415,2162.77,779.168,11.3128,265.864);
+CreateVehicle(516,2172.87,1029.13,10.8203,83.8158);
+CreateVehicle(516,1980.45,1750.32,18.9339,356.418);
+CreateVehicle(516,2490.91,1991.92,10.8203,170.954);
+CreateVehicle(516,1509.08,2077.84,10.8203,87.9899);
+CreateVehicle(448,2630.74,1852.28,10.8203,267.63);
+CreateVehicle(510,2633.96,1826.88,11.0234,171.122);
+CreateVehicle(480,2542.43,1677.61,10.6718,359.1);
+CreateVehicle(496,2374.68,1708.35,10.6718,90.9079);
+CreateVehicle(541,1634.39,2243.78,10.5426,178.072);
+CreateVehicle(445,1358.12,2279.95,10.5657,90.2421);
+CreateVehicle(412,-741.952,2750.02,46.9576,359.866);
+CreateVehicle(493,-1123.46,2819.73,40.068,94.8598);
+CreateVehicle(600,-1671.85,2494.4,86.8473,277.433);
+CreateVehicle(473,-2228.14,2405.16,-0.66,38.6041);
+CreateVehicle(437,-1987.63,950.278,45.1691,180.632);
+CreateVehicle(473,-1476.56,689.302,-0.7059,180.863);
+CreateVehicle(473,-1631.86,160.747,-0.4618,322.027);
+CreateVehicle(541,-1816.33,-191.229,13.3002,266.079);
+CreateVehicle(485,-1357.4,-396.936,13.8708,261.536);
+CreateVehicle(420,-2063.93,-84.6214,35.1641,0.0148);
+CreateVehicle(416,-2208.27,-2300.78,30.3497,320.465);
+CreateVehicle(448,382.574,-1928.44,7.8358,84.2988);
+CreateVehicle(481,362.471,-2042.15,7.8358,340.44);
+CreateVehicle(412,343.027,-1524.27,33.0133,320.885);
+CreateVehicle(487,834.767,-1211.71,16.7003,270.478);
+CreateVehicle(457,868.79,-1248.36,14.7024,288.67);
+CreateVehicle(541,1129.14,-1136.22,23.4619,271.651);
+CreateVehicle(522,2458.56,-1319.26,23.7268,178.97);
+CreateVehicle(567,2297.6,-2115.83,13.3245,225.617);
+CreateVehicle(496,2762.69,-2510.21,13.3705,81.7128);
+CreateVehicle(473,2512.68,-2269.27,-0.4386,93.917);
+CreateVehicle(480,1545.62,16.5086,23.8595,276.417);
+CreateVehicle(478,2318.95,96.8788,26.134,270.535);
+CreateVehicle(437,2779.44,-2015.77,14.2763,0.818);
+CreateVehicle(558,-2797.4,97.2642,6.8176,90.7276);
+CreateVehicle(558,-2599.67,-31.1774,3.8803,175.577);
+CreateVehicle(561,-2665.06,911.096,79.4845,178.822);
+CreateVehicle(561,-2568.31,626.539,27.6203,181.639);
+CreateVehicle(468,2075.25,99.2231,27.6303,257.916);
+// L00PINGS
+CreateObject( 13592 , -230.68947 , -4.21673 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13592 , -231.8 , -11.6167 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13592 , -234.01 , -26.345 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13592 , -232.9 , -18.945 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13592 , -229.531578455 , 3.15386875153 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13592 , -228.421578455 , 10.5538687515 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13592 , -227.321578455 , 17.8821687515 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13592 , -226.211048455 , 25.2821387515 , 11.8 , 0.0 , 0.0 , 0.0 );
+CreateObject( 13641 , -206.674789429 , 80.4033889771 , 3.5234375 , 0.0 , 0.0 , 0.0 );
+CreateObject( 3461 , -194.017 , 80.89 , 5.75 , 0.0 , 0.0 , 0.0 );
+CreateObject( 3461 , -194.017 , 81.49 , 5.75 , 0.0 , 0.0 , 0.0 );
+CreateObject( 3461 , -194.017 , 80.39 , 5.75 , 0.0 , 0.0 , 0.0 );
+end;
+
+procedure OnPlayerText(PlayerID : Integer; Message : String);
+var
+  PosX, PosY, PosZ : Single;
+  Tmp : String;
+  Val, i : Integer;
+begin
+  If (Message = '!teleports') Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** TELEPORTS > LS: !ls - SF: !sf - LV: !lv - SA: !sa');
+    SendTextToPlayer(PlayerID,'*** TELEPORTS > Liberty City: !lc - Rusty Browns Ring Donatus: !rusty');
+    SendTextToPlayer(PlayerID,'*** TELEPORTS > Marco''s place: !mp - Jail: !jail');
+  End
+  Else If (Message = '!ls') Then
+  Begin
+    SetPlayerInterior(PlayerID,0);
+    SetPlayerPos(PlayerID, 1551.484619, -1675.477905, 15.869174);
+    SendTextToPlayer(PlayerID,'*** Welcome in Los Santos!');
+    DisplayTextPlayer(PlayerID,4,'Los Santos',5000);
+  End
+  Else If (Message = '!sf') Then
+  Begin
+    SetPlayerInterior(PlayerID,0);
+    SetPlayerPos(PlayerID, -1605.517822, 711.905944, 13.867187);
+    SendTextToPlayer(PlayerID,'*** Welcome in San Fierro!');
+    DisplayTextPlayer(PlayerID,4,'San Fierro',5000);
+  End
+  Else If (Message = '!lv') Then
+  Begin
+    SetPlayerInterior(PlayerID,0);
+    SetPlayerPos(PlayerID, 2286.961914, 2429.110839, 10.820312);
+    SendTextToPlayer(PlayerID,'*** Welcome in Las Venturas!');
+    DisplayTextPlayer(PlayerID,4,'Las Venturas',5000);
+  End
+  Else If (Message = '!mp') Then
+  Begin
+    SetPlayerInterior(PlayerID,1);
+    SetPlayerPos(PlayerID, -785.191100, 497.430400, 1376.195000);
+    SendTextToPlayer(PlayerID,'*** Welcome to Marcos Place!');
+    DisplayTextPlayer(PlayerID,4,'Marcos Place',5000);
+  End
+  Else If (Message = '!rusty') Then
+  Begin
+    //SetPlayerInterior(PlayerID,1);
+    //SetPlayerPos(PlayerID, -785.191100, 497.430400, 1376.195000);
+    //SendTextToPlayer(PlayerID,'*** Welcome to Marcos Place!');
+    //DisplayTextPlayer(PlayerID,4,'Marcos Place',5000);
+    SetPlayerInterior(PlayerID,4);
+    SetPlayerPos(PlayerID, 458.2928, -89.69732, 999.5547);
+    SendTextToPlayer(PlayerID,'*** Welcome to Rusty Browns Ring Donuts!');
+    DisplayTextPlayer(PlayerID,4,'Rusty Browns Ring Donuts',7000);
+  End
+  Else If (Message = '!lc') Then
+  Begin
+    SetPlayerInterior(PlayerID,1);
+    SetPlayerPos(PlayerID, -783.2614, 503.1347, 1381.6);
+    SendTextToPlayer(PlayerID,'*** Welcome in Liberty City!');
+    DisplayTextPlayer(PlayerID,4,'Liberty City',5000);
+  End
+  Else If (Message = '!sa') Then
+  Begin
+    SetPlayerPos(PlayerID, 0.0, 0.0, 5.0);
+    SetPlayerInterior(PlayerID,0);
+    SendTextToPlayer(PlayerID,'*** Welcome in San Andreas!');
+    DisplayTextPlayer(PlayerID,4,'San Andreas',5000);
+  End
+  Else If (Message = '!money') Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** You got $'+ IntToStr(GetPlayerMoney(PlayerID)));
+  End
+  Else If (CopyBefore(Message,' ') = '!setmoney') Then
+  Begin
+    Tmp := CopyAfter(Message,' ');
+    SetPlayerMoney(PlayerID,StrToInt(Tmp));
+    SendTextToPlayer(PlayerID,'*** You got now $'+ Tmp +' in your pocket!');
+  End
+  Else If (Message = '!freeze') Then
+  Begin
+    SetPlayerFreeze(PlayerID,True);
+  End
+  Else If (Message = '!unfreeze') Then
+  Begin
+    SetPlayerFreeze(PlayerID,False);
+  End
+{  Else If (Message = '!haybale') Then
+  Begin
+    PosX := GetPlayerPosX(PlayerID);
+    PosY := GetPlayerPosY(PlayerID);
+    PosZ := GetPlayerPosZ(PlayerID);
+    CreateObject(3374,PosX,PosY,PosZ,0.0,0.0,0.0);
+    PosZ := PosZ + 5.0;
+    SetPlayerPos(PlayerID,PosX,PosY,PosZ);
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' spawned a haybale!');
+  End}
+  Else If (CopyBefore(Message,' ') =  '!teleport') Then
+  Begin
+    Tmp := CopyAfter(Tmp,' ');
+    i := GetPlayerID(Tmp);
+    PosX := GetPlayerPosX(i);
+    PosY := GetPlayerPosY(i);
+    PosZ := GetPlayerPosZ(i);
+    PosZ := PosZ + 5.0;
+    SetPlayerPos(PlayerID,PosX,PosY,PosZ);
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' teleported to '+ Message);
+  End
+  Else If (CopyBefore(Message,' ') = '!spawn') Then
+  Begin
+    Tmp := CopyAfter(Message,' ');
+    PosX := GetPlayerPosX(PlayerID);
+    PosY := GetPlayerPosY(PlayerID);
+    PosZ := GetPlayerPosZ(PlayerID);
+    PosX := PosX + 5.0;
+    PosZ := PosZ + 2.5;
+    Val := StrToInt(Tmp);
+    CreateVehicle(Val,PosX,PosY,PosZ,0.0);
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' spawned a '+ Tmp);
+  End;
+end;
+
+procedure OnPlayerStartGame(PlayerID : Integer);
+begin
+  SendTextToAll('* '+ GetPlayerNick(PlayerID) +' joined the game');
+end;
+
+procedure OnPlayerExitGame(PlayerID : Integer);
+begin
+  SendTextToAll('* '+ GetPlayerNick(PlayerID) +' left the game');
+end;
+
+procedure OnPlayerLeft(PlayerID : Integer);
+begin
+  SendTextToAll('* '+ GetPlayerNick(PlayerID) +' left the server');
+end;
+
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  SendTextToAll('* '+ GetPlayerNick(PlayerID) +' joined the server');
+  SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', welcome to this server.');
+end;
+
+procedure OnPlayerDeath(KillerID, PlayerID, ReasonID : Integer);
+begin
+  If (KillerID = 0) or (ReasonID = 0) Then
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' died')
+  Else
+    SendTextToAll('* '+ GetPlayerNick(KillerID) +' killed '+ GetPlayerNick(PlayerID) +' ('+ GetDeathReason(ReasonID) +')');
+end;
+
+begin
+end.

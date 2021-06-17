@@ -1,0 +1,564 @@
+type
+  TSplitArray = array [0 .. 100] of String;
+ 
+var
+  NeedSpawn : array[0 .. 32] of Boolean;
+ 
+ 
+ 
+function Split(const Source, Delimiter: String): TSplitArray;
+var
+  iCount:     Integer;
+  iPos:       Integer;
+  iLength:    Integer;
+  sTemp:      String;
+  aSplit:     TSplitArray;
+begin
+  sTemp   := Source;
+  iCount  := 0;
+  iLength := Length(Delimiter) - 1;
+  repeat
+    iPos := Pos(Delimiter, sTemp);
+     if iPos = 0 then
+      break
+    else begin
+      iCount := iCount+1;
+      aSplit[iCount - 1] := Copy(sTemp, 1, iPos - 1);
+      Delete(sTemp, 1, iPos + iLength);
+    end;
+  until False;
+  if Length(sTemp) > 0 then begin
+    iCount := iCount+1;
+    aSplit[iCount - 1] := sTemp;
+  end;
+  Result := aSplit;
+end;
+ 
+ 
+procedure OnServerStart();
+begin
+CreateVehicle(598,2273.5850,2476.0164,10.5666,179.7722,0,1); // policelv
+CreateVehicle(598,2273.5200,2459.7810,10.5670,179.7728,0,1); // policelv
+CreateVehicle(598,2273.5339,2444.2720,10.5655,359.8781,0,1); // policelv
+CreateVehicle(598,2256.3867,2444.3025,10.5676,0.1155,0,1); // policelv
+CreateVehicle(598,2256.0635,2476.7126,10.5666,179.0930,0,1); // policelv
+CreateVehicle(598,2255.7927,2459.5947,10.5668,179.0931,0,1); // policelv
+CreateVehicle(598,2242.3677,2440.8579,10.5670,7.2962,0,1); // policelv
+CreateVehicle(598,2243.3521,2479.4321,10.5661,176.8264,0,1); // policelv
+CreateVehicle(407,1751.1761,2075.2273,11.0561,180.1348,3,1); // feuerwehrlv
+CreateVehicle(407,1757.0912,2072.8000,11.0560,179.4120,3,1); // feuerwehrlv
+CreateVehicle(407,1763.6489,2073.7725,11.0541,181.4727,3,1); // feuerwehrlv
+CreateVehicle(407,1769.9983,2073.7668,11.0562,180.5995,3,1); // feuerwehrlv
+CreateVehicle(416,1893.8789,2296.9148,10.9700,271.2206,1,3); // ambulancelv
+CreateVehicle(416,1894.1376,2302.2385,10.9696,271.4648,1,3); // ambulancelv
+CreateVehicle(416,1894.0654,2306.0522,10.9695,270.7309,1,3); // ambulancelv
+CreateVehicle(416,1894.5845,2312.1096,10.9694,269.4673,1,3); // ambulancelv
+CreateVehicle(431,1910.0331,712.1096,10.9226,179.2830,55,83); // buslv
+CreateVehicle(431,1919.7598,712.0436,10.9213,179.3418,55,83); // buslv
+CreateVehicle(431,1929.1855,712.1748,10.9211,179.6710,55,83); // buslv
+CreateVehicle(431,1941.9530,711.7344,10.9210,179.8638,55,83); // buslv
+CreateVehicle(437,1909.9943,694.8896,10.9537,0.1670,54,7); // coachlv
+CreateVehicle(437,1919.5345,694.8385,10.9520,359.1228,54,7); // coachlv
+CreateVehicle(437,1929.2094,694.9722,10.9554,359.9487,54,7); // coachlv
+CreateVehicle(437,1942.0088,694.7441,10.9536,359.8951,54,7); // coachlv
+CreateVehicle(419,2853.0784,1348.5533,10.6082,269.8995,0,0); // drogendealerlv
+CreateVehicle(419,2853.1091,1354.9364,10.6083,90.5457,0,0); // drogendealerlv
+CreateVehicle(419,2853.4294,1361.3381,10.6090,269.2098,0,0); // drogendealerlv
+CreateVehicle(419,2853.2898,1367.7974,10.6076,89.4839,0,0); // drogendealerlv
+CreateVehicle(419,2845.7339,1375.4005,10.5912,1.3265,0,0); // drogendealerlv
+CreateVehicle(419,2839.3113,1375.0981,10.5614,178.7663,0,0); // drogendealerlv
+CreateVehicle(560,1652.2379,1039.6326,10.5249,179.7801,121,121); // adminauto
+CreateVehicle(560,1658.6398,1039.3605,10.5255,179.1532,121,121); // adminauto
+CreateVehicle(560,1674.5802,1039.5377,10.5258,181.1348,121,121); // adminauto
+CreateVehicle(560,1681.0476,1028.5944,10.5258,182.2138,121,121); // adminauto
+CreateVehicle(560,1674.6781,1028.7025,10.5257,179.7104,121,121); // adminauto
+CreateVehicle(560,1655.3945,1028.7391,10.5253,180.0780,121,121); // adminauto
+CreateVehicle(463,1116.6936,2262.2180,10.3587,179.0313,22,22); // biker
+CreateVehicle(463,1113.3262,2263.0220,10.3606,181.3733,22,22); // biker
+CreateVehicle(463,1110.0002,2262.7361,10.3621,181.8261,22,22); // biker
+CreateVehicle(463,1106.5804,2262.5859,10.3503,180.4772,22,22); // biker
+CreateVehicle(463,1116.2855,2250.6609,10.3559,1.6243,22,22); // biker
+CreateVehicle(403,2833.6042,946.1568,11.3543,180.7941,25,1); // trucker
+CreateVehicle(403,2827.1013,946.5231,11.3565,179.9600,25,1); // trucker
+CreateVehicle(403,2820.6621,946.5152,11.3565,181.1281,25,1); // trucker
+CreateVehicle(403,2814.3379,946.5385,11.3569,180.1828,25,1); // trucker
+CreateVehicle(432,274.3575,2023.6313,17.6567,268.7751,43,0); // panzerlv
+CreateVehicle(432,273.9057,2032.9132,17.6566,232.1042,43,0); // panzerlv
+CreateVehicle(432,273.6229,2013.2003,17.6564,296.0503,43,0); // panzerlv
+CreateVehicle(429,2037.4730,1006.7963,10.4231,182.6837,3,1); // civilian
+CreateVehicle(429,2077.2705,1130.5236,10.4232,0.9312,3,1); // civilian
+CreateVehicle(429,2077.2122,1403.8944,10.4226,1.9114,3,1); // civilian
+CreateVehicle(429,2075.4392,1615.9788,10.3515,359.5825,3,1); // civilian
+CreateVehicle(429,2094.6558,1742.6576,10.3555,335.1376,3,1); // civilian
+CreateVehicle(429,2154.9749,1967.3445,10.3516,1.5224,3,1); // civilian
+CreateVehicle(429,2155.0952,2193.2361,10.3517,0.4231,3,1); // civilian
+CreateVehicle(411,2119.4043,2150.7170,10.3990,183.0562,106,1); // civilian
+CreateVehicle(411,2120.1548,1991.0378,10.3989,178.1261,106,1); // civilian
+CreateVehicle(411,2085.9321,1796.0171,10.3990,154.6237,106,1); // civilian
+CreateVehicle(411,2039.9806,1549.8331,10.3990,179.6252,106,1); // civilian
+CreateVehicle(411,2039.5437,1259.6661,10.3989,181.2697,106,1); // civilian
+CreateVehicle(411,-1948.8232,257.9336,40.7766,68.0071,106,1); // civilian
+CreateVehicle(412,-1950.8350,269.7562,40.8874,120.1795,86,86); // grooves
+CreateVehicle(415,-1949.4158,260.2281,35.2410,57.8729,86,86); // grooves
+CreateVehicle(415,-1948.9153,270.3581,35.2430,118.3961,86,86); // grooves
+CreateVehicle(541,-1957.1273,302.6788,35.0936,104.9507,26,26); // grooves
+CreateVehicle(567,2501.9934,-1952.7101,13.3009,178.9485,22,22); // Ballas
+CreateVehicle(567,2495.5786,-1953.0393,13.2972,180.9929,22,22); // Ballas
+CreateVehicle(567,2489.1816,-1953.1747,13.2968,180.9965,22,22); // Ballas
+CreateVehicle(567,2482.7871,-1952.8688,13.2984,179.9065,22,22); // Ballas
+CreateVehicle(409,2618.8560,741.7843,10.6203,0.2341,0,0); // Limo
+CreateVehicle(409,2625.8035,741.4799,10.6203,359.5458,1,1); // Limo
+CreateVehicle(409,2633.3638,741.6069,10.6203,0.3562,0,0); // Limo
+CreateVehicle(409,2640.1897,741.4817,10.6203,359.8417,1,1); // Limo
+CreateVehicle(409,2576.3359,741.5856,10.6203,0.2485,0,0); // Limo
+CreateVehicle(409,2569.2871,741.5109,10.6203,0.0356,1,1); // Limo
+CreateVehicle(409,2562.1353,741.5065,10.6203,0.0356,0,0); // Limo
+CreateVehicle(409,2555.0325,741.5021,10.6203,0.0356,1,1); // Limo
+CreateVehicle(420,2570.5149,1033.5435,10.5999,359.4556,6,1); // Taxi
+CreateVehicle(420,2577.7188,1033.4750,10.5999,359.4556,6,1); // Taxi
+CreateVehicle(420,2584.8010,1033.4076,10.5999,359.4556,6,1); // Taxi
+CreateVehicle(420,2592.0537,1033.3387,10.5999,359.4556,6,1); // Taxi
+CreateVehicle(522,2076.3208,933.1006,9.0374,356.5681,7,79); // public
+CreateVehicle(522,2076.1272,1069.4399,10.2357,357.6555,7,79); // public
+CreateVehicle(522,2076.3875,1349.3971,10.2373,358.6277,7,79); // public
+CreateVehicle(522,2085.2266,1714.5977,10.3888,341.4063,7,79); // public
+CreateVehicle(522,2171.1538,1972.7782,10.3845,271.2102,7,79); // public
+CreateVehicle(522,2115.2075,2126.1663,10.3836,178.0495,7,79); // public
+CreateVehicle(522,2101.5156,2033.7864,10.3941,272.6238,7,79); // public
+CreateVehicle(522,2050.3950,1931.1292,11.8472,177.9930,7,79); // public
+CreateVehicle(522,2037.8019,1566.4871,10.2391,180.3218,7,79); // public
+CreateVehicle(522,2026.9623,1345.8873,10.3876,183.7129,7,79); // public
+CreateVehicle(522,2039.3152,984.5885,10.2146,357.7821,7,79); // public
+CreateVehicle(492,2508.6111,-1671.9943,13.1659,349.0677,28,56); // groovecar1
+CreateVehicle(492,2498.9236,-1655.5470,13.1840,78.1664,28,56); // groovecar2
+CreateVehicle(492,2473.4426,-1694.6051,13.2974,359.4070,28,56); // groovecar3
+CreateVehicle(492,2480.3916,-1654.3890,13.1736,89.3343,28,56); // groovecar4
+CreateVehicle(414,-2175.2241,637.3318,49.5312,0.5832,0,0); // triadenliefer
+CreateVehicle(451,-2178.9915,637.0568,49.1470,359.0837,0,0); // triadenauto1
+CreateVehicle(451,-2185.1841,645.7833,49.1436,89.6730,0,0); // triadenauto2
+CreateVehicle(522,-2173.1218,659.9074,49.0079,177.2634,0,0); // triadnrg#
+CreateVehicle(522,-2173.3547,655.0287,49.0050,177.2638,0,0); // triadnrg
+CreateVehicle(525,2427.1973,-1655.7734,13.2603,92.4047,22,30); // abschlepper 1
+
+// vehicles with non petrol
+CreateVehicle(487,1647.6814,1540.6254,10.9333,56.2795,54,29); // pilot
+CreateVehicle(487,1633.8196,1536.6356,10.9452,8.4254,54,29); // pilot
+CreateVehicle(487,1625.9387,1531.0490,10.9282,311.7800,54,29); // pilot
+CreateVehicle(519,1613.5778,1624.5841,11.7370,150.6109,1,1); // pilot
+CreateVehicle(519,1699.9496,1634.3076,11.6252,156.6554,1,1); // pilot
+CreateVehicle(519,1664.4719,1627.6577,11.7390,173.2648,1,1); // pilot
+CreateVehicle(520,275.8889,1980.1543,18.3681,302.7051,0,0); // hydralv
+CreateVehicle(520,274.5716,1989.8402,18.3524,271.1566,0,0); // hydralv
+CreateVehicle(520,275.4663,1999.2278,18.3713,246.2353,0,0); // hydralv
+CreateVehicle(577,1585.1268,1188.3334,10.7667,181.3345,8,16); // Passagierflugzeug
+CreateVehicle(593,1302.7050,1360.4324,11.2805,268.1000,2,1); // dodo
+CreateVehicle(593,1300.5885,1323.8289,11.2820,270.3124,2,1); // dodo
+CreateVehicle(593,1371.4874,1223.9249,11.2839,356.8270,2,1); // dodo
+CreateVehicle(593,1391.1537,1230.7938,11.2766,4.2348,2,1); // dodo
+CreateVehicle(592,1559.1434,1536.2773,12.0228,247.7221,1,1); // transportflugzeug
+CreateVehicle(592,1562.6777,1450.7361,12.0186,89.6511,1,1); // transportflugzeug
+CreateVehicle(592,1560.9657,1356.2777,12.0980,300.5581,1,1); // transportflugzeug
+CreateVehicle(485,1629.7878,1629.2517,10.4756,359.0132,1,73); // flughafenauto
+CreateVehicle(485,1629.7153,1625.0200,10.4811,359.0132,1,73); // flughafenauto
+CreateVehicle(485,1629.6288,1619.9983,10.4799,359.0134,1,73); // flughafenauto
+CreateVehicle(405,-2064.4507,-84.5270,35.0391,0.3943,36,1); // autos bei der fahrschule
+CreateVehicle(405,-2068.8281,-84.5846,35.0391,359.1449,36,1); // autos bei der fahrschule
+CreateVehicle(405,-2072.8853,-84.5400,35.0391,0.2457,36,1); // autos bei der fahrschule
+CreateVehicle(405,-2077.0627,-84.6261,35.0391,0.6597,36,1); // autos bei der fahrschule
+CreateVehicle(472,-856.1234,630.5819,-1.1412,259.8007,1,1); //
+CreateVehicle(537,-1943.3127,158.0254,27.0006,357.3614,121,1);//Zug
+
+
+//LosKaffos
+CreateObject(4887, -358.697144, 566.632629, 33.885586, 0, 0, 0);
+CreateObject(3309, -16.565613, 1571.058838, 13.651114, 0, 0, 348.75);
+CreateObject(3449, -19.826706, 1545.240601, 13.265635, 0, 0, 258.75);
+CreateObject(3466, -28.884026, 1518.537231, 14.292351, 0, 0, 168.75);
+CreateObject(3580, -24.030216, 1497.544800, 16.389023, 0, 0, 258.75);
+CreateObject(973, 3.391167, 1579.099487, 12.692733, 0, 0, 162.3295);
+CreateObject(973, 11.641878, 1577.166504, 12.681798, 0, 0, 170.9239);
+CreateObject(3187, 2.388419, 1488.345703, 15.802498, 0, 0, 80.787);
+CreateObject(3306, 25.130322, 1557.343872, 13.011884, 0, 0, 170.9239);
+CreateObject(972, 14.059935, 1501.058716, 11.363615, 0, 0, 260.3053);
+CreateObject(972, 34.640915, 1503.595215, 11.396862, 0, 0, 301.5584);
+CreateObject(972, 45.373474, 1518.393311, 11.446871, 0, 0, 0);
+CreateObject(972, 38.431793, 1531.517212, 11.827902, 0, 0, 76.4899);
+CreateObject(972, 24.059052, 1534.172485, 11.877903, 0, 0, 79.068);
+CreateObject(972, 12.361260, 1530.763062, 11.349401, 0, 0, 169.2051);
+CreateObject(974, 3.831489, 1502.915161, 14.606880, 0, 0, 264.6025);
+CreateObject(1291, -4.458482, 1484.213867, 12.480975, 0, 0, 261.1648);
+CreateObject(1478, -13.469536, 1520.528809, 13.151720, 0, 0, 73.8076);
+CreateObject(1478, 12.850457, 1550.674561, 12.563571, 0, 0, 259.4459);
+CreateObject(1478, -5.280452, 1560.194458, 12.863087, 0, 0, 73.8076);
+CreateObject(1395, 21.647770, 1510.981323, 44.286327, 0, 0, 0);
+CreateObject(1394, 21.366365, 1510.923462, 96.825394, 0, 0, 0);
+CreateObject(974, 5.708640, 1514.266113, 14.533764, 0, 0, 256.8676);
+CreateObject(974, 4.516908, 1508.705444, 14.533763, 0, 0, 256.8676);
+CreateObject(18569, 38.152386, 1518.792725, 13.076090, 0, 0, 0);
+CreateObject(18568, 26.006031, 1522.594360, 12.545031, 0, 0, 0);
+CreateObject(1359, -14.543683, 1492.239380, 12.665133, 0, 0, 0);
+CreateObject(1359, -0.981089, 1499.538818, 12.665133, 0, 0, 0);
+CreateObject(1232, -14.835336, 1484.320435, 14.603218, 0, 0, 0);
+CreateObject(1232, -4.796535, 1482.704712, 14.603218, 0, 0, 0);
+CreateObject(1232, -12.943019, 1497.958008, 14.603218, 0, 0, 0);
+CreateObject(1232, -2.186491, 1495.909546, 14.603218, 0, 0, 0);
+CreateObject(850, 18.955849, 1521.134766, 11.867513, 0, 0, 0);
+CreateObject(850, 8.000595, 1506.951050, 11.867517, 0, 0, 0);
+CreateObject(850, 29.948586, 1503.062622, 11.861493, 0, 0, 0);
+CreateObject(1365, 20.120602, 1527.860474, 12.898935, 0, 0, 0);
+CreateObject(1415, 34.421585, 1505.159546, 11.865705, 0, 0, 228.5061);
+CreateObject(1232, -1.747914, 1558.724365, 14.603218, 0, 0, 0);
+CreateObject(1232, 9.129233, 1555.650879, 14.603218, 0, 0, 0);
+CreateObject(1231, 7.624404, 1579.070435, 14.532906, 0, 0, 333.3575);
+CreateObject(1232, -5.603690, 1538.330688, 14.595425, 0, 0, 0);
+CreateObject(1232, -8.876668, 1518.002441, 14.386642, 0, 0, 0);
+CreateObject(1257, -15.573672, 1488.488647, 13.245768, 0, 0, 170.0644);
+CreateObject(1229, -3.467036, 1489.983887, 13.451257, 0, 0, 0);
+CreateObject(3996, -1.035183, 1533.133789, 11.886662, 0, 0, 259.4459);
+CreateObject(1229, 0.022210, 1570.668945, 13.532280, 0, 0, 337.551);
+CreateObject(979, 6.354451, 1540.917114, 12.812819, 0, 0, 0);
+CreateObject(979, -0.972794, 1501.082520, 12.812819, 0, 0, 150.2973);
+CreateObject(978, -4.153522, 1507.588745, 12.648757, 0, 0, 79.9276);
+CreateObject(978, -2.406587, 1516.449829, 12.648757, 0, 0, 78.2087);
+CreateObject(978, 0.728109, 1536.415894, 12.656551, 0, 0, 76.4899);
+CreateObject(1238, -1.042934, 1530.068115, 12.126717, 0, 0, 0);
+CreateObject(1238, -1.341846, 1527.826538, 12.126716, 0, 0, 0);
+CreateObject(1238, -1.539863, 1525.435425, 12.126717, 0, 0, 0);
+CreateObject(1238, -1.570884, 1523.288574, 12.126717, 0, 0, 0);
+CreateObject(1238, -1.493101, 1521.468994, 12.126717, 0, 0, 0);
+CreateObject(18229, -16.764309, 1467.017578, 3.842582, 0, 349.6868, 261.1648);
+CreateObject(18229, -22.150715, 1426.028076, 7.060246, 0, 0, 262.8837);
+CreateObject(18229, -28.628262, 1380.640747, 7.346091, 0, 0, 264.6025);
+CreateObject(18229, -32.067654, 1334.052246, 6.418360, 6.0161, 1.7189, 268.8997);
+CreateObject(18229, -44.135117, 1304.437988, 0.705717, 6.0161, 345.3896, 358.2811);
+CreateObject(18229, -35.250031, 1278.352539, 5.491975, 0, 0, 0);
+CreateObject(18229, 0.067225, 1302.445801, 6.232259, 0, 0, 0);
+CreateObject(18229, 12.546431, 1276.967163, 4.090889, 0, 3.4377, 0);
+CreateObject(1231, 10.192816, 1307.210815, 19.650152, 0, 0, 0);
+CreateObject(1231, -2.219744, 1306.434814, 19.650152, 0, 0, 0);
+CreateObject(1231, -15.823997, 1306.278687, 19.650152, 0, 0, 0);
+CreateObject(1231, -3.145801, 1282.898682, 18.462357, 0, 0, 0);
+CreateObject(1231, 13.330416, 1281.260254, 17.721241, 0, 357.4217, 0);
+CreateObject(1231, -15.055315, 1284.109253, 18.277552, 0, 0, 0);
+CreateObject(1231, -32.461693, 1283.570313, 18.909868, 0, 0, 0);
+CreateObject(1231, -44.710503, 1281.915771, 18.909868, 0, 0, 0);
+CreateObject(1432, 37.079742, 1562.175537, 12.859377, 0, 0, 0);
+CreateObject(1432, 32.070724, 1550.861816, 12.918430, 0, 0, 0);
+CreateObject(1432, 37.261623, 1555.085083, 12.877392, 0, 0, 0);
+CreateObject(1432, 35.529961, 1547.568970, 12.974897, 0, 0, 0);
+CreateObject(1256, 2.434474, 1283.999512, 16.064558, 0, 0, 267.1808);
+CreateObject(1256, -9.870464, 1284.359009, 16.105837, 0, 0, 272.3375);
+CreateObject(1256, -22.799768, 1284.898071, 16.838930, 0, 0, 269.7591);
+CreateObject(1256, -38.412178, 1283.742310, 16.838930, 0, 0, 269.7591);
+CreateObject(1256, -9.121824, 1306.466797, 17.579216, 0, 0, 88.522);
+CreateObject(1256, 2.570123, 1305.734863, 17.579214, 0, 0, 92.8192);
+CreateObject(1256, 13.734691, 1306.381714, 17.579214, 0, 0, 90.2409);
+
+  print('* Server Started SAP-RPG');
+  print('* Made by Sebihunter and Killerkid)');
+end;
+ 
+ 
+ 
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  print('* '+GetPlayerName(PlayerID)+' Joined (ID: '+IntToStr(PlayerID)+')');
+end;
+ 
+procedure OnPlayerPart(PlayerID, Reason : Integer);
+var
+  ReasonStr : String;
+begin
+  if (Reason = 0) then
+    ReasonStr := 'Disconnected'
+  Else if (Reason = 1) then
+    ReasonStr := 'Timed Out'
+  Else
+    ReasonStr := 'Unknown Reason'
+  print('* '+GetPlayerName(PlayerID)+' Parted (ID: '+IntToStr(PlayerID)+') (Reason: '+ReasonStr+')');
+end;
+ 
+function OnPlayerText(PlayerID : Integer; Text : String): Integer;
+begin
+  print(GetPlayerName(PlayerID)+': '+Text);
+  result := 1;
+end;
+ 
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd : TSplitArray;
+  Mssg : String;
+  i : integer;
+  PosX, PosY, PosZ : Single;
+begin
+  //print('COMMAND: '+GetPlayerName(PlayerID)+': '+Command);
+ 
+  Cmd := Split(Command, ' ');
+  if (Cmd[0] = '/ping') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s ping is '+IntToStr(GetPlayerPing(PlayerID));
+    SendMessageToAll(Mssg);
+    print(Mssg);
+  end
+{  else if (Cmd[0] = '/skin') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Skin ID '+Cmd[1];
+      SetPlayerSkin(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end}
+  else if (Cmd[0] = '/armour') or (Cmd[0] = '/armor') Then
+  begin
+    SetPlayerArmour(PlayerID,1000.0);
+    Mssg := GetPlayerName(PlayerID)+' got now full armour!';
+    SendMessageToAll(Mssg);
+  end
+  else if (Cmd[0] = '/weapon') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Weapon '+Cmd[1];
+      GivePlayerWeapon(PlayerID, StrToInt(Cmd[1]), 500);
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/time') then
+  begin
+    if (IsInteger(Cmd[1])) AND (IsInteger(Cmd[2])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set the time to '+Cmd[1]+':'+Cmd[2];
+      SetGameTime(StrToInt(Cmd[1]), StrToInt(Cmd[2]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/weather') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now weather id '+Cmd[1];
+      SetGameWeather(StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/money') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now $'+Cmd[1];
+      SetPlayerMoney(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/flags') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now the flags '+Cmd[1];
+      SetPlayerFlags(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/kill') then
+  begin
+    SetPlayerHealth(PlayerID, 0.0);
+  end
+  else if (Cmd[0] = '/north') then
+  begin
+    SetPlayerRotation(PlayerID, 0.0);
+  end
+  else if (Cmd[0] = '/ww') then
+  begin
+    if (Cmd[1] = 'on') then
+    begin
+      SetWaterWalk(True);
+      Mssg := GetPlayerName(PlayerID)+' turned Waterwalk on';
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end
+    else if (Cmd[1] = 'off') then
+    begin
+      SetWaterWalk(False);
+      Mssg := GetPlayerName(PlayerID)+' turned Waterwalk off';
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/gravity') then
+  begin
+    if (isFloat(Cmd[1])) then
+    begin
+      SetGravity(StrToFloatFix(Cmd[1])); 
+      Mssg := GetPlayerName(PlayerID)+' setted the gravity to '+Cmd[1];
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  Else if(Cmd[0] = '/haybale') Then
+  begin
+    PosX := GetPlayerPosX(PlayerID);
+    PosY := GetPlayerPosY(PlayerID);
+    PosZ := GetPlayerPosZ(PlayerID);
+    i := CreateObjectEx(3374,PosX,PosY,PosZ,0.0,0.0,0.0);
+    PosZ := PosZ + 5.0;
+    SetPlayerPos(PlayerID,PosX,PosY,PosZ);
+    Mssg := '* '+GetPlayerName(PlayerID)+' spawned a haybale (ObjectID: '+ IntToStr(i) +')';
+    SendMessageToAll(Mssg);
+  end
+  Else if(Cmd[0] = '/do') Then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      DestroyObject(i);
+      Mssg := '* '+GetPlayerName(PlayerID)+' deleted object '+ IntToStr(i);
+      SendMessageToAll(Mssg);
+    end;
+  end
+  Else if(Cmd[0] = '/hudoff') Then
+  begin
+    SetPlayerHUD(PlayerID,False);
+  end
+  Else if(Cmd[0] = '/hudon') Then
+  begin
+    SetPlayerHUD(PlayerID,True);
+  end
+  Else if(Cmd[0] = '/radaroff') Then
+  begin
+    SetPlayerRadar(PlayerID,False);
+  end
+  Else if(Cmd[0] = '/radaron') Then
+  begin
+    SetPlayerRadar(PlayerID,True);
+  end
+  Else if(Cmd[0] = '/boom') Then
+  begin
+    PosX := GetPlayerPosX(PlayerID);
+    PosY := GetPlayerPosY(PlayerID);
+    PosZ := GetPlayerPosZ(PlayerID);
+    //PosZ := PosZ + 5.0;
+    CreateExplosion(PosX,PosY,PosZ);
+  end
+  Else if (Cmd[0] = '/island') Then
+  Begin
+    SetPlayerPos(PlayerID, 12.546431, 1276.967163, 6.090889);
+  End
+  Else if (Cmd[0] = '/objto') Then
+  Begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      SetObjectPos(i,10.0,0.0,10.0);
+      Mssg := '* '+GetPlayerName(PlayerID)+' teleported object '+ IntToStr(i) +' to position 10.0 0.0 10.0';
+      SendMessageToAll(Mssg);
+    end;
+  End
+  Else if (Cmd[0] = '/objmove') Then
+  Begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      MoveObject(i,15.0,0.0,10.0);
+      Mssg := '* '+GetPlayerName(PlayerID)+' moved object '+ IntToStr(i) +' to position 15.0 0.0 10.0';
+      SendMessageToAll(Mssg);
+    end;
+  End
+  Else If (Cmd[0] = '/zero') Then
+  Begin
+    SetPlayerPos(PlayerID,0.0,0.0,3.0);
+  End
+  else if (Cmd[0] = '/to') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      if (i = PlayerID) Then
+        SendMessageToPlayer(PlayerID,'*** You can''t teleport to yourself')
+      else if (IsPlayerConnected(i)) AND (IsPlayerIngame(i)) then
+      begin
+        Mssg := GetPlayerName(PlayerID)+' teleported to '+GetPlayerName(i);
+        SetPlayerPos(PlayerID, GetPlayerPosX(i), GetPlayerPosY(i), GetPlayerPosZ(i)+2.0);
+        SendMessageToAll(Mssg);
+        print(Mssg);
+      end;
+    end;
+  end;
+end;
+ 
+procedure OnPlayerStartedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := false;
+  Mssg := '* '+GetPlayerName(PlayerID)+' started the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+ 
+procedure OnPlayerClosedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := False;
+  Mssg := '* '+GetPlayerName(PlayerID)+' closed the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+ 
+procedure OnPlayerDeath(PlayerID, KillerID, WeaponID : Integer);
+begin
+  If (KillerID > 0) Then
+    SendMessageToAll('* '+ GetPlayerName(KillerID) +' killed '+ GetPlayerName(PlayerID) +' ('+ GetDeathReason(WeaponID) +')')
+  Else
+    SendMessageToAll('* '+ GetPlayerName(PlayerID) +' died');
+  //SetCamera(PlayerID,0.0,0.0,10.0);
+end;
+ 
+procedure OnPlayerSpawned(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  //SetPlayerSkin(PlayerID, 213);
+  //SetPlayerPos(PlayerID, -2642.2583, -274.9985,  7.5393);
+  //FreezePlayer(PlayerID, True);
+  SetPlayerPos(PlayerID, -2173.3547,655.0287,51.0050);
+  Mssg := '* '+GetPlayerName(PlayerID)+' spawned';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+  //NeedSpawn[PlayerID] := True;
+  //Timer(3,'UnfreezeAll');
+  //SetPlayerPos(PlayerID, 3264.925537, -1765.095337, 9.280780);
+end;
+ 
+procedure OnIRCConnected();
+begin
+  Print('m00');
+  //IRCJoin('#sap','');
+  IRCRaw('JOIN #sap');
+  //IRCSay('#sap', 'San Andreas Party server loaded');
+end;
+ 
+procedure UnfreezeAll();
+var
+  i : Integer;
+begin
+  For i := 1 To 32 Do
+  Begin
+    If (NeedSpawn[i] = True) and (isPlayerConnected(i) = True) and (IsPlayerIngame(i) = True) Then
+    Begin
+      NeedSpawn[i] := False;
+      SetPlayerPos(i, -2173.3547,655.0287,51.0050);
+      FreezePlayer(i,False);
+    End;
+  End;
+end;
+ 
+begin
+end.

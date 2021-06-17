@@ -1,0 +1,240 @@
+var
+  GrReefer, BReefer, GrScore, BScore, GrHolder, BHolder : Integer;
+
+procedure OnStart();
+begin
+	// GREEN CLASSES
+	CreateSpawn(1980.0054,-266.6487,2.9653,348.9788);
+
+ 	// BLUE CLASSES
+	CreateSpawn(2359.2703,540.5911,1.7969,180.6476);
+
+	// OBJECTIVE VEHICLES
+        GrReefer := CreateVehicleEx(453,2057.0154,-236.5598,-0.2621,359.4377,114,1); // gr reefer
+	BReefer := CreateVehicleEx(453,2381.9685,532.4496,0.2574,183.2029,79,7); // b reefer
+
+        // GREEN VEHICLES
+        CreateVehicle(473,2023.5109,-246.4161,-0.1514,351.0038,114,1); // gr dhin
+        CreateVehicle(473,1949.2490,-259.5398,-0.2794,13.3247,114,1); // gr ding2fix
+	CreateVehicle(473,2003.7256,-248.4939,-0.2243,5.1752,114,1); // gr ding
+	CreateVehicle(473,1982.4832,-252.4811,-0.3006,358.3696,114,1); // gr ding
+	CreateVehicle(473,1927.7894,-249.3088,-0.2893,320.7715,114,1); // gr ding
+	CreateVehicle(473,1907.6969,-230.4202,-0.2585,306.0136,114,1); // gr ding
+	CreateVehicle(487,1913.0819,-376.2350,21.4819,350.9412,114,1); // gr mav
+
+	// BLUE VEHICLES
+	CreateVehicle(473,2289.7571,518.4412,-0.2167,178.8301,79,7); // b ding
+	CreateVehicle(473,2294.3599,519.1021,-0.1391,177.1416,79,7); // b ding
+	CreateVehicle(473,2298.8411,518.4229,-0.2333,181.1228,79,7); // b ding
+	CreateVehicle(473,2369.9839,519.0364,-0.3190,187.9187,79,7); // b ding
+	CreateVehicle(473,2359.9417,519.1055,-0.2271,183.8014,79,7); // b ding
+	CreateVehicle(473,2351.4617,519.1046,-0.1172,182.8623,79,7); // b ding
+	CreateVehicle(487,2324.4399,573.1667,7.9578,177.6699,79,7); // b mav
+
+	GrScore := 0;
+	BScore := 0;
+
+        IRCSay('RiverShell - By kyeman for SA:MP');
+end;
+
+procedure OnPlayerEnterCheckpoint(PlayerID, CPID : Integer);
+begin
+  SendTextToPlayer(PlayerID,'* You entered the checkpoint (ID: '+ IntToStr(CPID) +')');
+end;
+
+procedure OnPlayerLeaveCheckpoint(PlayerID, CPID : Integer);
+begin
+  SendTextToPlayer(PlayerID,'* You left the checkpoint (ID: '+ IntToStr(CPID) +')');
+end;
+
+procedure OnPlayerEnterVehicle(PlayerID, CarID : Integer);
+begin
+  If (CarID = GrReefer) Then
+  Begin
+    GrHolder := PlayerID;
+    CreateCheckpoint(PlayerID,2328.2935,531.8324,0.0094,5.0);
+    DisplayTextPlayer(PlayerID,5,'~w~Take the ~y~boat ~w~back to the ~r~spawn!',3000);
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' captured the green teams Reefer!');
+    IRCSay('* '+ GetPlayerNick(PlayerID) +' captured the green teams Reefer!');
+  End
+  Else If (CarID = BReefer) Then
+  Begin
+    BHolder := PlayerID;
+    CreateCheckpoint(PlayerID,1982.6150,-220.6680,-0.2432,5.0);
+    DisplayTextPlayer(PlayerID,5,'~w~Take the ~y~boat ~w~back to the ~r~spawn!',3000);
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' captured the blue teams Reefer!');
+    IRCSay('* '+ GetPlayerNick(PlayerID) +' captured the blue teams Reefer!');
+  End;
+end;
+
+procedure OnPlayerLeaveVehicle(PlayerID, CarID : Integer);
+begin
+  If (CarID = GrReefer) Then
+  Begin
+    GrHolder := 0;
+    DeleteCheckpoint(PlayerID, 1);
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' lost the green teams Reefer!');
+    IRCSay('* '+ GetPlayerNick(PlayerID) +' lost the green teams Reefer!');
+  End
+  Else If (CarID = BReefer) Then
+  Begin
+    BHolder := 0;
+    DeleteCheckpoint(PlayerID, 1);
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' lost the blue teams Reefer!');
+    IRCSay('* '+ GetPlayerNick(PlayerID) +' lost the blue teams Reefer!');
+  End;
+end;
+
+procedure OnPlayerText(PlayerID : Integer; Text : String);
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+    IRCSay('[ACHAT] '+ GetPlayerNick(PlayerID) +': '+Text)
+  Else
+    IRCSay('[CHAT] '+ GetPlayerNick(PlayerID) +': '+Text)
+end;
+
+procedure OnIRCMessage(Nickname, Message : String);
+var
+  Tmp, PlayerList, MaxSlots : String;
+  i, count : Integer;
+begin
+  if (Message = '!players') Then
+  begin
+    count := 0;
+    PlayerList := '';
+    For i := 0 To 20 Do
+    begin
+      if (IsPlayerConnected(i) = True) Then
+      begin
+        If (PlayerList = '') Then
+          PlayerList := GetPlayerNick(i)
+        Else
+          PlayerList := PlayerList+', '+GetPlayerNick(i);
+        count := count+1;
+      end
+    end
+    MaxSlots := IntToStr(GetMaxSlots());
+    if (count = 0) Then
+      IRCSay('*** 0/'+MaxSlots+' Players')
+    Else if (count = 1) Then
+      IRCSay('*** 1/'+MaxSlots+' Player: '+PlayerList)
+    Else
+      IRCSay('*** '+IntToStr(count)+'/'+MaxSlots+' Players: '+PlayerList);
+  end
+  Else if (Message = '!about') Then
+  begin
+    IRCSay('BTS v0.2 loaded by Mount and Ywa*NL');
+  end
+  Else if (CopyBefore(Message,' ') = '!msg') Then
+  begin
+    Tmp := CopyAfter(Message, ' ');
+    If (Tmp = '') Then
+    begin
+      IRCSay('*** Syntax: !msg <action>');
+    end
+    Else
+    begin
+      SendTextToAll('[IRC] '+Nickname+': '+Tmp);
+      IRCSay('[IRC] '+Nickname+': '+Tmp);
+    end
+  end;
+end;
+
+procedure OnIRCJoin(Nickname : String);
+begin
+  SendTextToAll('* '+Nickname+' joined the IRC channel.');
+end;
+
+procedure OnIRCPart(Nickname : String);
+begin
+  SendTextToAll('* '+Nickname+' left the IRC channel.');
+end;
+
+procedure OnPlayerChangeSpawn(PlayerID, SpawnID : Integer);
+begin
+  If (SpawnID = 1) Then
+    DisplayTextPlayer(PlayerID,5,'~g~Green team',5000)
+  Else If (SpawnID = 2) Then
+    DisplayTextPlayer(PlayerID,5,'~b~Blue team',5000);
+end;
+
+procedure OnPlayerSpawn(PlayerID, SpawnID : Integer);
+begin
+  If (SpawnID = 1) Then
+    SetPlayerColor(PlayerID,1)
+  Else If (SpawnID = 2) Then
+    SetPlayerColor(PlayerID,8);
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd : String;
+  PosZ, PosY, PosX : Single;
+  ID : Integer;
+begin
+  Cmd := CopyBefore(Command, ' ');
+  if(Cmd = '/check') Then
+  begin
+      PosX := GetPlayerPosX(PlayerID); 
+      PosY := GetPlayerPosY(PlayerID);
+      PosZ := GetPlayerPosZ(PlayerID);
+      ID := CreateCheckpointEx(PlayerID,PosX,PosY,PosZ,5.0);
+      SendTextToAll('>>> New checkpoint: '+ IntToStr(ID));
+  end
+  else if(Cmd = '/delcheck') Then
+  begin
+      ID := StrToInt(CopyAfter(Command,' '));
+      DeleteCheckpoint(PlayerID,ID);
+      SendTextToAll('>>> Deleted checkpoint: '+ IntToStr(ID));
+  end;
+end;
+
+procedure OnPlayerLeft(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+    Msg := '* Admin '+ GetPlayerNick(PlayerID) +' left the server'
+  Else
+    Msg := '* '+ GetPlayerNick(PlayerID) +' left the server';
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+procedure OnPlayerJoin(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+  begin
+    Msg := '* Admin '+ GetPlayerNick(PlayerID) +' joined the server';
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', you have been logged in with admin rights.');
+  end
+  Else
+  begin
+    Msg := '* '+ GetPlayerNick(PlayerID) +' joined the server';
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', welcome to this server.');
+  end;
+  SendTextToAllExceptPlayer(PlayerID, Msg);
+  IRCSay(Msg);
+  Log(Msg);
+end;
+
+procedure OnPlayerDeath(KillerID, PlayerID, ReasonID : Integer);
+var
+  Msg : String;
+begin
+  If (KillerID = 0) or (ReasonID = 0) Then
+   begin
+    Msg := '- '+ GetPlayerNick(PlayerID) +' died';
+  end
+  Else 
+  begin
+    Msg := '- '+GetPlayerNick(KillerID)+' killed '+GetPlayerNick(PlayerID)+' ('+GetDeathReason(ReasonID)+')';
+  end
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+begin
+end.

@@ -1,0 +1,435 @@
+Var
+  WaterWalk, Fly : Boolean;
+  FirstSpawn : array[1..21] of Boolean;
+  BombX : Array[1..21] of Single;
+  BombY : Array[1..21] of Single;
+  BombZ : Array[1..21] of Single;
+  Teams : Array[1..21] of Integer;
+  BomX, BomY, BomZ : Single;
+
+procedure OnStart();
+begin
+  WaterWalk := False;
+  Fly := False;
+  CreateSpawn(-2062.5583,  237.4662, 35.7149, 268.8936); // #1 Worker
+  CreateSpawn(-2653.6443, 1388.2767,  7.1301, 212.8453); // #2 Pimp
+  CreateSpawn(-2642.2583, -274.9985,  7.5393, 135.0036); // #3 Golfer
+  CreateSpawn(-2157.2119,  649.5484, 52.3672, 267.0820); // #4 Triad
+  CreateSpawn(-1377.4271,  466.0897,  7.1875,   1.0348); // #5 Mechanic
+  CreateSpawn(-1754.9976,  958.5851, 24.8828, 163.2550); // #6 Valet
+  CreateSpawn(-2665.4282,  635.6348, 14.4531, 179.8403); // #7 Medic
+  CreateSpawn(-1635.0077,  665.8105,  7.1875, 264.2244); // #8 FBI
+   
+  CreateVehicle(401,-2118.9319,194.8274,35.7567,2.7513,-1,-1);
+  CreateVehicle(401,-2036.5212,305.6321,35.9090,359.8144,-1,-1);
+  CreateVehicle(413,-2087.8369,255.6416,37.0341,357.9168,-1,-1);
+  CreateVehicle(457,-2652.9031,-297.2605,8.0617,315.6009,-1,-1);
+  CreateVehicle(457,-2659.7441,-289.6562,8.0920,313.6239,-1,-1);
+  CreateVehicle(457,-2642.9949,-301.7552,8.0090,47.6567,-1,-1);
+  CreateVehicle(421,-2681.7434,-276.2391,8.0605,44.2241,-1,-1);
+  CreateVehicle(575,-2618.9480,1376.7870,7.7322,181.1998,-1,-1);
+  CreateVehicle(411,-2645.5964,1376.7522,7.8935,267.8349,-1,-1);
+  CreateVehicle(409,-2628.6924,1377.4845,7.9350,180.7913,-1,-1);
+  CreateVehicle(409,-2633.1638,1332.7010,7.9953,269.6430,-1,-1);
+  CreateVehicle(405,-2126.2573,650.7344,53.2421,88.8335,-1,-1);
+  CreateVehicle(405,-2125.8604,658.0598,53.3040,92.1547,-1,-1);
+  CreateVehicle(445,-2158.0305,657.3961,53.2440,272.5298,-1,-1);
+  CreateVehicle(522,-2151.1257,629.7889,52.8293,180.7068,-1,-1);
+  CreateVehicle(484,-1476.5386,700.1740,1.1248,355.3123,-1,-1);
+  CreateVehicle(446,-1571.3143,1263.2914,1.2879,269.1020,-1,-1);
+  CreateVehicle(446,-1720.0265,1436.3821,1.4272,3.3108,-1,-1);
+  CreateVehicle(445,-2156.6838,942.3219,80.8784,269.6746,-1,-1);
+  CreateVehicle(480,-2223.2629,1083.2794,80.7819,359.6700,-1,-1);
+  CreateVehicle(444,-2517.2996,1229.3512,38.7999,209.3221,-1,-1);
+  CreateVehicle(522,-1654.1005,1211.9901,14.2380,315.9562,-1,-1);
+  CreateVehicle(415,-1660.4161,1213.3704,8.0209,295.4768,-1,-1);
+  CreateVehicle(415,-1553.3494,1089.8568,7.9584,89.1789,-1,-1);
+  CreateVehicle(420,-1497.4607,845.8477,7.9671,88.5197,-1,-1);
+  CreateVehicle(421,-1699.4597,1035.9624,46.0932,91.6588,-1,-1);
+  CreateVehicle(559,-1786.6871,1206.5266,25.7813,178.8742,-1,-1);
+  CreateVehicle(559,-1703.9169,1339.6957,7.8358,133.6003,-1,-1);
+  CreateVehicle(539,-1835.1257,1425.9342,1.5476,184.1130,-1,-1);
+  CreateVehicle(539,-2441.2109,1414.1995,1.4429,86.1079,-1,-1);
+  CreateVehicle(547,-2438.0117,1340.9783,8.7316,86.7979,-1,-1);
+  CreateVehicle(411,-2166.5498,1251.0760,28.2782,1.6030,-1,-1);
+  CreateVehicle(411,-2636.3838,932.3286,72.5378,187.1212,-1,-1);
+  CreateVehicle(461,-2566.5906,989.6594,78.8568,358.1472,-1,-1);
+  CreateVehicle(461,-2464.8860,896.7036,63.6223,0.6326,-1,-1);
+  CreateVehicle(542,-2273.8679,921.3689,67.3102,359.9958,-1,-1);
+  CreateVehicle(400,-2459.9055,786.4501,36.2643,89.8722,-1,-1);
+  CreateVehicle(400,-2673.5830,802.1517,51.0693,0.3607,-1,-1);
+  CreateVehicle(539,-2952.4602,495.9247,1.9517,0.4375,-1,-1);
+  CreateVehicle(446,-2970.6746,497.2838,1.3557,4.0073,-1,1);
+  CreateVehicle(444,-2902.7820,342.5712,6.3723,138.7612,-1,-1);
+  CreateVehicle(444,-2876.3977,26.3173,7.2123,118.5961,-1,-1);
+  CreateVehicle(470,-1382.4279,455.8060,7.1838,359.9849,-1,-1);
+  CreateVehicle(470,-1439.3396,455.1034,7.1739,0.1531,-1,-1);
+  CreateVehicle(542,-1465.0304,455.6730,7.9280,358.9676,-1,-1);
+  CreateVehicle(571,-1677.1865,438.8195,7.4635,227.1910,-1,-1);
+  CreateVehicle(476,-1433.3817,-504.8247,15.8794,158.2625,-1,-1);
+  CreateVehicle(476,-1464.6495,-522.4009,15.8899,234.2019,-1,-1);
+  CreateVehicle(593,-1354.2429,-467.9689,15.6386,162.9646,-1,-1);
+  CreateVehicle(593,-1387.8518,-484.0513,15.6341,247.9289,-1,-1);
+  CreateVehicle(487,-1162.1279,-460.9374,15.3257,53.8622,-1,-1);
+  CreateVehicle(553,-1317.8910,-260.4665,16.4827,288.2876,-1,-1);
+  CreateVehicle(553,-1362.9397,-183.5522,16.4848,308.6994,-1,-1);
+  CreateVehicle(447,-1187.9520,26.1456,15.1604,45.3312,-1,-1);
+  CreateVehicle(447,-1222.7996,-10.4235,15.1594,45.5780,-1,-1);
+  CreateVehicle(475,-1872.5575,-820.7949,32.8273,90.7921,-1,-1);
+  CreateVehicle(444,-1898.3019,-915.5814,33.3947,91.2857,-1,-1);
+  CreateVehicle(496,-2124.4800,-929.0856,32.7397,269.1853,-1,-1);
+  CreateVehicle(496,-2133.3015,-847.1439,32.7396,88.8312,-1,-1);
+  CreateVehicle(516,-2134.1038,-775.5048,32.8568,91.5838,-1,-1);
+  CreateVehicle(516,-2134.1428,-453.9576,36.1699,95.0875,-1,-1);
+  CreateVehicle(541,-2035.6851,170.2529,29.4610,268.9087,-1,-1);
+  CreateVehicle(500,-2219.7209,-83.2318,36.4367,2.0481,-1,-1);
+  CreateVehicle(541,-2018.4379,-98.9675,35.7890,358.5420,-1,-1);
+  CreateVehicle(541,-2352.0959,-126.8848,35.9374,179.5324,-1,-1);
+  CreateVehicle(405,-2180.1277,41.8536,36.1953,269.9865,-1,-1);
+  CreateVehicle(522,-2269.4526,69.5823,35.7279,89.6104,-1,-1);
+  CreateVehicle(522,-2266.0090,145.0206,35.7322,92.0045,-1,-1);
+  CreateVehicle(475,-2129.2864,787.6249,70.3666,87.1679,-1,-1);
+  CreateVehicle(475,-2424.9958,740.8871,35.8205,177.6701,-1,-1);
+  CreateVehicle(400,-2684.7639,636.4294,14.5454,179.2696,-1,-1);
+  CreateVehicle(496,-2545.7666,627.5895,15.1684,89.1952,-1,-1);
+  CreateVehicle(496,-2428.7107,514.7900,30.6451,207.9893,-1,-1);
+  CreateVehicle(429,-2498.4822,357.5526,35.7969,58.0823,-1,-1);
+  CreateVehicle(429,-2664.9673,268.9968,5.0156,357.6026,-1,-1);
+  CreateVehicle(420,-2626.5276,-53.6779,5.1144,357.7703,-1,-1);
+  CreateVehicle(434,-2718.5354,-124.4790,5.3071,269.1429,-1,-1);
+  CreateVehicle(434,-2487.5295,-125.3075,26.5715,90.9363,-1,-1);
+  CreateVehicle(400,-2486.0298,51.5018,27.7954,177.2178,-1,-1);
+  CreateVehicle(400,-2574.9736,146.5981,5.4279,1.8790,-1,-1);
+  CreateVehicle(559,-2800.0251,205.2155,7.8399,92.2606,-1,-1);
+  CreateVehicle(549,-1741.0009,811.0599,25.5879,270.6703,-1,-1);
+  CreateVehicle(549,-1920.7559,875.2713,36.1113,270.0973,-1,-1);
+  CreateVehicle(500,-2040.4465,1107.7076,54.4032,89.8491,-1,-1);
+  CreateVehicle(500,-1968.8488,465.6065,36.2766,89.3124,-1,-1);
+  CreateVehicle(401,-1938.2876,584.4863,35.9137,1.1244,-1,-1);
+  CreateVehicle(401,-1825.2035,-0.4858,15.8965,270.0104,-1,-1);
+  CreateVehicle(579,-1820.0182,-175.9391,10.3323,87.9147,-1,-1);
+  CreateVehicle(429,-1687.9076,1003.5587,18.2656,91.3972,-1,-1);
+  CreateVehicle(439,-1704.8613,1058.0004,18.4810,182.3475,-1,-1);
+  CreateVehicle(579,-1702.2262,1028.7677,18.5187,270.2923,-1,-1);
+  CreateVehicle(480,-1735.9534,1016.0621,18.3580,268.5771,-1,-1);
+  CreateVehicle(400,-2782.3508,442.1533,5.5383,57.1401,-1,-1)
+  CreateVehicle(400,-2836.3665,865.6495,44.1470,268.7662,-1,-1);
+  CreateVehicle(415,-2899.3823,1112.4786,27.3954,268.9744,-1,-1);
+  CreateVehicle(516,-2654.5662,615.2198,15.2873,0.1598,-1,-1);
+  CreateVehicle(416,-2618.7363,627.2617,15.6024,179.6464,-1,-1);
+  CreateVehicle(401,-1968.8031,-400.9335,35.1227,88.2282,-1,-1);
+  CreateVehicle(516,-1904.3373,-599.6174,24.4277,344.2378,-1,-1);
+  CreateVehicle(475,-1639.3912,-567.4948,13.9482,80.1914,-1,-1);
+  CreateVehicle(475,-1405.5500,-309.2615,13.9504,174.9827,-1,-1);
+  CreateVehicle(475,-2132.1143,160.2086,35.1341,270.0023,-1,-1);
+  CreateVehicle(500,-2151.4924,428.9210,35.1902,176.6156,-1,-1);
+  CreateVehicle(500,-2304.8279,360.0154,35.2835,201.6184,-1,-1);
+  CreateVehicle(522,-1696.7413,977.0867,17.1574,7.0263,-1,-1);
+  CreateVehicle(429,-2641.7395,1333.0645,6.8700,356.7557,-1,-1);
+  CreateVehicle(457,-2650.6292,-280.5106,7.0874,132.0127,-1,-1);
+  CreateVehicle(421,-1409.6693,456.0711,7.0672,3.2988,-1,-1);
+  CreateVehicle(487,-1681.5756,706.4234,30.7777,266.5047,-1,-1);
+  CreateVehicle(603,-2617.2964,1349.0765,7.0217,358.1852,-1,-1);
+  CreateVehicle(475,-2129.8242,288.0418,34.9864,269.9582,-1,-1); 
+  CreateVehicle(475,-2664.0950,-259.9579,6.5482,74.4868,-1,-1); 
+  CreateVehicle(597,-1628.6875,652.5107,6.9568,0.9097,-1,-1); 
+  CreateVehicle(597,-1616.7957,652.5980,6.9551,0.6199,-1,-1); 
+  CreateVehicle(597,-1594.2644,672.5858,6.9564,176.7420,-1,-1); 
+  CreateVehicle(597,-1593.5823,652.3891,6.9567,1.3142,-1,1); 
+  CreateVehicle(597,-1611.9730,673.5499,6.9567,181.6088,-1,1); 
+
+  IRCSay('4,1SFTDM v0.1 loaded by [SWK]Killerkid');
+  IRCSay('12Have fun!');
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd, Str, Msg : String;
+  Int, Int2 : Integer;
+  PosZ, PosY, PosX : Single;
+begin
+  Cmd := CopyBefore(Command, ' ');
+  if (IsPlayerAdmin(PlayerID)) Then
+  begin
+    if(Cmd = '/kick') Then
+    begin
+      Int := StrToInt(CopyAfter(Command,' '));
+      Msg := '* Admin '+ GetPlayerNick(PlayerID) +' kicked '+
+GetPlayerNick(Int);
+      KickPlayer(Int);
+      SendTextToAll(Msg);
+      IRCSay(Msg);
+    end
+    if(Cmd = '/ban') Then
+    begin
+      Int := StrToInt(CopyAfter(Command,' '));
+      Msg := '* Admin '+ GetPlayerNick(PlayerID) +' banned '+
+GetPlayerNick(Int);
+      BanPlayer(Int);
+      SendTextToAll(Msg);
+      IRCSay(Msg);
+    end
+  end
+
+  Else if(Cmd = '/weapon') Then
+  begin
+    Str := CopyAfter(Command,' ');
+    Int := StrToInt(Str);
+    GivePlayerWeapon(PlayerID, Int);
+    Msg := '* '+ GetPlayerNick(PlayerID) +' gave him/herself an '+
+GetDeathReason(Int);
+    SendTextToAll(Msg);
+    IRCSay(Msg);
+  end
+  Else if(Cmd = '/to') Then
+  begin
+    Int := StrToInt(CopyAfter(Command,' '));
+    If (Int = PlayerID) Then
+      SendTextToPlayer(PlayerID,'* You can''t teleport to yourself')
+    Else
+    Begin
+      PosX := GetPlayerPosX(Int);
+      PosY := GetPlayerPosY(Int);
+      PosZ := GetPlayerPosZ(Int);
+      PosZ := PosZ + 2.0;
+      If (IsPlayerConnected(PlayerID)) Then
+      Begin
+        SetPlayerPos(PlayerID, PosX, PosY, PosZ);
+        Msg := '* '+ GetPlayerNick(PlayerID) +' teleported to '+
+GetPlayerNick(Int);
+        SendTextToAll(Msg);
+        IRCSay(Msg);
+      End
+      Else
+        SendTextToPlayer(PlayerID,'* Teleporting to '+ GetPlayerNick(Int)
++' failed. Player is not connected.');
+    End;
+  end
+  Else if(Cmd = '/weather') Then
+  begin
+    Int := StrToInt(CopyAfter(Command,' '));
+    SetWeather(Int);
+    Msg := '* Weather set to '+IntToStr(Int);
+    SendTextToAll(Msg);
+    IRCSay(Msg);
+  end
+  Else if(Cmd = '/gravity') Then
+  begin
+    Int := StrToInt(CopyAfter(Command,' '));
+    SetGravity(Int);
+    Msg := '* Gravity set to '+IntToStr(Int) +' - Default: 100';
+    SendTextToAll(Msg);
+    IRCSay(Msg);
+  end
+  Else if(Cmd = '/time') Then
+  begin
+    Int := StrToInt(CopyAfter(Command,' '));
+    SetTime(Int, 0);
+    Msg := '* Time set to '+IntToStr(Int)+':00';
+    SendTextToAll(Msg);
+    IRCSay(Msg);
+  end
+  Else if(Cmd = '/me') Then
+  begin
+    Str := CopyAfter(Command,' ');
+    Msg := '* '+GetPlayerNick(PlayerID)+' '+Str;
+    SendTextToAll(Msg);
+    IRCSay(Msg);
+  end
+
+  Else if(Command = '/ww') Then
+  begin
+    if (WaterWalk = False) Then
+    begin
+      WaterWalk := True;
+      UnderWaterWalk(WaterWalk);
+      Msg := '* Under water walk enabled';
+    end
+    Else
+    begin
+      WaterWalk := False;
+      UnderWaterWalk(WaterWalk);
+      Msg := '* Under water walk disabled';
+    end
+    SendTextToAll(Msg);
+    IRCSay(Msg);
+  end
+  Else if(Command = '/fly') Then
+  begin
+    if (Fly = False) Then
+    begin
+      Fly := True;
+      SetFlyingVehicles(Fly);
+      Msg := '* Flying vehicles is now enabled';
+    end
+    Else
+    begin
+      Fly := False;
+      SetFlyingVehicles(Fly);
+      Msg := '* Flying vehicles is now disabled';
+    end
+    SendTextToAll(Msg);
+    IRCSay(Msg);
+  end
+  Else If (Command = '/put') Then
+  Begin
+    BombX[PlayerID] := GetPlayerPosX(PlayerID);
+    BombY[PlayerID] := GetPlayerPosY(PlayerID);
+    BombZ[PlayerID] := GetPlayerPosZ(PlayerID);
+    SendTextToPlayer(PlayerID, '* Bomb planted!');
+  End
+
+Else If (Command = '/commands') Then
+  Begin
+
+    SendTextToPlayer(PlayerID, 'The commnads for this server are:');
+    SendTextToPlayer(PlayerID, '/ban /kick /weapon /to (goto) /weather');
+    SendTextToPlayer(PlayerID, '/gravity /time / me /ww /fly /put');
+    SendTextToPlayer(PlayerID, 'Thanks for playing this mode.');
+  End
+
+  Else If (Command = '/boom') Then
+  Begin
+    CreateExplosion(BombX[PlayerID], BombY[PlayerID], BombZ[PlayerID]);
+    SendTextToPlayer(PlayerID, '* Bomb exploded!');
+  End
+  Else If (Command = '/') Then
+  Begin
+    BomX := GetPlayerPosX(PlayerID);
+    BomY := GetPlayerPosY(PlayerID);
+    BomZ := GetPlayerPosZ(PlayerID);
+
+    Timer(1, 'Bomb');
+    SendTextToPlayer(PlayerID, '* GTFO!');
+  End;
+end;
+
+procedure OnPlayerJoin(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+  begin
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', you have been logged in with admin rights.');
+    Msg := '*** Admin '+GetPlayerNick(PlayerID)+' joined the server.';
+  end
+  Else
+  begin
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', welcome to this server.');
+    Msg := '*** '+GetPlayerNick(PlayerID)+' joined the server.';
+  end;
+  SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', Do /commands to check out the commands!');
+  DisplayTextPlayer(PlayerID, 1, 'San Fierro:TDM', 5);
+  IRCSay(Msg);
+  Log(Msg);
+end;
+
+procedure OnPlayerDeath(KillerID, PlayerID, ReasonID : Integer);
+var
+  Msg : String;
+begin
+  SetPlayerColor(PlayerID,-1);
+  Teams[PlayerID] := 0; // Reset player team
+  If (KillerID = 0) or (ReasonID = 0) Then
+   begin
+    Msg := '* '+ GetPlayerNick(PlayerID) +' died';
+  end
+  Else
+  begin
+    If (Teams[KillerID] = Teams[PlayerID]) Then
+      Msg := '* '+GetPlayerNick(KillerID)+' teamkilled '+GetPlayerNick(PlayerID)+' ('+GetDeathReason(ReasonID)+')' // OMFG! TEAMKILLER! KICK BAN KICK BAN
+    Else
+      Msg := '* '+GetPlayerNick(KillerID)+' killed '+GetPlayerNick(PlayerID)+' ('+GetDeathReason(ReasonID)+')'
+  end;
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+procedure Bomb();
+begin
+  CreateExplosion(BomX, BomY, BomZ); // BOOOOOOOOOOOOOOOOOOOOOOOOM!
+end;
+
+procedure OnPlayerSpawn(PlayerID, SpawnID : Integer);
+begin
+  Teams[PlayerID] := SpawnID; // Set the player team
+  SetPlayerColor(PlayerID,SpawnID); // Set the color... Green is 1 but we use random colors here.
+  
+  Teams[PlayerID] := SpawnID; // Set the TEAMid for the player
+  
+  If (SpawnID = 1) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as Worker!');
+    SetPlayerColor(PlayerID,1);
+    GivePlayerWeapon(PlayerID,25);
+    GivePlayerWeapon(PlayerID,4);
+    DisplayTextPlayer(PlayerID, 1, 'Worker', 5);
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as Worker');
+  End
+  Else If (SpawnID = 2) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as Pimp!');
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as Pimp');
+    DisplayTextPlayer(PlayerID, 1, 'Pimp', 5);
+    SetPlayerColor(PlayerID,0);
+    GivePlayerWeapon(PlayerID,29);
+    GivePlayerWeapon(PlayerID,5);
+  End
+  Else If (SpawnID = 3) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as Golfer');
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as Golfer');
+    DisplayTextPlayer(PlayerID, 1, 'Golfer', 5);
+    SetPlayerColor(PlayerID,4);
+    GivePlayerWeapon(PlayerID,32);
+    GivePlayerWeapon(PlayerID,9);
+  End
+  Else If (SpawnID = 4) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as Triad');
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as Triad');
+    DisplayTextPlayer(PlayerID, 1, 'Triad', 5);
+    SetPlayerColor(PlayerID,6);
+    GivePlayerWeapon(PlayerID,31);
+    GivePlayerWeapon(PlayerID,4);
+  End
+  Else If (SpawnID = 5) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as Mechanic');
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as Mechanic');
+    DisplayTextPlayer(PlayerID, 1, 'Mechanic', 5);
+    SetPlayerColor(PlayerID,9);
+    GivePlayerWeapon(PlayerID,30);
+    GivePlayerWeapon(PlayerID,9);
+  End
+  Else If (SpawnID = 6) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as Valet');
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as Valet');
+    DisplayTextPlayer(PlayerID, 1, 'Valet', 5);
+    SetPlayerColor(PlayerID,2);
+    GivePlayerWeapon(PlayerID,24);
+    GivePlayerWeapon(PlayerID,4);
+  End
+  Else If (SpawnID = 8) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as FBI');
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as FBI');
+    DisplayTextPlayer(PlayerID, 1, 'FBI', 5);
+    SetPlayerColor(PlayerID,2);
+    GivePlayerWeapon(PlayerID,22);
+    GivePlayerWeapon(PlayerID,3);
+  End
+  Else If (SpawnID = 7) Then
+  Begin
+    SendTextToPlayer(PlayerID,'*** '+ GetPlayerNick(PlayerID) +', You have spawned as Medic');
+    IRCSay(+ GetPlayerNick(PlayerID) +' spawned as Medic');
+    DisplayTextPlayer(PlayerID, 1, 'Madic', 5);
+    SetPlayerColor(PlayerID,2);
+    GivePlayerWeapon(PlayerID,23);
+    GivePlayerWeapon(PlayerID,4);
+  End;
+End;
+
+begin
+end.

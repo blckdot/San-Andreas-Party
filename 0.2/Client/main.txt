@@ -1,0 +1,2542 @@
+DEFINE OBJECTS  14
+DEFINE OBJECT Xoti                        // This is an unused object. You can put anything here.
+DEFINE OBJECT CRACKFACT_SFS           
+DEFINE OBJECT CF_EXT_DEM_SFS           // Object number -1
+DEFINE OBJECT LODCRACKFACT_SFS         // Object number -2
+DEFINE OBJECT LODEXT_DEM_SFS           // Object number -3
+DEFINE OBJECT VENDMACHFD               // Object number -4
+DEFINE OBJECT VENDMACH                 // Object number -5
+DEFINE OBJECT VENDIN3                  // Object number -6
+DEFINE OBJECT CJ_SPRUNK1               // Object number -7
+DEFINE OBJECT CJ_CANDYVENDOR           // Object number -8
+DEFINE OBJECT CJ_EXT_CANDY             // Object number -9
+DEFINE OBJECT CJ_EXT_SPRUNK            // Object number -10
+DEFINE OBJECT KB_BEER                  // Object number -11
+DEFINE OBJECT CJ_JUICE_CAN             // Object number -12
+
+DEFINE MISSIONS  0
+
+// Thanks to mabako for the external scripts _O_
+DEFINE EXTERNAL_SCRIPTS  1
+DEFINE SCRIPT VENDING_MACHINE AT @VENDING // 0
+
+DEFINE UNKNOWN_EMPTY_SEGMENT  0
+
+DEFINE UNKNOWN_THREADS_MEMORY  2146
+
+//-------------MAIN---------------
+
+
+:MAIN_1
+thread 'MAIN'
+var
+    $PIcon : array 20 of Marker
+    
+    $PLAYER_CHAR : Player
+    $PLAYER_ACTOR : Actor
+    
+    $PLAYERS : array 21 of Actor 
+    $DUMMYS : array 21 of Actor 
+    $PLRMARKERS : array 21 of Marker
+    
+    $ShootReset : array 21 of Integer
+    
+    $PlrActive : array 21 of Integer
+    $PlrActiveL : array 21 of Integer
+    $PlrCar : array 21 of Integer
+    $PlrArm : array 21 of Integer
+    $PlrShoot : array 21 of Integer
+    $PlrInterior : array 21 of Integer
+    
+    $CarPJ : array 21 of Integer 
+    
+    $PP : Integer
+    $SpawnX : Float
+    $Spawn : Integer // Spawn?
+    $Act : Integer
+    $Pass : Integer
+    $CPJ : Integer
+    $CurWeapon : Integer    
+    $Parachute : Integer   
+    $ParaModel : Integer 
+    $Armed : Integer    
+    $RotZ : Float
+    $Interior : Integer
+    $OnSpawnChange : Integer   
+    
+    $PlrMem1 : Integer
+    $PlrMem2 : Integer
+    $PlrMem3 : Integer
+    $PlrMem4 : Integer
+    $PlrMem5 : Integer
+    $PlrMem6 : Integer
+    $PlrMem7 : Integer
+    $PlrMem8 : Integer
+    $PlrMem9 : Integer
+    $PlrMem10 : Integer
+    $PlrMem11 : Integer
+    $PlrMem12 : Integer
+    $PlrMem13 : Integer
+    $PlrMem14 : Integer
+    $PlrMem15 : Integer
+    $PlrMem16 : Integer
+    $PlrMem17 : Integer
+    $PlrMem18 : Integer
+    $PlrMem19 : Integer
+    $PlrMem20 : Integer
+        
+    // Player Car
+    $PCar : Integer
+    $PlrCar1 : Integer
+    $PlrCar2 : Integer
+    $PlrCar3 : Integer
+    $PlrCar4 : Integer
+    $PlrCar5 : Integer
+    $PlrCar6 : Integer
+    $PlrCar7 : Integer
+    $PlrCar8 : Integer
+    $PlrCar9 : Integer
+    $PlrCar10 : Integer
+    $PlrCar11 : Integer
+    $PlrCar12 : Integer
+    $PlrCar13 : Integer
+    $PlrCar14 : Integer
+    $PlrCar15 : Integer
+    $PlrCar16 : Integer
+    $PlrCar17 : Integer
+    $PlrCar18 : Integer
+    $PlrCar19 : Integer
+    $PlrCar20 : Integer
+   
+    // Car Speed     
+    $CarSpeed1 : Integer
+    $CarSpeed2 : Integer
+    $CarSpeed3 : Integer
+    $CarSpeed4 : Integer
+    $CarSpeed5 : Integer
+    $CarSpeed6 : Integer
+    $CarSpeed7 : Integer
+    $CarSpeed8 : Integer
+    $CarSpeed9 : Integer
+    $CarSpeed10 : Integer
+    $CarSpeed11 : Integer
+    $CarSpeed12 : Integer
+    $CarSpeed13 : Integer
+    $CarSpeed14 : Integer
+    $CarSpeed15 : Integer
+    $CarSpeed16 : Integer
+    $CarSpeed17 : Integer
+    $CarSpeed18 : Integer
+    $CarSpeed19 : Integer
+    $CarSpeed20 : Integer   
+    
+    $CarPaintjob1 : Integer
+    $CarPaintjob2 : Integer
+    $CarPaintjob3 : Integer
+    $CarPaintjob4 : Integer
+    $CarPaintjob5 : Integer
+    $CarPaintjob6 : Integer
+    $CarPaintjob7 : Integer
+    $CarPaintjob8 : Integer
+    $CarPaintjob9 : Integer
+    $CarPaintjob10 : Integer
+    $CarPaintjob11 : Integer
+    $CarPaintjob12 : Integer
+    $CarPaintjob13 : Integer
+    $CarPaintjob14 : Integer
+    $CarPaintjob15 : Integer
+    $CarPaintjob16 : Integer
+    $CarPaintjob17 : Integer
+    $CarPaintjob18 : Integer
+    $CarPaintjob19 : Integer
+    $CarPaintjob20 : Integer
+    
+    $PlrActive1 : Integer
+    $PlrActive2 : Integer
+    $PlrActive3 : Integer
+    $PlrActive4 : Integer
+    $PlrActive5 : Integer
+    $PlrActive6 : Integer
+    $PlrActive7 : Integer
+    $PlrActive8 : Integer
+    $PlrActive9 : Integer
+    $PlrActive10 : Integer
+    $PlrActive11 : Integer
+    $PlrActive12 : Integer
+    $PlrActive13 : Integer
+    $PlrActive14 : Integer
+    $PlrActive15 : Integer
+    $PlrActive16 : Integer
+    $PlrActive17 : Integer
+    $PlrActive18 : Integer
+    $PlrActive19 : Integer
+    $PlrActive20 : Integer
+    
+    $PlrInterior1 : Integer 
+    $PlrInterior2 : Integer 
+    $PlrInterior3 : Integer 
+    $PlrInterior4 : Integer 
+    $PlrInterior5 : Integer 
+    $PlrInterior6 : Integer 
+    $PlrInterior7 : Integer 
+    $PlrInterior8 : Integer 
+    $PlrInterior9 : Integer 
+    $PlrInterior10 : Integer 
+    $PlrInterior11 : Integer 
+    $PlrInterior12 : Integer 
+    $PlrInterior13 : Integer 
+    $PlrInterior14 : Integer 
+    $PlrInterior15 : Integer 
+    $PlrInterior16 : Integer 
+    $PlrInterior17 : Integer 
+    $PlrInterior18 : Integer 
+    $PlrInterior19 : Integer 
+    $PlrInterior20 : Integer
+    
+    $PlrShoot1 : Integer
+    $PlrShoot2 : Integer
+    $PlrShoot3 : Integer
+    $PlrShoot4 : Integer
+    $PlrShoot5 : Integer
+    $PlrShoot6 : Integer
+    $PlrShoot7 : Integer
+    $PlrShoot8 : Integer
+    $PlrShoot9 : Integer
+    $PlrShoot10 : Integer
+    $PlrShoot11 : Integer
+    $PlrShoot12 : Integer
+    $PlrShoot13 : Integer
+    $PlrShoot14 : Integer
+    $PlrShoot15 : Integer
+    $PlrShoot16 : Integer
+    $PlrShoot17 : Integer
+    $PlrShoot18 : Integer
+    $PlrShoot19 : Integer
+    $PlrShoot20 : Integer
+    
+    $PlrArm1 : Integer
+    $PlrArm2 : Integer
+    $PlrArm3 : Integer
+    $PlrArm4 : Integer
+    $PlrArm5 : Integer
+    $PlrArm6 : Integer
+    $PlrArm7 : Integer
+    $PlrArm8 : Integer
+    $PlrArm9 : Integer
+    $PlrArm10 : Integer
+    $PlrArm11 : Integer
+    $PlrArm12 : Integer
+    $PlrArm13 : Integer
+    $PlrArm14 : Integer
+    $PlrArm15 : Integer
+    $PlrArm16 : Integer
+    $PlrArm17 : Integer
+    $PlrArm18 : Integer
+    $PlrArm19 : Integer
+    $PlrArm20 : Integer
+        
+    $MarkerColor : Integer
+    
+    $ParaTemp : Integer
+end
+
+$PCar = 0
+$Act = 0
+$Pass = 0
+$CPJ = 0
+$CurWeapon = 0
+$Parachute = 0
+$MarkerColor = 1 // Groen
+$ParaTemp = 0
+$RotZ = 0
+$Armed = 0
+$Interior = -1
+// Car speed
+$CarSpeed1 = 0
+$CarSpeed2 = 0
+$CarSpeed3 = 0
+$CarSpeed4 = 0
+$CarSpeed5 = 0
+$CarSpeed6 = 0
+$CarSpeed7 = 0
+$CarSpeed8 = 0
+$CarSpeed9 = 0
+$CarSpeed10 = 0
+$CarSpeed11 = 0
+$CarSpeed12 = 0
+$CarSpeed13 = 0
+$CarSpeed14 = 0
+$CarSpeed15 = 0
+$CarSpeed16 = 0
+$CarSpeed17 = 0
+$CarSpeed18 = 0
+$CarSpeed19 = 0
+$CarSpeed20 = 0
+
+$CarPaintjob1 = 0
+$CarPaintjob2 = 0
+$CarPaintjob3 = 0
+$CarPaintjob4 = 0
+$CarPaintjob5 = 0
+$CarPaintjob6 = 0
+$CarPaintjob7 = 0
+$CarPaintjob8 = 0
+$CarPaintjob9 = 0
+$CarPaintjob10 = 0
+$CarPaintjob11 = 0
+$CarPaintjob12 = 0
+$CarPaintjob13 = 0
+$CarPaintjob14 = 0
+$CarPaintjob15 = 0
+$CarPaintjob16 = 0
+$CarPaintjob17 = 0
+$CarPaintjob18 = 0
+$CarPaintjob19 = 0
+$CarPaintjob20 = 0
+
+$PlrInterior1 = 0
+$PlrInterior2 = 0
+$PlrInterior3 = 0
+$PlrInterior4 = 0
+$PlrInterior5 = 0
+$PlrInterior6 = 0
+$PlrInterior7 = 0
+$PlrInterior8 = 0
+$PlrInterior9 = 0
+$PlrInterior10 = 0
+$PlrInterior11 = 0
+$PlrInterior12 = 0
+$PlrInterior13 = 0
+$PlrInterior14 = 0
+$PlrInterior15 = 0
+$PlrInterior16 = 0
+$PlrInterior17 = 0
+$PlrInterior18 = 0
+$PlrInterior19 = 0
+$PlrInterior20 = 0
+
+$PlrCar1 = 0
+$PlrCar2 = 0
+$PlrCar3 = 0
+$PlrCar4 = 0
+$PlrCar5 = 0
+$PlrCar6 = 0
+$PlrCar7 = 0
+$PlrCar8 = 0
+$PlrCar9 = 0
+$PlrCar10 = 0
+$PlrCar11 = 0
+$PlrCar12 = 0
+$PlrCar13 = 0
+$PlrCar14 = 0
+$PlrCar15 = 0
+$PlrCar16 = 0
+$PlrCar17 = 0
+$PlrCar18 = 0
+$PlrCar19 = 0
+$PlrCar20 = 0
+
+$PlrActive1 = 0
+$PlrActive2 = 0
+$PlrActive3 = 0
+$PlrActive4 = 0
+$PlrActive5 = 0
+$PlrActive6 = 0
+$PlrActive7 = 0
+$PlrActive8 = 0
+$PlrActive9 = 0
+$PlrActive10 = 0
+$PlrActive11 = 0
+$PlrActive12 = 0
+$PlrActive13 = 0
+$PlrActive14 = 0
+$PlrActive15 = 0
+$PlrActive16 = 0
+$PlrActive17 = 0
+$PlrActive18 = 0
+$PlrActive19 = 0
+$PlrActive20 = 0
+
+$CarSpeed1 = 0
+$CarSpeed2 = 0
+$CarSpeed3 = 0
+$CarSpeed4 = 0
+$CarSpeed5 = 0
+$CarSpeed6 = 0
+$CarSpeed7 = 0
+$CarSpeed8 = 0
+$CarSpeed9 = 0
+$CarSpeed10 = 0
+$CarSpeed11 = 0
+$CarSpeed12 = 0
+$CarSpeed13 = 0
+$CarSpeed14 = 0
+$CarSpeed15 = 0
+$CarSpeed16 = 0
+$CarSpeed17 = 0
+$CarSpeed18 = 0
+$CarSpeed19 = 0
+$CarSpeed20 = 0
+
+$PlrShoot1 = 0
+$PlrShoot2 = 0
+$PlrShoot3 = 0
+$PlrShoot4 = 0
+$PlrShoot5 = 0
+$PlrShoot6 = 0
+$PlrShoot7 = 0
+$PlrShoot8 = 0
+$PlrShoot9 = 0
+$PlrShoot10 = 0
+$PlrShoot11 = 0
+$PlrShoot12 = 0
+$PlrShoot13 = 0
+$PlrShoot14 = 0
+$PlrShoot15 = 0
+$PlrShoot16 = 0
+$PlrShoot17 = 0
+$PlrShoot18 = 0
+$PlrShoot19 = 0
+$PlrShoot20 = 0
+
+$PlrArm1 = 0
+$PlrArm2 = 0
+$PlrArm3 = 0
+$PlrArm4 = 0
+$PlrArm5 = 0
+$PlrArm6 = 0
+$PlrArm7 = 0
+$PlrArm8 = 0
+$PlrArm9 = 0
+$PlrArm10 = 0
+$PlrArm11 = 0
+$PlrArm12 = 0
+$PlrArm13 = 0
+$PlrArm14 = 0
+$PlrArm15 = 0
+$PlrArm16 = 0
+$PlrArm17 = 0
+$PlrArm18 = 0
+$PlrArm19 = 0
+$PlrArm20 = 0
+
+$ParaModel = 0
+
+alloc($PCar,0)
+alloc($Act,1)
+alloc($Pass,2)
+alloc($CPJ,3) 
+alloc($CurWeapon,4)
+alloc($Parachute,5)
+alloc($MarkerColor,6)
+alloc($RotZ,7)
+alloc($Armed,8)
+alloc($Interior,9)
+alloc($ParaModel,10)
+// Car speed
+alloc($CarSpeed1,40)
+alloc($CarSpeed2,41)
+alloc($CarSpeed3,42)
+alloc($CarSpeed4,43)
+alloc($CarSpeed5,44)
+alloc($CarSpeed6,45)
+alloc($CarSpeed7,46)
+alloc($CarSpeed8,47)
+alloc($CarSpeed9,48)
+alloc($CarSpeed10,49)
+alloc($CarSpeed11,50)
+alloc($CarSpeed12,51)
+alloc($CarSpeed13,52)
+alloc($CarSpeed14,53)
+alloc($CarSpeed15,54)
+alloc($CarSpeed16,55)
+alloc($CarSpeed17,56)
+alloc($CarSpeed18,57)
+alloc($CarSpeed19,58)
+alloc($CarSpeed20,59)
+
+alloc($PlrCar1,50)
+alloc($PlrCar2,51)
+alloc($PlrCar3,52)
+alloc($PlrCar4,53)
+alloc($PlrCar5,54)
+alloc($PlrCar6,55)
+alloc($PlrCar7,56)
+alloc($PlrCar8,57)
+alloc($PlrCar9,58)
+alloc($PlrCar10,59)
+alloc($PlrCar11,60)
+alloc($PlrCar12,61)
+alloc($PlrCar13,62)
+alloc($PlrCar14,63)
+alloc($PlrCar15,64)
+alloc($PlrCar16,65)
+alloc($PlrCar17,66)
+alloc($PlrCar18,67)
+alloc($PlrCar19,68)
+alloc($PlrCar20,69)
+
+alloc($PlrActive1,70)
+alloc($PlrActive2,71)
+alloc($PlrActive3,72)
+alloc($PlrActive4,73)
+alloc($PlrActive5,74)
+alloc($PlrActive6,75)
+alloc($PlrActive7,76)
+alloc($PlrActive8,77)
+alloc($PlrActive9,78)
+alloc($PlrActive10,79)
+alloc($PlrActive11,80)
+alloc($PlrActive12,81)
+alloc($PlrActive13,82)
+alloc($PlrActive14,83)
+alloc($PlrActive15,84)
+alloc($PlrActive16,85)
+alloc($PlrActive17,86)
+alloc($PlrActive18,87)
+alloc($PlrActive19,88)
+alloc($PlrActive20,89)
+
+alloc($PlrInterior1,90)
+alloc($PlrInterior2,91)
+alloc($PlrInterior3,92)
+alloc($PlrInterior4,93)
+alloc($PlrInterior5,94)
+alloc($PlrInterior6,95)
+alloc($PlrInterior7,96)
+alloc($PlrInterior8,97)
+alloc($PlrInterior9,98)
+alloc($PlrInterior10,99)
+alloc($PlrInterior11,100)
+alloc($PlrInterior12,101)
+alloc($PlrInterior13,102)
+alloc($PlrInterior14,103)
+alloc($PlrInterior15,104)
+alloc($PlrInterior16,105)
+alloc($PlrInterior17,106)
+alloc($PlrInterior18,107)
+alloc($PlrInterior19,108)
+alloc($PlrInterior20,109)
+
+alloc($CarPaintjob1,110)
+alloc($CarPaintjob2,111)
+alloc($CarPaintjob3,112)
+alloc($CarPaintjob4,113)
+alloc($CarPaintjob5,114)
+alloc($CarPaintjob6,115)
+alloc($CarPaintjob7,116)
+alloc($CarPaintjob8,117)
+alloc($CarPaintjob9,118)
+alloc($CarPaintjob10,119)
+alloc($CarPaintjob11,120)
+alloc($CarPaintjob12,121)
+alloc($CarPaintjob13,122)
+alloc($CarPaintjob14,123)
+alloc($CarPaintjob15,124)
+alloc($CarPaintjob16,125)
+alloc($CarPaintjob17,126)
+alloc($CarPaintjob18,127)
+alloc($CarPaintjob19,128)
+alloc($CarPaintjob20,129)
+
+alloc($PlrShoot1,130)
+alloc($PlrShoot2,131)
+alloc($PlrShoot3,132)
+alloc($PlrShoot4,133)
+alloc($PlrShoot5,134)
+alloc($PlrShoot6,135)
+alloc($PlrShoot7,136)
+alloc($PlrShoot8,137)
+alloc($PlrShoot9,138)
+alloc($PlrShoot10,139)
+alloc($PlrShoot11,140)
+alloc($PlrShoot12,141)
+alloc($PlrShoot13,142)
+alloc($PlrShoot14,143)
+alloc($PlrShoot15,144)
+alloc($PlrShoot16,145)
+alloc($PlrShoot17,146)
+alloc($PlrShoot18,147)
+alloc($PlrShoot19,148)
+alloc($PlrShoot20,149)
+
+alloc($PlrArm1,150)
+alloc($PlrArm2,151)
+alloc($PlrArm3,152)
+alloc($PlrArm4,153)
+alloc($PlrArm5,154)
+alloc($PlrArm6,155)
+alloc($PlrArm7,156)
+alloc($PlrArm8,157)
+alloc($PlrArm9,158)
+alloc($PlrArm10,159)
+alloc($PlrArm11,160)
+alloc($PlrArm12,161)
+alloc($PlrArm13,162)
+alloc($PlrArm14,163)
+alloc($PlrArm15,164)
+alloc($PlrArm16,165)
+alloc($PlrArm17,166)
+alloc($PlrArm18,167)
+alloc($PlrArm19,168)
+alloc($PlrArm20,169)
+
+alloc($PlrMem1,170)
+alloc($PlrMem2,171)
+alloc($PlrMem3,172)
+alloc($PlrMem4,173)
+alloc($PlrMem5,174)
+alloc($PlrMem6,175)
+alloc($PlrMem7,176)
+alloc($PlrMem8,177)
+alloc($PlrMem9,178)
+alloc($PlrMem10,179)
+alloc($PlrMem11,180)
+alloc($PlrMem12,181)
+alloc($PlrMem13,182)
+alloc($PlrMem14,183)
+alloc($PlrMem15,184)
+alloc($PlrMem16,185)
+alloc($PlrMem17,186)
+alloc($PlrMem18,187)
+alloc($PlrMem19,188)
+alloc($PlrMem20,189)
+
+
+// -----------------------------------------
+// Important stuff (Must be after variables)
+// -----------------------------------------
+fade  0  0
+0776: init_objects_in_object_group "CARTER"
+0776: init_objects_in_object_group "CRACK" 
+0363: toggle_model_render_at -2166.86 -236.5  40.86 radius  40.0 object #CRACKFACT_SFS  1
+0363: toggle_model_render_at -2185.49 -215.55  34.31 radius  40.0 object #CF_EXT_DEM_SFS  0
+0363: toggle_model_render_at -2166.86 -236.5  40.86 radius  40.0 object #LODCRACKFACT_SFS  1
+0363: toggle_model_render_at -2185.49 -215.55  34.31 radius  40.0 object #LODEXT_DEM_SFS  0
+07FB: set_interior 'FDREST1' accessible  0
+07FB: set_interior 'REST2' accessible  0
+07FB: set_interior 'DINER1' accessible  0
+07FB: set_interior 'DINER2' accessible  0
+07FB: set_interior 'TSDINER' accessible  0
+07FB: set_interior 'GF1' accessible  0
+07FB: set_interior 'GF2' accessible  0
+07FB: set_interior 'GF3' accessible  0
+07FB: set_interior 'GF4' accessible  0
+07FB: set_interior 'GF5' accessible  0
+07FB: set_interior 'GF6' accessible  0
+07FB: set_interior 'CARLS' accessible  1
+07FB: set_interior 'AMMUN1' accessible  1
+07FB: set_interior 'AMMUN2' accessible  1
+07FB: set_interior 'AMMUN3' accessible  1
+07FB: set_interior 'AMMUN4' accessible  1
+07FB: set_interior 'AMMUN5' accessible  1
+07FB: set_interior 'BARBERS' accessible  1
+07FB: set_interior 'BARBER2' accessible  1
+07FB: set_interior 'BARBER3' accessible  1
+07FB: set_interior 'FDPIZA' accessible  1
+07FB: set_interior 'FDCHICK' accessible  1
+07FB: set_interior 'FDBURG' accessible  1
+07FB: set_interior 'TATTOO' accessible  1
+07FB: set_interior 'CSCHP' accessible  1
+07FB: set_interior 'CSSPRT' accessible  1
+07FB: set_interior 'LACS1' accessible  1
+07FB: set_interior 'CLOTHGP' accessible  1
+07FB: set_interior 'CSDESGN' accessible  1
+07FB: set_interior 'CSEXL' accessible  1
+07FB: set_interior 'GYM1' accessible  1
+07FB: set_interior 'GYM2' accessible  1
+07FB: set_interior 'GYM3' accessible  1
+07FB: set_interior 'PDOMES' accessible  1
+07FB: set_interior 'PDOMES2' accessible  1
+07FB: set_interior 'MADDOGS' accessible  1
+07FB: set_interior 'MDDOGS' accessible  1
+07FB: set_interior 'GANG' accessible  1
+07FB: set_interior 'RCPLAY' accessible  1
+07FB: set_interior 'PAPER' accessible  1
+07FB: set_interior 'ABATOIR' accessible  1
+07FB: set_interior 'LACRAK' accessible  1
+07FB: set_interior 'DAMIN' accessible  1
+07FB: set_interior 'DAMOUT' accessible  1
+04E4: unknown_refresh_game_renderer_at 1960.3783 1343.1572 
+03DE: set_pedestrians_density_multiplier_to  0.0
+01EB: set_car_density_to  0.0
+01E8: create_forbidden_for_cars_cube  100000.0  100000.0  100000.0 -100000.0 -100000.0 -100000.0
+022B: create_forbidden_for_peds_cube  100000.0  100000.0  100000.0 -100000.0 -100000.0 -100000.0
+062A: change_stat  165 (energy) to  1000.0  // float
+062A: change_stat  23 (muscle) to  1000.0  // float 
+//062A: change_stat  24 (max health) to  1000.0  // float 
+062A: change_stat 21 (fat) to 0.0  // float
+062A: change_stat 22 (stamina) to 1000.0  // float
+062A: change_stat 225 (lung capasity) to 1000.0  // float
+062A: change_stat 229 (bike skill) to 1000.0  // float
+062A: change_stat 230 (cycling skill) to 1000.0  // float
+062A: change_stat 223 (pilot skill) to 1000.0  // float
+062A: change_stat 160 (driving skill) to 1000.0  // float
+0629: change_stat 80 () to  2000  // integer see statdisp.dat
+0629: change_stat 68 () to  2000  // integer see statdisp.dat
+0629: change_stat 181 (islands unlocked) to 4  // integer see statdisp.dat
+062A: change_stat 69 (Weap skill: pistol) to 1000.0  // float
+062A: change_stat 70 (Weap skill: silence) to 1000.0  // float
+062A: change_stat 71 (Weap skill: desert ) to 1000.0  // float
+062A: change_stat 72 (Weap skill: shotgun) to 1000.0  // float
+062A: change_stat 73 (Weap skill: sawn of) to 1000.0  // float
+062A: change_stat 74 (Weap skill: combat ) to 1000.0  // float
+062A: change_stat 75 (Weap skill: machine) to 1000.0  // float
+062A: change_stat 76 (Weap skill: smg) to 1000.0  // float
+062A: change_stat 77 (Weap skill: ak-47) to 1000.0  // float
+062A: change_stat 78 (Weap skill: m4) to 1000.0  // float
+06D7: toggle_trains 0
+0A24: toggle_military_zones_wanted_level 0
+09E4: toggle_aircraftcarrier_sam 0
+07A8: toggle_area69_sam 0 
+08E7: disable_entrance_markers 0
+08DD: keep_stuff_after_wasted 0 
+0335: set_free_paynspray_to 0
+// ------
+// Player
+// ------
+$PLAYER_CHAR.Create(#NULL, 1960.3783, 1343.1572, 16.0)
+$PLAYER_ACTOR.EmulateFromPlayer($PLAYER_CHAR)
+$PLAYER_CHAR.SetClothes("PLAYER_FACE", "HEAD", Head)
+$PLAYER_CHAR.SetClothes("JEANSDENIM", "JEANS", Legs)
+$PLAYER_CHAR.SetClothes("SNEAKERBINCBLK", "SNEAKER", Shoes)
+$PLAYER_CHAR.SetClothes("VEST", "VEST", Torso)
+$PLAYER_CHAR.Build 
+$PLAYER_ACTOR.WeaponAccuracy = 100
+$PLAYER_CHAR.CanMove(False)
+$PLAYER_CHAR.InfiniteRun(True)
+//0109: player $PLAYER_CHAR money += 10
+{Model.Load(#MP5LNG)
+while not Model.Available(#MP5LNG)
+  wait 0
+end
+Model.Load(#MINIGUN)
+while not Model.Available(#MINIGUN)
+  wait 0
+end
+Model.Load(#AK47)
+while not Model.Available(#AK47)
+  wait 0
+end
+Model.Load(#MOLOTOV)
+while not Model.Available(#MOLOTOV)
+  wait 0
+end
+Model.Load(#DESERT_EAGLE)
+while not Model.Available(#DESERT_EAGLE)
+  wait 0
+end
+Model.Load(#FIRE_EX)
+while not Model.Available(#FIRE_EX)
+  wait 0
+end
+01B2: give_actor $PLAYER_ACTOR weapon 29 ammo 99999 // MP5
+01B2: give_actor $PLAYER_ACTOR weapon 38 ammo 99999 // Minigun
+01B2: give_actor $PLAYER_ACTOR weapon 30 ammo 99999 // AK47
+01B2: give_actor $PLAYER_ACTOR weapon 18 ammo 99999 // Molotov Cocktail
+01B2: give_actor $PLAYER_ACTOR weapon 24 ammo 99999 // Deagle
+01B2: give_actor $PLAYER_ACTOR weapon 42 ammo 99999 // Fire Extinguisher
+01B9: set_actor $PLAYER_ACTOR armed_weapon_to 0
+//0992: set_player $PLAYER_CHAR weapons_scrollable 0} 
+// -----
+// Actors
+// -----
+Model.Load(#NULL) 
+while not Model.Available(#NULL)
+  wait 0
+end
+$SpawnX = 1124.59
+for $PP = 1 to 20
+$PLAYERS[$PP].Create(Mission1, #NULL, $SpawnX, -1489.0, 23.0)
+0245: set_actor $PLAYERS[$PP] walk_style_to "PLAYER" 
+//$PLAYERS[$PP].Angle = 0.0
+02AB: $PLAYERS[$PP] 1 1 1 1 1 // Immunities
+0350: unknown_actor $PLAYERS[$PP] not_scared_flag  2
+04D8: actor $PLAYERS[$PP] cannot_swim 0
+02A9: set_actor $PLAYERS[$PP] immune_to_nonplayer  1
+0446: set_actor $PLAYERS[$PP] immune_to_headshots 1
+//$PLAYERS[$PP].LockInCurrentPosition(True) 
+//$PLRMARKERS[$PP].CreateAboveActor($PLAYERS[$PP])
+//$PLRMARKERS[$PP].CreateAboveActor($PLAYERS[$PP])
+//$PLRMARKERS[$PP].SetColor(1)
+// 0 - Rood
+// 1 - Groen
+// 2 - Lichtpaars
+// 3 - Wit?
+// 4 - Geel
+// 5 - Rood
+// 6 - Lichtblauw
+// 7 - Rood
+// 8 - Geel
+// 9 - Zwart
+// 10 - Zwart
+//$PLRMARKERS[$PP].Disable()
+//01B2: give_actor $PLAYERS[$PP] weapon 29 ammo 99999 // MP5
+//01B2: give_actor $PLAYERS[$PP] weapon 38 ammo 99999 // Minigun
+//01B2: give_actor $PLAYERS[$PP] weapon 30 ammo 99999 // AK47
+//01B2: give_actor $PLAYERS[$PP] weapon 18 ammo 99999 // Molotov Cocktail
+//01B2: give_actor $PLAYERS[$PP] weapon 24 ammo 99999 // Deagle
+//01B2: give_actor $PLAYERS[$PP] weapon 42 ammo 99999 // Fire Extinguisher
+//01B9: set_actor $PLAYERS[$PP] armed_weapon_to 0 
+0619: set_actor $PLAYERS[$PP] collision_detection 0
+0638: AS_actor $PLAYERS[$PP] stay_put 1 
+0337: unknown_actor $PLAYERS[$PP] flag 0 // Invisible 
+02E2: set_actor $PLAYERS[$PP] weapon_accuracy_to 100
+081A: actor $PLAYERS[$PP] weapon_skill 2
+0946: (unknown) $PLAYERS[$PP] 1
+093B: (unknown) $PLAYERS[$PP] 1 
+$SpawnX += 4.0
+end
+$SpawnX = 1124.59
+
+
+for $PP = 1 to 20
+$DUMMYS[$PP].Create(CivMale, #NULL, $SpawnX, -1489.0, 30.0)
+02AB: $DUMMYS[$PP] 1 1 1 1 1 // Immunities
+0350: unknown_actor $DUMMYS[$PP] not_scared_flag  1
+04D8: actor $DUMMYS[$PP] cannot_swim 0
+02A9: set_actor $DUMMYS[$PP] immune_to_nonplayer  1
+Actor.LockInCurrentPosition($DUMMYS[$PP],True)
+//$PLAYERS[$PP].LockInCurrentPosition(True) 
+//$PLAYERS[$PP].WeaponAccuracy = 100  
+//081A: actor $PLAYERS[$PP] weapon_skill 2
+0619: set_actor $DUMMYS[$PP] collision_detection 0  
+0337: unknown_actor $DUMMYS[$PP] flag 0 // Invisible
+$SpawnX += 4.0
+end
+// ------
+// Models
+// ------
+Model.Destroy(#NULL)
+{Model.Destroy(#MP5LNG)
+Model.Destroy(#MINIGUN)
+Model.Destroy(#AK47)
+Model.Destroy(#MOLOTOV)
+Model.Destroy(#DESERT_EAGLE)
+Model.Destroy(#FIRE_EX)}
+// ----------------
+// EXTERNAL SCRIPTS -- Tnx to Mabako
+0914: init_external_script 0 (VENDING_MACHINE)
+0929: init_external_script_with_object_trigger 0 (VENDING_MACHINE) object #VENDMACHFD priority 100 6.0 -1
+0929: init_external_script_with_object_trigger 0 (VENDING_MACHINE) object #VENDMACH priority 100 6.0 -1
+0929: init_external_script_with_object_trigger 0 (VENDING_MACHINE) object #VENDIN3 priority 100 6.0 -1
+0929: init_external_script_with_object_trigger 0 (VENDING_MACHINE) object #CJ_SPRUNK1 priority 100 6.0 -1
+0929: init_external_script_with_object_trigger 0 (VENDING_MACHINE) object #CJ_CANDYVENDOR priority 100 6.0 -1
+0929: init_external_script_with_object_trigger 0 (VENDING_MACHINE) object #CJ_EXT_CANDY priority 100 6.0 -1
+0929: init_external_script_with_object_trigger 0 (VENDING_MACHINE) object #CJ_EXT_SPRUNK priority 100 6.0 -1
+// ----------------
+// Time and weather
+// ----------------
+00C0: set_current_time 12 0
+set_weather 1
+// -------------------
+// Wasted/Busted stuff
+// -------------------
+016C: restart_if_wasted at -2029.16 156.47 28.9 angle  0.0 unknown  0
+016D: restart_if_busted at -2029.16 156.47 28.9 angle  0.0 unknown  0
+// -----------
+// Player misc
+// -----------
+01F0: set_max_wanted_level_to  0
+set_wb_check_to 0
+// -----------------
+// Pay 'n Spray icons
+// ------------------
+$APoint = 1
+$PIcon[$APoint].CreateIconWithoutSphere(63, 2067.3999, -1831.2, 13.5)
+$APoint = 2
+$PIcon[$APoint].CreateIconWithoutSphere(63, 2067.3999, -1831.2, 13.5)
+$APoint = 3
+$PIcon[$APoint].CreateIconWithoutSphere(63, 488.0, -1734.0, 34.4)
+$APoint = 4
+$PIcon[$APoint].CreateIconWithoutSphere(63, 720.016, -454.625, 15.328)
+$APoint = 5
+$PIcon[$APoint].CreateIconWithoutSphere(63, -1420.547, 2583.9451, 58.031)
+$APoint = 6
+$PIcon[$APoint].CreateIconWithoutSphere(63, 1966.532, 2162.6499, 10.995)
+$APoint = 7
+$PIcon[$APoint].CreateIconWithoutSphere(63, -2425.46, 1020.83, 49.39)
+$APoint = 8
+$PIcon[$APoint].CreateIconWithoutSphere(63, 1021.8, -1018.7, 30.9)
+$APoint = 9
+$PIcon[$APoint].CreateIconWithoutSphere(63, -1908.9, 292.3, 40.0)
+$APoint = 10
+$PIcon[$APoint].CreateIconWithoutSphere(63, -103.6, 1112.4, 18.7)
+$APoint = 11
+$PIcon[$APoint].CreateIconWithoutSphere(27, -2026.25,125.1948,29.07955)
+$APoint = 12
+$PIcon[$APoint].CreateIconWithoutSphere(27, 2505.063,-1695.167,13.28974)
+$APoint = 13
+$PIcon[$APoint].CreateIconWithoutSphere(27, 1273.849,2531.008,10.54739)
+$APoint = 0
+// ----
+// Misc
+// ----
+03F4:  0 (clear) cars_can_be_damaged
+03E6: remove_text_box
+00BE: text_clear_all
+create_thread @CarSetup_Main
+
+:MAIN_Loop
+wait 15
+042B: clear_peds_from_cube  100000.0  100000.0  100000.0 -100000.0 -100000.0 -100000.0
+03BA: clear_cars_from_cube  100000.0  100000.0  100000.0 -100000.0 -100000.0 -100000.0
+00C0: set_current_time 15 0
+01B6: set_weather 1 
+set_weather 1
+if
+  0117: is_player_wasted $PLAYER_CHAR
+then
+  if
+    $Spawn == 0
+  then
+    $Spawn = 1
+//    $PLAYER_ACTOR.Dead()
+    $Act = 0
+    wait 5000
+    create_thread @SpawnStart  
+  else
+    $Spawn = 1
+  end
+else
+  $Spawn = 0
+end
+if
+  $Parachute > 0
+then
+  $ParaTemp = 0
+  Model.Load($ParaModel)
+  While not Model.Available($ParaModel)
+    wait 0
+  end
+  01B2: give_actor $PLAYER_ACTOR weapon $Parachute ammo 99999
+  for 3@ = 1 to 20
+    01B2: give_actor $PLAYERS[3@] weapon $Parachute ammo 99999
+  end  
+  Model.Destroy($ParaModel)
+  $ParaTemp = 0
+  $Parachute = 0
+  $ParaModel = 0
+end
+jump @MAIN_Loop
+
+// #########################################################
+// ############### BEGIN DYNAMIC MAP LISTING ###############
+// #########################################################
+
+:CarSetup_Main
+thread 'CRSETUP'
+var
+    $SpawnPosX : array 20 of Float
+    $SpawnPosY : array 20 of Float
+    $SpawnPosZ : array 20 of Float
+    $SpawnAngle : array 20 of Float
+//    $SpawnSkinID : array 20 of Integer
+    $Pickup : array 30 of Pickup
+    $PickupPosX : array 30 of Float
+    $PickupPosY : array 30 of Float
+    $PickupPosZ : array 30 of Float
+    $PickupModel : array 30 of Integer
+    $PickupType : array 30 of Integer
+    $Car : array 2000 of Car
+    $CarPosX : array 2000 of Float
+    $CarPosY : array 2000 of Float
+    $CarPosZ : array 2000 of Float
+    $CarAngle : array 2000 of Float
+    $CarID : array 2000 of Integer
+    $CarActive : array 2000 of Integer
+    $NumOfCars : Integer
+    $NumOfSpawns : Integer
+    $NumOfPickups : Integer
+    $NumOfObjects : Integer
+    $NumOfRepairs : Integer
+    $NumOfTmp : Integer
+    $CurrentSpawnID : Integer
+    $StartSendVar : Integer 
+    $svPosX : Float
+    $svPosY : Float
+    $svPosZ : Float
+    $svRotX : Float
+    $svRotY : Float
+    $svRotZ : Float
+    $svAngle : Float
+    $svCarID : Integer
+    $svType : Integer 
+    $svTypePoint : Integer
+    2@ : Integer
+    3@ : Integer
+    $Object : array 300 of Float
+    $ObjectLast : array 300 of Float
+    $ObjectPosX : array 300 of Float
+    $ObjectPosY : array 300 of Float
+    $ObjectPosZ : array 300 of Float
+    $ObjectRotX : array 300 of Float
+    $ObjectRotY : array 300 of Float
+    $ObjectRotZ : array 300 of Float
+    $ObjectModel : array 300 of Integer
+    $Repair : array 80 of Marker
+    $RepairPosX : array 80 of Float
+    $RepairPosY : array 80 of Float
+    $RepairPosZ : array 80 of Float
+ end 
+alloc($StartSendVar, 28)
+alloc($svPosX, 29)
+alloc($svPosY, 30)
+alloc($svPosZ, 31)
+alloc($svAngle, 32)
+alloc($svCarID, 33)
+alloc($svType, 34)
+alloc($svTypePoint, 35)
+alloc($svRotX, 36)
+alloc($svRotY, 37)
+alloc($svRotZ, 38)
+ 
+// ---------
+// Car setup
+// ---------
+
+$NumOfCars = 0
+$NumOfSpawns = 0
+$NumOfPickups = 0
+$NumOfObjects = 0
+$NumOfRepairs = 0
+$StartSendVar = 2
+$CurrentSpawnID = 1
+$NumOfTmp = 0
+
+fade 1 0
+while not $StartSendVar == 1
+  wait 10
+end 
+
+
+:CarRead1
+while not $StartSendVar == 1
+      wait 10      
+end 
+if
+  $svTypePoint == 1
+then
+  // Vehicle
+  $NumOfTmp = $NumOfCars
+  $NumOfTmp += 1
+  $CarPosX[$NumOfTmp] = $svPosX
+  $CarPosY[$NumOfTmp] = $svPosY
+  $CarPosZ[$NumOfTmp] = $svPosZ
+  $CarAngle[$NumOfTmp] = $svAngle
+  $CarID[$NumOfTmp] = $svCarID
+  $NumOfCars += 1
+end
+if
+    $svTypePoint == 4
+  then
+    // Object
+    $NumOfTmp = $NumOfObjects
+    $NumOfTmp += 1
+    $ObjectPosX[$NumOfTmp] = $svPosX
+    $ObjectPosY[$NumOfTmp] = $svPosY
+    $ObjectPosZ[$NumOfTmp] = $svPosZ
+    $ObjectRotX[$NumOfTmp] = $svRotX
+    $ObjectRotY[$NumOfTmp] = $svRotY
+    $ObjectRotZ[$NumOfTmp] = $svRotZ
+    $ObjectModel[$NumOfTmp] = $svCarID
+    $NumOfObjects += 1
+end
+if
+      $svTypePoint == 2
+then
+      // Spawn
+      $NumOfTmp = $NumOfSpawns
+      $NumOfTmp += 1
+      $SpawnPosX[$NumOfTmp] = $svPosX
+      $SpawnPosY[$NumOfTmp] = $svPosY
+      $SpawnPosZ[$NumOfTmp] = $svPosZ
+      $SpawnAngle[$NumOfTmp] = $svAngle
+      //$SpawnSkinID[$NumOfTmp] = $svCarID
+      $NumOfSpawns += 1
+      if
+        $NumOfSpawns == 1
+      then
+        create_thread @DoData      
+      end
+end
+if
+        $svTypePoint == 3
+then
+        // Pickup
+        $NumOfTmp = $NumOfPickups
+        $NumOfTmp += 1
+        $PickupPosX[$NumOfTmp] = $svPosX
+        $PickupPosY[$NumOfTmp] = $svPosY
+        $PickupPosZ[$NumOfTmp] = $svPosZ
+        $PickupType[$NumOfTmp] = $svType
+        $PickupModel[$NumOfTmp] = $svCarID
+        $NumOfPickups += 1
+        Pickup.Create($Pickup[$NumOfPickups],$PickupModel[$NumOfPickups],$PickupType[$NumOfPickups],$PickupPosX[$NumOfPickups],$PickupPosY[$NumOfPickups],$PickupPosZ[$NumOfPickups])
+end
+if
+  $svTypePoint == 5
+then
+  // Marker (Repair)
+  $NumOfTmp = $NumOfRepairs
+  $NumOfTmp += 1
+  $RepairPosX[$NumOfTmp] = $svPosX
+  $RepairPosY[$NumOfTmp] = $svPosY
+  $RepairPosZ[$NumOfTmp] = $svPosZ
+  $NumOfRepairs += 1
+  03BC: $Repair[$NumOfRepairs] = create_sphere $RepairPosX[$NumOfRepairs] $RepairPosY[$NumOfRepairs] $RepairPosZ[$NumOfRepairs] 4.0 
+end      
+$StartSendVar = 2
+jump @CarRead1
+
+:DoData
+$PLAYER_ACTOR.LockInCurrentPosition(True)
+create_thread @CarData1A // Cars system
+create_thread @PlrCarA // Player car
+create_thread @ActCarA // Actor car
+create_thread @CarSync1A // Speed sync
+create_thread @Pass // Passenger code
+//create_thread @CarPJ_A // Paintjob sync
+//create_thread @ModShop // Mod garage
+create_thread @RepairA // Repair pickups
+create_thread @PlrSync // Player sync
+create_thread @PlrShootA // Shoot sync
+create_thread @ObjectFast1A // Object management
+
+
+// #########################################################
+// ################ END DYNAMIC MAP LISTING ################
+// #########################################################
+
+// ####################################################
+// ################ BEGIN SPAWN SYSTEM ################
+// ####################################################
+
+:SpawnStart   
+thread 'SPAWN' 
+//var
+//  10@ : Integer
+//end    
+fade 0 250
+wait 250
+03E6: remove_text_box
+00BE: text_clear_all
+02A3: toggle_widescreen 1
+$Act = 0 
+$PLAYER_CHAR.CanMove(False)
+$PLAYER_ACTOR.LockInCurrentPosition(True)
+//$PLAYER_ACTOR.PutAt(1960.3783, 1343.1572, 15.3746)
+//$PLAYER_ACTOR.Angle = 90.0
+//Camera.SetPosition(1956.3783, 1343.1572, 16.3746,0.0,0.0,0.0)
+//Camera.PointAt(1958.3783, 1343.1572, 16.3746,2)
+$PLAYER_ACTOR.PutAt($SpawnPosX[1],$SpawnPosY[1],$SpawnPosZ[1])
+wait 2000
+fade 1 250
+//018C: play_sound 1183 at 0.0 0.0 0.0 // Loading music
+//018D: 10@ = create_sound 1183 at 2181.127 -2251.999 14.0361 
+//$CurrentSpawnID = 1
+
+:Spawn_Choose
+wait 10
+var
+  1@ : Float
+  2@ : Float
+  3@ : Float
+end
+0860: link_actor $PLAYER_ACTOR to_interior 0
+04BB: select_interior 0
+$OnSpawnChange = $CurrentSpawnID
+{Model.Load($SpawnSkinID[$CurrentSpawnID])
+while not Model.Available($SpawnSkinID[$CurrentSpawnID])
+  wait 0
+end} 
+018C: play_sound 1058 at 0.0 0.0 0.0 
+//fade 0 250
+//wait 250
+$PLAYER_ACTOR.LockInCurrentPosition(True)
+//09C7: change_player $PLAYER_CHAR model_to $SpawnSkinID[$CurrentSpawnID]
+//Model.Destroy($SpawnSkinID[$CurrentSpawnID])
+$PLAYER_ACTOR.PutAt($SpawnPosX[$CurrentSpawnID],$SpawnPosY[$CurrentSpawnID],$SpawnPosZ[$CurrentSpawnID])
+$PLAYER_ACTOR.Angle = $SpawnAngle[$CurrentSpawnID]
+1@ = $SpawnPosX[$CurrentSpawnID]
+2@ = $SpawnPosY[$CurrentSpawnID]
+3@ = $SpawnPosZ[$CurrentSpawnID]
+wait 5
+1@ += 8.0
+2@ -= 5.0
+3@ += 5.0
+Camera.SetPosition(1@,2@,3@,0.0,0.0,0.0)
+Camera.PointAt($SpawnPosX[$CurrentSpawnID],$SpawnPosY[$CurrentSpawnID],$SpawnPosZ[$CurrentSpawnID],2)
+wait 750
+$PLAYER_ACTOR.LockInCurrentPosition(False)
+//fade 1 250
+wait 250
+ 
+:Spawn_Idle
+while true
+  wait 5 
+  if or
+    00E1: key_pressed 0 14
+    00E1: key_pressed 0 0
+    00E1: key_pressed 0 1
+  then
+    if
+      $CurrentSpawnID == $NumOfSpawns
+    then
+      $CurrentSpawnID = 1
+      wait 100
+      jump @Spawn_Choose
+    else
+      $CurrentSpawnID += 1
+      wait 100
+      jump @Spawn_Choose     
+    end
+  end
+  if or
+    00E1: key_pressed 0 15
+    00E1: key_pressed 0 17
+  then
+    jump @Spawn_Go
+  end 
+end
+end_thread 
+
+:Spawn_Go
+//018E: stop_sound 10@
+wait 5
+018C: play_sound 1083 at 0.0 0.0 0.0
+fade 0 250
+wait 250
+$PLAYER_ACTOR.LockInCurrentPosition(True)
+//$PLAYER_ACTOR.LockInCurrentPosition(True)
+02A3: toggle_widescreen 0
+//$PLAYER_ACTOR.PutAt($SpawnPosX[$CurrentSpawnID],$SpawnPosY[$CurrentSpawnID],$SpawnPosZ[$CurrentSpawnID])
+//$PLAYER_ACTOR.Angle = $SpawnAngle[$CurrentSpawnID]
+wait 50
+Camera.Restore_WithJumpCut()
+Camera.SetBehindPlayer()
+wait 1000
+//Camera.Restore()
+$PLAYER_ACTOR.LockInCurrentPosition(False)
+fade 1 250
+wait 250
+$PLAYER_CHAR.CanMove(True)
+//$Skin = $SpawnSkinID[$CurrentSpawnID] 
+$Act = 1 
+end_thread
+
+// ####################################################
+// ################# END SPAWN SYSTEM #################
+// ####################################################
+
+// ####################################################
+// ################## BEGIN CAR LOCK ##################
+// ####################################################
+
+:RepairA
+thread 'RPRCAR'
+var
+  1@ : Integer
+  2@ : Car
+  3@ : Integer
+end
+
+:RepairB
+wait 100
+if
+  $NumOfRepairs > 0
+jf @RepairB
+for 1@ = 1 to $NumOfRepairs
+  if
+    0100:   actor $PLAYER_ACTOR near_point_in_car $RepairPosX[1@] $RepairPosY[1@] $RepairPosZ[1@] radius 4.0 4.0 4.0 sphere 1 
+  then
+    0811: 2@ = actor $PLAYER_ACTOR car    
+    0A30: repair_car 2@
+  end
+  for 3@ = 1 to 20
+    if
+      $PlrActive[3@] == 1
+    then
+      if
+        0100:   actor $PLAYERS[3@] near_point_in_car $RepairPosX[1@] $RepairPosY[1@] $RepairPosZ[1@] radius 4.0 4.0 4.0 sphere 1 
+      then
+        0811: 2@ = actor $PLAYERS[3@] car
+        0A30: repair_car 2@
+      end
+    end
+  end
+end
+jump @RepairB
+
+
+:ObjectFast1A
+thread 'OBJ1FST'
+var
+  2@ : Integer
+  1@ : Integer
+  6@ : Float
+  7@ : Integer
+end
+
+:ObjectFast1B
+wait 200
+if
+  $NumOfObjects > 0
+jf @ObjectFast1B
+  for 2@ = 1 to $NumOfObjects
+    $PLAYER_ACTOR.StorePos(3@, 4@, 5@)
+    //0509: 6@ = distance between point $ObjectPosX[2@] $ObjectPosY[2@] and point 3@ 4@
+    050A: 6@ = distance_between $ObjectPosX[2@] $ObjectPosY[2@] $ObjectPosZ[2@] and point 3@ 4@ 5@
+    if
+      6@ < 140.0  
+    then 
+      if                                                         
+        $ObjectLast[2@] == 0
+      then        
+        if
+          not Model.Available($ObjectModel[2@])
+        then
+          Model.Load($ObjectModel[2@])
+          while not Model.Available($ObjectModel[2@])
+            wait 0
+          end
+        end
+        0107: $Object[2@] = create_object $ObjectModel[2@] at $ObjectPosX[2@] $ObjectPosY[2@] $ObjectPosZ[2@]    
+        0453: object $Object[2@] set_rotation $ObjectRotX[2@] $ObjectRotY[2@] $ObjectRotZ[2@]
+        Object.PutAt($Object[2@],$ObjectPosX[2@],$ObjectPosY[2@],$ObjectPosZ[2@]) 
+        Model.Destroy($ObjectModel[2@])
+        $ObjectLast[2@] = 1
+      end
+    else
+      if
+        $ObjectLast[2@] == 1
+      then     
+        Object.Destroy($Object[2@])
+        $ObjectLast[2@] = 0 
+      end     
+    end 
+  end
+jump @ObjectFast1B
+
+:CarData1A
+thread 'CRDAT1'
+var
+  23@ : Car
+  24@ : Float
+  25@ : Float
+  26@ : Float
+  27@ : Integer
+  28@ : Integer
+end
+
+:CarData1B
+wait 200
+if
+  $NumOfCars > 0
+jf @CarData1B 
+for 1@ = 1 to $NumOfCars
+  if
+    $CarActive[1@] == 1
+  then
+    if
+      $Car[1@].Wrecked() 
+    then
+      if
+        not $PLAYER_ACTOR.InCar($Car[1@])
+      then
+        27@ = 0
+        for 2@ = 1 to 20
+          if
+            $PLAYERS[2@].InCar($Car[1@])
+          then
+            27@ = 1
+          end
+        end
+        if
+          27@ == 0
+        then
+          $Car[1@].Destroy()      
+          $CarActive[1@] = 0
+          jump @CarData1B
+        end
+      end
+    end
+    $PLAYER_ACTOR.StorePos(4@,5@,6@)
+    Car.StorePos($Car[1@],7@,8@,9@)
+    050A: 3@ = distance_between 7@ 8@ 9@ and point 4@ 5@ 6@                    
+  else
+    $PLAYER_ACTOR.StorePos(4@,5@,6@)
+    050A: 3@ = distance_between $CarPosX[1@] $CarPosY[1@] $CarPosZ[1@] and point 4@ 5@ 6@        
+  end             
+  if
+    3@ < 300.0 
+  then
+    if
+      $CarActive[1@] == 0
+    then
+      $CarActive[1@] = 1
+      if 
+        not Model.Available($CarID[1@])
+      then
+        Model.Load($CarID[1@])
+        while not Model.Available($CarID[1@])
+          wait 0
+        end
+      end   
+      0674: set_car_model $CarID[1@] numberplate "_SAP__"
+      $Car[1@].Create($CarID[1@],$CarPosX[1@],$CarPosY[1@],$CarPosZ[1@])
+      0175: set_car $Car[1@] angle $CarAngle[1@]
+      Marker.TieToCar(10@,$Car[1@],1,0) 
+      Marker.SetColor(10@,2)
+      018B: show_on_radar 10@ 2
+      Car.DoorStatus($Car[1@],0)
+      Model.Destroy($CarID[1@])
+      $CarActive[1@] = 1
+    end   
+  else
+    if
+      $CarActive[1@] == 1
+    then
+      $CarActive[1@] = 0
+      20@ = 0
+      for 21@ = 1 to 20
+        if
+          $PLAYERS[21@].InCar($Car[1@])
+        then
+          20@ = 1
+        end
+      end
+      if
+        20@ == 0
+      then
+        if
+          $PLAYER_ACTOR.InCar($Car[1@])
+        then
+          $CarActive[1@] = 1
+        else
+          $Car[1@].Destroy()
+          $CarActive[1@] = 0
+        end
+      end
+    end
+  end
+end
+jump @CarData1B
+
+
+// ####################################################
+// ################### END CAR LOCK ###################
+// ####################################################
+
+// #############################################
+// ############## BEGIN ACTOR CAR ##############
+// #############################################
+
+:PlrCarA
+Thread 'PLRCAR'
+var
+  1@ : Integer
+end
+
+:PlrCarB
+wait 150
+if
+  $NumOfCars == 0
+then
+  $Pass = 0
+  $PCar = 0
+  jump @PlrCarB
+end
+for 1@ = 1 to $NumOfCars
+  if
+    $CarActive[1@] == 1
+  then 
+    if
+      Actor.InCar($PLAYER_ACTOR,$Car[1@])
+    then
+      $PCar = 1@
+      jump @PlrCarB
+    end
+  end
+end 
+$Pass = 0
+$PCar = 0 
+jump @PlrCarB
+
+:ActCarA
+Thread 'ACTCAR'
+var
+    $TampCar : Integer
+    2@ : Integer
+    3@ : Integer
+    10@ : Integer
+    11@ : Car
+    12@ : Integer
+    13@ : Integer
+end
+
+:ActCarB
+wait 200
+if
+  $NumOfCars > 0
+jf @ActCarB
+$PlrCar[1] = $PlrCar1
+$PlrCar[2] = $PlrCar2
+$PlrCar[3] = $PlrCar3
+$PlrCar[4] = $PlrCar4
+$PlrCar[5] = $PlrCar5
+$PlrCar[6] = $PlrCar6
+$PlrCar[7] = $PlrCar7
+$PlrCar[8] = $PlrCar8
+$PlrCar[9] = $PlrCar9
+$PlrCar[10] = $PlrCar10
+$PlrCar[11] = $PlrCar11
+$PlrCar[12] = $PlrCar12
+$PlrCar[13] = $PlrCar13
+$PlrCar[14] = $PlrCar14
+$PlrCar[15] = $PlrCar15
+$PlrCar[16] = $PlrCar16
+$PlrCar[17] = $PlrCar17
+$PlrCar[18] = $PlrCar18
+$PlrCar[19] = $PlrCar19
+$PlrCar[20] = $PlrCar20
+for 12@ = 1 to 20
+  if
+    $PlrActive[12@] == 1
+  then
+    if
+      $PlrCar[12@] == 0
+    then
+      0811: 11@ = actor $PLAYERS[12@] car
+      if
+        Actor.InCar($PLAYERS[12@],11@)
+      then
+        0362: remove_actor $PLAYERS[12@] from_car_and_place_at 10.0 0.0 75.0
+      end
+    else
+      10@ = 0
+      13@ = $PlrCar[12@]
+      if
+        $PlrCar[12@] > 6000
+      then
+        13@ -= 6000
+      else
+        if
+          $PlrCar[12@] > 4000
+        then
+          13@ -= 4000
+        else
+          if
+            $PlrCar[12@] > 2000
+          then
+            13@ -= 2000
+          else
+            13@ = $PlrCar[12@]
+            if
+              $CarActive[13@] == 0
+            then
+              Model.Load($CarID[13@])
+              while not Model.Available($CarID[13@])
+                wait 0
+              end    
+              $Car[13@].Create($CarID[13@],$CarPosX[13@],$CarPosY[13@],$CarPosZ[13@])
+              0175: set_car $Car[13@] angle $CarAngle[13@]
+              Marker.TieToCar(3@,$Car[13@],1,0) 
+              Marker.SetColor(3@,2)
+              018B: show_on_radar 3@ 2
+              Car.DoorStatus($Car[13@],0)
+              Model.Destroy($CarID[13@])
+              $CarActive[13@] = 1
+            end
+            if
+              not Actor.InCar($PLAYERS[12@],$Car[13@])
+            then
+              036A: put_actor $PLAYERS[12@] in_car $Car[13@]
+            end
+            10@ = 1
+          end
+        end
+      end
+    end
+    if
+      10@ == 0
+    then
+      if
+        $CarActive[13@] == 1
+      then
+        if 
+          not Actor.InCar($PLAYERS[12@],$Car[13@])
+        then
+          if
+            $PlrCar[12@] > 6000
+          then
+            05CA: AS_actor $PLAYERS[12@] enter_car $Car[13@] passenger_seat 2 0 ms
+          else
+            if
+              $PlrCar[12@] > 4000
+            then
+              05CA: AS_actor $PLAYERS[12@] enter_car $Car[13@] passenger_seat 1 0 ms
+            else
+              if
+                $PlrCar[12@] > 2000
+              then
+                05CA: AS_actor $PLAYERS[12@] enter_car $Car[13@] passenger_seat 0 0 ms
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+end
+jump @ActCarB
+
+// #############################################
+// ############### END ACTOR CAR ###############
+// #############################################
+:PlrSync
+thread 'PLRSYNC'
+var
+  1@ : Integer
+  2@ : Integer
+end
+
+:PlrSync1
+wait 300
+if
+  $Interior > -1
+then 
+  09E8: 1@ = actor $PLAYER_ACTOR active_interior
+  if
+    not $Interior == 1@
+  then 
+    0860: link_actor $PLAYER_ACTOR to_interior $Interior
+    04BB: select_interior $Interior
+    $Interior = -1
+  end
+end
+
+
+$PlrInterior[1] = $PlrInterior1
+$PlrInterior[2] = $PlrInterior2
+$PlrInterior[3] = $PlrInterior3
+$PlrInterior[4] = $PlrInterior4
+$PlrInterior[5] = $PlrInterior5
+$PlrInterior[6] = $PlrInterior6
+$PlrInterior[7] = $PlrInterior7
+$PlrInterior[8] = $PlrInterior8
+$PlrInterior[9] = $PlrInterior9
+$PlrInterior[10] = $PlrInterior10
+$PlrInterior[11] = $PlrInterior11
+$PlrInterior[12] = $PlrInterior12
+$PlrInterior[13] = $PlrInterior13
+$PlrInterior[14] = $PlrInterior14
+$PlrInterior[15] = $PlrInterior15
+$PlrInterior[16] = $PlrInterior16
+$PlrInterior[17] = $PlrInterior17
+$PlrInterior[18] = $PlrInterior18
+$PlrInterior[19] = $PlrInterior19
+$PlrInterior[20] = $PlrInterior20
+for 2@ = 1 to 20
+  if
+    $PlrActive[2@] == 1
+  then
+    09E8: 1@ = actor $PLAYERS[2@] active_interior 
+    if
+      not $PlrInterior[2@] == 1@
+    then 
+      0860: link_actor $PLAYERS[2@] to_interior $PlrInterior[2@]
+    end
+  end
+end
+$PlrActive[1] = $PlrActive1
+$PlrActive[2] = $PlrActive2
+$PlrActive[3] = $PlrActive3
+$PlrActive[4] = $PlrActive4
+$PlrActive[5] = $PlrActive5
+$PlrActive[6] = $PlrActive6
+$PlrActive[7] = $PlrActive7
+$PlrActive[8] = $PlrActive8
+$PlrActive[9] = $PlrActive9
+$PlrActive[10] = $PlrActive10
+$PlrActive[11] = $PlrActive11
+$PlrActive[12] = $PlrActive12
+$PlrActive[13] = $PlrActive13
+$PlrActive[14] = $PlrActive14
+$PlrActive[15] = $PlrActive15
+$PlrActive[16] = $PlrActive16
+$PlrActive[17] = $PlrActive17
+$PlrActive[18] = $PlrActive18
+$PlrActive[19] = $PlrActive19
+$PlrActive[20] = $PlrActive20
+for 2@ = 1 to 20
+  if
+    not $PlrActive[2@] == $PlrActiveL[2@]
+  then
+    $PlrActiveL[2@] = $PlrActive[2@]
+    if
+      $PlrActive[2@] == 1
+    then
+{      Model.Load(#NULL) 
+      while not Model.Available(#NULL)
+        wait 0
+      end
+      $PLAYERS[2@].Create(4, #NULL, 3500.0, 3500.0, 1000.0)
+      0245: set_actor $PLAYERS[2@] walk_style_to "PLAYER" 
+      02AB: $PLAYERS[2@] 1 1 1 1 1 // Immunities
+      0350: unknown_actor $PLAYERS[2@] not_scared_flag  2
+      04D8: actor $PLAYERS[2@] cannot_swim 0
+      02A9: set_actor $PLAYERS[2@] immune_to_nonplayer  1
+      0446: set_actor $PLAYERS[2@] immune_to_headshots 1
+      0638: AS_actor $PLAYERS[2@] stay_put 1
+      02E2: set_actor $PLAYERS[2@] weapon_accuracy_to 100
+      081A: actor $PLAYERS[22@] weapon_skill 2 
+      0946: (unknown) $PLAYERS[2@] 1
+      093B: (unknown) $PLAYERS[2@] 1 
+      Model.Destroy(#NULL)  }
+      $PLRMARKERS[2@].CreateAboveActor($PLAYERS[2@])
+      //$PLRMARKERS[2@].SetColor($MarkerColor)
+      07E0: set_marker $PLRMARKERS[2@] type_to 1
+      0619: set_actor $PLAYERS[2@] collision_detection 1
+      0337: unknown_actor $PLAYERS[2@] flag 1 // Visible
+    else
+      $PLRMARKERS[2@].Disable()
+      //$PLAYERS[2@].PutAt(3500.0,3500.0,0.0)
+      //$PLAYERS[2@].DestroyInstantly()
+      0619: set_actor $PLAYERS[2@] collision_detection 0
+      0337: unknown_actor $PLAYERS[2@] flag 0 // Invisible 
+    end
+  end
+end
+{ $PlrMem1 = $PLAYERS[1] 
+$PlrMem2 = $PLAYERS[2]
+$PlrMem3 = $PLAYERS[3]
+$PlrMem4 = $PLAYERS[4]
+$PlrMem5 = $PLAYERS[5]
+$PlrMem6 = $PLAYERS[6]
+$PlrMem7 = $PLAYERS[7]
+$PlrMem8 = $PLAYERS[8]
+$PlrMem9 = $PLAYERS[9]
+$PlrMem10 = $PLAYERS[10]
+$PlrMem11 = $PLAYERS[11]
+$PlrMem12 = $PLAYERS[12]
+$PlrMem13 = $PLAYERS[13]
+$PlrMem14 = $PLAYERS[14]
+$PlrMem15 = $PLAYERS[15]
+$PlrMem16 = $PLAYERS[16]
+$PlrMem17 = $PLAYERS[17]
+$PlrMem18 = $PLAYERS[18]
+$PlrMem19 = $PLAYERS[19]
+$PlrMem20 = $PLAYERS[20] }
+jump @PlrSync1
+
+:CarSync1A
+thread 'SPDSYNC'
+var
+  1@ : Car
+end
+
+:CarSync1B
+wait 60
+if
+  $NumOfCars > 0
+jf @CarSync1B
+if
+  $PlrActive1 == 1
+then 
+  if
+    $PLAYERS[1].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[1] car
+    0477: set_car 1@ animation $CarSpeed1 200 ms
+  end
+end
+if
+  $PlrActive2 == 1
+then 
+  if
+    $PLAYERS[2].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[2] car
+    0477: set_car 1@ animation $CarSpeed2 200 ms
+  end
+end
+if
+  $PlrActive3 == 1
+then 
+  if
+    $PLAYERS[3].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[3] car
+    0477: set_car 1@ animation $CarSpeed3 200 ms
+  end
+end
+if
+  $PlrActive4 == 1
+then 
+  if
+    $PLAYERS[4].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[4] car
+    0477: set_car 1@ animation $CarSpeed4 200 ms
+  end
+end
+if
+  $PlrActive5 == 1
+then 
+  if
+    $PLAYERS[5].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[5] car
+    0477: set_car 1@ animation $CarSpeed5 200 ms
+  end
+end
+if
+  $PlrActive6 == 1
+then 
+  if
+    $PLAYERS[6].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[6] car
+    0477: set_car 1@ animation $CarSpeed6 200 ms
+  end
+end
+if
+  $PlrActive7 == 1
+then 
+  if
+    $PLAYERS[7].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[7] car
+    0477: set_car 1@ animation $CarSpeed7 200 ms
+  end
+end
+if
+  $PlrActive8 == 1
+then 
+  if
+    $PLAYERS[8].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[8] car
+    0477: set_car 1@ animation $CarSpeed8 200 ms
+  end
+end
+if
+  $PlrActive9 == 1
+then 
+  if
+    $PLAYERS[9].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[9] car
+    0477: set_car 1@ animation $CarSpeed9 200 ms
+  end
+end
+if
+  $PlrActive10 == 1
+then 
+  if
+    $PLAYERS[10].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[10] car
+    0477: set_car 1@ animation $CarSpeed10 200 ms
+  end
+end
+if
+  $PlrActive11 == 1
+then 
+  if
+    $PLAYERS[11].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[11] car
+    0477: set_car 1@ animation $CarSpeed11 200 ms
+  end
+end
+if
+  $PlrActive12 == 1
+then 
+  if
+    $PLAYERS[12].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[12] car
+    0477: set_car 1@ animation $CarSpeed12 500 ms
+  end
+end
+if
+  $PlrActive13 == 1
+then 
+  if
+    $PLAYERS[13].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[13] car
+    0477: set_car 1@ animation $CarSpeed13 200 ms
+  end
+end
+if
+  $PlrActive14 == 1
+then 
+  if
+    $PLAYERS[14].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[14] car
+    0477: set_car 1@ animation $CarSpeed14 200 ms
+  end
+end
+if
+  $PlrActive15 == 1
+then 
+  if
+    $PLAYERS[15].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[15] car
+    0477: set_car 1@ animation $CarSpeed15 200 ms
+  end
+end
+if
+  $PlrActive16 == 1
+then 
+  if
+    $PLAYERS[16].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[16] car
+    0477: set_car 1@ animation $CarSpeed16 200 ms
+  end
+end
+if
+  $PlrActive17 == 1
+then 
+  if
+    $PLAYERS[17].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[17] car
+    0477: set_car 1@ animation $CarSpeed17 200 ms
+  end
+end
+if 
+  $PlrActive18 == 1
+then 
+  if
+    $PLAYERS[18].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[18] car
+    0477: set_car 1@ animation $CarSpeed18 200 ms
+  end
+end
+if
+  $PlrActive19 == 1
+then 
+  if
+    $PLAYERS[19].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[19] car
+    0477: set_car 1@ animation $CarSpeed19 200 ms
+  end
+end
+if
+  $PlrActive20 == 1
+then 
+  if
+    $PLAYERS[20].Driving()
+  then
+    0811: 1@ = actor $PLAYERS[20] car
+    0477: set_car 1@ animation $CarSpeed20 200 ms
+  end
+end
+jump @CarSync1B
+
+// #######################
+// Passenger code ########
+// #######################
+
+:Pass
+thread 'PASSC'
+var
+  $CarAPosX: array 2000 of Float
+  $CarAPosY: array 2000 of Float 
+  $CarAPosZ: array 2000 of Float
+  $Input: array 2000 of Float
+  $APoint: Integer
+  $Distance: array 2000 of Float
+  $PPosX: Float
+  $PPosY: Float
+  $PPosZ: Float
+  $ClCar: Integer
+  9@: Integer
+  $j: Integer
+  $t: Float
+  $lengte: Integer
+  $tmp: Integer
+end
+
+:PassC2
+wait 100
+if
+  $NumOfCars > 0
+jf @PassC2
+if
+  not $PLAYER_ACTOR.Driving
+jf @PassC2
+if
+  00E1: key_pressed 0 8
+jf @PassC2
+$PLAYER_ACTOR.StorePos($PPosX, $PPosY, $PPosZ)
+gosub @GetCarPos
+gosub @GetCarDistance
+for $APoint = 1 to $NumOfCars
+  if
+    $CarActive[$APoint] == 1
+  then
+    $Input[$APoint] = $Distance[$APoint]
+  else
+    $Input[$APoint] = 1000.0  
+  end
+end
+$lengte = $NumOfCars
+gosub @Sort
+gosub @GetClosestCar
+$ClCar = $APoint
+if 
+   $Distance[$ClCar] < 5.0
+jf @PassC2 
+if
+  0431: car $Car[$ClCar] car_passenger_seat_free 0 
+then
+    end_thread_named 'PLRCAR'
+    $Pass = 1
+    $PCar = $ClCar
+    05CA: AS_actor $PLAYER_ACTOR enter_car $Car[$PCar] passenger_seat 0 0 ms
+    wait 250
+    create_thread @PlrCarA
+else
+    if
+      0431: car $Car[$ClCar] car_passenger_seat_free 1 
+    then
+      end_thread_named 'PLRCAR'
+      $Pass = 2
+      $PCar = $ClCar
+      05CA: AS_actor $PLAYER_ACTOR enter_car $Car[$PCar] passenger_seat 1 0 ms
+      wait 250
+      create_thread @PlrCarA
+    else
+      if
+        0431: car $Car[$ClCar] car_passenger_seat_free 2 
+      then
+        end_thread_named 'PLRCAR'
+        $Pass = 3
+        $PCar = $ClCar
+        05CA: AS_actor $PLAYER_ACTOR enter_car $Car[$PCar] passenger_seat 2 0 ms
+        wait 250
+        create_thread @PlrCarA
+      end    
+    end
+end
+$ClCar = 0
+wait 100
+jump @PassC2
+
+:GetCarPos
+for 9@ = 1 to $NumOfCars
+  if
+    $CarActive[9@] == 1
+  then
+    $Car[9@].StorePos($CarAPosX[9@], $CarAPosY[9@], $CarAPosZ[9@])
+  else
+    $CarAPosX[9@] = 3500.0
+    $CarAPosY[9@] = 3500.0
+    $CarAPosZ[9@] = 1000.0
+  end
+end
+return
+
+:GetCarDistance
+for $APoint = 1 to $NumOfCars
+  if
+    $CarActive[$APoint] == 1
+  then
+    050A: $Distance[$APoint] = distance_between $CarAPosX[$APoint] $CarAPosY[$APoint] $CarAPosZ[$APoint] and $PPosX $PPosY $PPosZ 
+  else
+    $Distance[$APoint] = 1000.0 
+  end
+end 
+return
+
+:Sort
+for $j = 0 to $lengte - 1
+    for 9@ = 1 to $lengte - $j
+        $APoint = 9@
+        $APoint -= 1
+        if
+          $Input[$APoint] > $Input[9@]
+        then
+            $t = $Input[9@]
+            $Input[9@] = $Input[$APoint]
+            $Input[$APoint] = $t
+        end
+    end
+end
+return
+
+:GetClosestCar
+9@ = 1
+for $APoint = 1 to $NumOfCars
+    if
+      $Input[9@] == $Distance[$APoint]
+    then
+        break
+    end
+end
+return
+
+:ModShop
+Thread 'MODSHOP'
+var
+  1@ : Integer
+  2@ : Integer
+end 
+
+:ModShop2
+wait 500
+if
+  $NumOfCars > 0
+jf @ModShop2
+  if or
+    0100: actor $PLAYER_ACTOR near_point_in_car -2026.25 125.1948 29.07955 radius 4.0 4.0 4.0 sphere 1 
+    0100: actor $PLAYER_ACTOR near_point_in_car 2505.063 -1695.167 13.28974 radius 4.0 4.0 4.0 sphere 1
+    0100: actor $PLAYER_ACTOR near_point_in_car 1273.849 2531.008 10.54739 radius 4.0 4.0 4.0 sphere 1
+  then
+    fade 0 750
+    wait 1000
+    $APoint = 11
+    $PIcon[$APoint].Disable()
+    $APoint = 12
+    $PIcon[$APoint].Disable()
+    $APoint = 13
+    $PIcon[$APoint].Disable()
+    $APoint = 0
+    0811: 1@ = actor $PLAYER_ACTOR car
+    2@ = random(0,3)
+    06ED: set_car 1@ paintjob 2@
+    wait 500
+    fade 1 750
+    wait 1000
+    jump @ModShop3
+  end
+jump @ModShop2
+
+:ModShop3
+wait 5000
+$APoint = 11
+$PIcon[$APoint].CreateIconWithoutSphere(27, -2026.25,125.1948,29.07955)
+$APoint = 12
+$PIcon[$APoint].CreateIconWithoutSphere(27, 2505.063,-1695.167,13.28974)
+$APoint = 13
+$PIcon[$APoint].CreateIconWithoutSphere(27, 1273.849,2531.008,10.54739)
+$APoint = 0
+jump @ModShop2
+
+:PlrShootA
+thread 'PLRSHT'
+var
+  1@ : Integer
+  2@ : Car
+  3@ : Float
+  4@ : Float
+  5@ : Float
+end
+
+:PlrShootB
+wait 150
+0470: $Armed = actor $PLAYER_ACTOR armed_weapon unknown 
+0172: $RotZ = actor $PLAYER_ACTOR z_angle
+$PlrArm[1] = $PlrArm1
+$PlrArm[2] = $PlrArm2
+$PlrArm[3] = $PlrArm3
+$PlrArm[4] = $PlrArm4
+$PlrArm[5] = $PlrArm5
+$PlrArm[6] = $PlrArm6
+$PlrArm[7] = $PlrArm7
+$PlrArm[8] = $PlrArm8
+$PlrArm[9] = $PlrArm9
+$PlrArm[10] = $PlrArm10
+$PlrArm[11] = $PlrArm11
+$PlrArm[12] = $PlrArm12
+$PlrArm[13] = $PlrArm13
+$PlrArm[14] = $PlrArm14
+$PlrArm[15] = $PlrArm15
+$PlrArm[16] = $PlrArm16
+$PlrArm[17] = $PlrArm17
+$PlrArm[18] = $PlrArm18
+$PlrArm[19] = $PlrArm19
+$PlrArm[20] = $PlrArm20
+$PlrShoot[1] = $PlrShoot1
+$PlrShoot[2] = $PlrShoot2
+$PlrShoot[3] = $PlrShoot3
+$PlrShoot[4] = $PlrShoot4
+$PlrShoot[5] = $PlrShoot5
+$PlrShoot[6] = $PlrShoot6
+$PlrShoot[7] = $PlrShoot7
+$PlrShoot[8] = $PlrShoot8
+$PlrShoot[9] = $PlrShoot9
+$PlrShoot[10] = $PlrShoot10
+$PlrShoot[11] = $PlrShoot11
+$PlrShoot[12] = $PlrShoot12
+$PlrShoot[13] = $PlrShoot13
+$PlrShoot[14] = $PlrShoot14
+$PlrShoot[15] = $PlrShoot15
+$PlrShoot[16] = $PlrShoot16
+$PlrShoot[17] = $PlrShoot17
+$PlrShoot[18] = $PlrShoot18
+$PlrShoot[19] = $PlrShoot19
+$PlrShoot[20] = $PlrShoot20
+
+//0634: unknown_action_sequence 67@ 50@ 4 2000 100 
+for 1@ = 1 to 20
+  if
+    $PlrActive[1@] == 1
+  then
+    if
+      $PlrArm[1@] > -1
+    then
+      0687: (unknown) $PLAYERS[1@]
+      wait 5
+      01B9: set_actor $PLAYERS[1@] armed_weapon_to $PlrArm[1@]
+      $PlrArm[1@] = -1
+    end
+    if
+      $PlrShoot[1@] == 1
+    then
+      //05E2: AS_actor $PLAYERS[1@] kill_actor $DUMMYS[1@]
+      Actor.StorePos($DUMMYS[1@],3@,4@,5@)
+      5@ += 50.0
+      0668: actor $PLAYERS[1@] fire_at 3@ 4@ 5@ time 500 ms 
+      $PlrShoot[1@] = 0
+    else
+      if
+        $PlrShoot[1@] == 2
+      then
+        0687: (unknown) $PLAYERS[1@]
+        $PlrShoot[1@] = 0
+      end
+    end
+  end
+end
+$PlrArm1 = $PlrArm[1]
+$PlrArm2 = $PlrArm[2]
+$PlrArm3 = $PlrArm[3]
+$PlrArm4 = $PlrArm[4]
+$PlrArm5 = $PlrArm[5]
+$PlrArm6 = $PlrArm[6]
+$PlrArm7 = $PlrArm[7]
+$PlrArm8 = $PlrArm[8]
+$PlrArm9 = $PlrArm[9]
+$PlrArm10 = $PlrArm[10]
+$PlrArm11 = $PlrArm[11]
+$PlrArm12 = $PlrArm[12]
+$PlrArm13 = $PlrArm[13]
+$PlrArm14 = $PlrArm[14]
+$PlrArm15 = $PlrArm[15]
+$PlrArm16 = $PlrArm[16]
+$PlrArm17 = $PlrArm[17]
+$PlrArm18 = $PlrArm[18]
+$PlrArm19 = $PlrArm[19]
+$PlrArm20 = $PlrArm[20]
+$PlrShoot1 = $PlrShoot[1]
+$PlrShoot2 = $PlrShoot[2]
+$PlrShoot3 = $PlrShoot[3]
+$PlrShoot4 = $PlrShoot[4]
+$PlrShoot5 = $PlrShoot[5]
+$PlrShoot6 = $PlrShoot[6]
+$PlrShoot7 = $PlrShoot[7]
+$PlrShoot8 = $PlrShoot[8]
+$PlrShoot9 = $PlrShoot[9]
+$PlrShoot10 = $PlrShoot[10]
+$PlrShoot11 = $PlrShoot[11]
+$PlrShoot12 = $PlrShoot[12]
+$PlrShoot13 = $PlrShoot[13]
+$PlrShoot14 = $PlrShoot[14]
+$PlrShoot15 = $PlrShoot[15]
+$PlrShoot16 = $PlrShoot[16]
+$PlrShoot17 = $PlrShoot[17]
+$PlrShoot18 = $PlrShoot[18]
+$PlrShoot19 = $PlrShoot[19]
+$PlrShoot20 = $PlrShoot[20]
+
+jump @PlrShootB
+
+//-------------External script 0 (VENDING_MACHINE)---------------
+
+:VENDING
+thread 'VENDING'
+1@ = 0 // integer values
+if
+  1@ == 1 // integer values
+else_jump @VENDING_80
+0@ = Object.Init(#VENDMACHFD, 0.0, 0.0, 0.0)
+3@ = Object.Init(#KB_BEER, 0.0, 0.0, 0.0)
+
+:VENDING_80
+wait 0
+01BD: $CURRENT_TIME_IN_MS2 = current_time_in_ms
+if
+03CA:   object 0@ exists
+else_jump @VENDING_1578
+if
+0977:   0@
+else_jump @VENDING_1483
+if
+   Player.Defined($PLAYER_CHAR)
+else_jump @VENDING_1390
+if
+  1@ == 0 // integer values
+else_jump @VENDING_173
+04ED: load_animation "VENDING"
+1@ += 1 // integer values
+
+:VENDING_173
+if
+  1@ == 1 // integer values
+else_jump @VENDING_395
+if
+04EE:   animation "VENDING" loaded
+else_jump @VENDING_384
+0400: create_coordinate $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 from_object 0@ offset 0.0 -1.0 0.5
+if
+00FF:   actor $PLAYER_ACTOR 0 $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 radius 0.6 0.6 1.0
+else_jump @VENDING_377
+if or
+   Object.Model(0@) == #VENDIN3
+   Object.Model(0@) == #CJ_CANDYVENDOR
+   Object.Model(0@) == #CJ_EXT_CANDY
+else_jump @VENDING_343
+03CF: load_wav 42601 as 4
+0512: permanent_text_box 'SLOT_04'  // ~k~~VEHICLE_ENTER_EXIT~ Buy Snack: $1
+jump @VENDING_363
+
+:VENDING_343
+03CF: load_wav 42600 as 4
+0512: permanent_text_box 'SLOT_05'  // ~k~~VEHICLE_ENTER_EXIT~ Buy Drink: $1
+
+:VENDING_363
+07CC: player $PLAYER_CHAR disable_key_15 0
+1@ += 1 // integer values
+
+:VENDING_377
+jump @VENDING_395
+
+:VENDING_384
+04ED: load_animation "VENDING"
+
+:VENDING_395
+if
+  1@ == 2 // integer values
+else_jump @VENDING_1209
+if
+04EE:   animation "VENDING" loaded
+else_jump @VENDING_1198
+0400: create_coordinate $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 from_object 0@ offset 0.0 -1.0 0.5
+if or
+   Object.Model(0@) == #VENDIN3
+   Object.Model(0@) == #CJ_CANDYVENDOR
+   Object.Model(0@) == #CJ_EXT_CANDY
+else_jump @VENDING_512
+03CF: load_wav 42601 as 4
+jump @VENDING_521
+
+:VENDING_512
+03CF: load_wav 42600 as 4
+
+:VENDING_521
+if
+00FF:   actor $PLAYER_ACTOR 0 $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 radius 0.6 0.6 1.0
+else_jump @VENDING_1175
+if
+00E1:   key_pressed 0 15
+else_jump @VENDING_1168
+if
+   Player.Controllable($PLAYER_CHAR)
+else_jump @VENDING_1168
+if
+   Player.Money($PLAYER_CHAR) > 0
+else_jump @VENDING_1140
+if
+03D0:   wav 4 loaded
+else_jump @VENDING_1133
+$TEMPVAR_ANGLE = Object.Angle(0@)
+0400: create_coordinate $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 from_object 0@ offset 0.0 -0.2 0.6
+3@ = Object.Init(#CJ_JUICE_CAN, $TEMPVAR_FLOAT_1, $TEMPVAR_FLOAT_2, $TEMPVAR_FLOAT_3)
+$TEMPVAR_ANGLE = Object.Angle(0@)
+0615: define_action_sequences $3381[14]
+0400: create_coordinate $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 from_object 0@ offset 0.2 -1.0 0.0
+0804: unknown_action_sequence -1 $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 $TEMPVAR_ANGLE 0.4 "VEND_USE" "VENDING" 4.0 0 0 0 1 0
+if or
+   Object.Model(0@) == #VENDIN3
+   Object.Model(0@) == #CJ_CANDYVENDOR
+   Object.Model(0@) == #CJ_EXT_CANDY
+else_jump @VENDING_858
+0A1A: unknown_action_sequence -1 "VEND_EAT_P" "VENDING" 4.0 0 0 0 0 -1
+jump @VENDING_1000
+
+:VENDING_858
+07E4: (unknown) -172 $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3 $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3
+$TEMPVAR_FLOAT_2 /= 2.0 // floating-point values
+$TEMPVAR_FLOAT_2 += 0.027 // floating-point values
+070A: unknown_action_sequence -1 3@ 0.062 $TEMPVAR_FLOAT_2 0.0 5 16 "VEND_USE_PT2" "VENDING" 0
+070A: unknown_action_sequence -1 3@ 0.062 $TEMPVAR_FLOAT_2 0.0 5 16 "VEND_DRINK2_P" "VENDING" 0
+
+:VENDING_1000
+0616: define_action_sequences_end $3381[14]
+0618: assign_actor $PLAYER_ACTOR to_action_sequences $3381[14]
+061B: remove_references_to_action_sequences $3381[14]
+Player.Money($PLAYER_CHAR) += -1
+03E6: remove_text_box
+if or
+   Object.Model(0@) == #VENDIN3
+   Object.Model(0@) == #CJ_CANDYVENDOR
+   Object.Model(0@) == #CJ_EXT_CANDY
+else_jump @VENDING_1075
+03CF: load_wav 42601 as 4
+jump @VENDING_1084
+
+:VENDING_1075
+03CF: load_wav 42600 as 4
+
+:VENDING_1084
+if
+03D0:   wav 4 loaded
+else_jump @VENDING_1110
+0949: link_wav 4 to_actor $PLAYER_ACTOR
+03D1: play_wav 4
+
+:VENDING_1110
+008B: 2@ = $CURRENT_TIME_IN_MS2 // integer values and handles
+2@ += 3000 // integer values
+1@ += 1 // integer values
+
+:VENDING_1133
+jump @VENDING_1168
+
+:VENDING_1140
+Actor.StorePos($PLAYER_ACTOR, $TEMPVAR_FLOAT_1, $TEMPVAR_FLOAT_2, $TEMPVAR_FLOAT_3)
+018C: play_sound 1053 at $TEMPVAR_FLOAT_1 $TEMPVAR_FLOAT_2 $TEMPVAR_FLOAT_3
+
+:VENDING_1168
+jump @VENDING_1191
+
+:VENDING_1175
+03E6: remove_text_box
+07CC: player $PLAYER_CHAR disable_key_15 1
+1@ = 1 // integer values
+
+:VENDING_1191
+jump @VENDING_1209
+
+:VENDING_1198
+04ED: load_animation "VENDING"
+
+:VENDING_1209
+if
+  1@ == 3 // integer values
+else_jump @VENDING_1323
+062E: (unknown) $PLAYER_ACTOR 1560 $242[174]
+if
+04A3:   island_variable $242[174] == 7
+else_jump @VENDING_1323
+0623: add 5 to_stat 245
+$3381[15] = Actor.Health($PLAYER_ACTOR)
+$3381[15] += 30 // integer values
+Actor.Health($PLAYER_ACTOR) = $3381[15]
+Object.RemoveReferences(3@)
+03E6: remove_text_box
+07CC: player $PLAYER_CHAR disable_key_15 1
+008B: 2@ = $CURRENT_TIME_IN_MS2 // integer values and handles
+2@ += 1500 // integer values
+1@ += 1 // integer values
+
+:VENDING_1323
+if
+  1@ == 4 // integer values
+else_jump @VENDING_1383
+if
+001E:   $CURRENT_TIME_IN_MS2 > 2@ // integer values
+else_jump @VENDING_1383
+0687: (unknown) $PLAYER_ACTOR
+04EF: release_animation "VENDING"
+1@ = 0 // integer values
+
+:VENDING_1383
+jump @VENDING_1476
+
+:VENDING_1390
+if
+  1@ > 0 // integer values
+else_jump @VENDING_1476
+if
+  1@ > 1 // integer values
+else_jump @VENDING_1435
+03E6: remove_text_box
+07CC: player $PLAYER_CHAR disable_key_15 1
+
+:VENDING_1435
+if
+  1@ > 2 // integer values
+else_jump @VENDING_1458
+Object.RemoveReferences(3@)
+
+:VENDING_1458
+04EF: release_animation "VENDING"
+1@ = 0 // integer values
+
+:VENDING_1476
+jump @VENDING_1571
+
+:VENDING_1483
+if
+  1@ > 0 // integer values
+else_jump @VENDING_1569
+if
+  1@ > 1 // integer values
+else_jump @VENDING_1528
+03E6: remove_text_box
+07CC: player $PLAYER_CHAR disable_key_15 1
+
+:VENDING_1528
+if
+  1@ > 2 // integer values
+else_jump @VENDING_1551
+Object.RemoveReferences(3@)
+
+:VENDING_1551
+04EF: release_animation "VENDING"
+1@ = 0 // integer values
+
+:VENDING_1569
+end_thread
+
+:VENDING_1571
+jump @VENDING_1666
+
+:VENDING_1578
+if
+  1@ > 0 // integer values
+else_jump @VENDING_1664
+if
+  1@ > 1 // integer values
+else_jump @VENDING_1623
+03E6: remove_text_box
+07CC: player $PLAYER_CHAR disable_key_15 1
+
+:VENDING_1623
+if
+  1@ > 2 // integer values
+else_jump @VENDING_1646
+Object.RemoveReferences(3@)
+
+:VENDING_1646
+04EF: release_animation "VENDING"
+1@ = 0 // integer values
+
+:VENDING_1664
+end_thread
+
+:VENDING_1666
+jump @VENDING_80
+end_thread

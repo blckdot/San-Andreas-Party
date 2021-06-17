@@ -1,0 +1,344 @@
+type
+  TSplitArray = array [0 .. 100] of String;
+ 
+
+procedure IRCSay (Boo : String);
+begin
+  IRCMessage('#sap', Boo);
+end;
+ 
+function Split(const Source, Delimiter: String): TSplitArray;
+var
+  iCount:     Integer;
+  iPos:       Integer;
+  iLength:    Integer;
+  sTemp:      String;
+  aSplit:     TSplitArray;
+begin
+  sTemp   := Source;
+  iCount  := 0;
+  iLength := Length(Delimiter) - 1;
+  repeat
+    iPos := Pos(Delimiter, sTemp);
+     if iPos = 0 then
+      break
+    else begin
+      iCount := iCount+1;
+      aSplit[iCount - 1] := Copy(sTemp, 1, iPos - 1);
+      Delete(sTemp, 1, iPos + iLength);
+    end;
+  until False;
+  if Length(sTemp) > 0 then begin
+    iCount := iCount+1;
+    aSplit[iCount - 1] := sTemp;
+  end;
+  Result := aSplit;
+end;
+
+procedure OnServerStart();
+var
+  i : Integer;
+  NewX : Single;
+begin
+  Log('* Standard SAP 0.5 script loaded');
+  IRCSetNames('SAP-Server', 'SAPServer');
+  IRCServer('irc.gtanet.com', 6667);
+  IRCConnect();
+  IRCJoin('#sap.betateam lovelybirds');
+  IRCJoin('#sap');
+  IRCJoin('#ywa');
+  IRCJoin('#physbox');
+  IRCMessage('#sap', '* Standard SAP 0.5 script loaded');
+  NewX := -2650.6443;
+  For i := 0 To 3 Do
+  Begin
+	  CreateObject(3374,NewX,1388.2767,7.1301+10.0,0.0,0.0,0.0);
+	NewX := NewX + 6.0;
+  End;
+end; 
+
+procedure OnPlayerJoin(PlayerID : Integer);
+var
+	Mssg : String;
+begin
+  Mssg := '* '+GetPlayerName(PlayerID)+' joined (ID: '+IntToStr(PlayerID)+')';
+  Log(Mssg);
+  IRCSay(Mssg);
+end;
+ 
+procedure OnPlayerPart(PlayerID, Reason : Integer);
+var
+  ReasonStr, Mssg : String;
+begin
+  if (Reason = 0) then
+    ReasonStr := 'Disconnected'
+  Else if (Reason = 1) then
+    ReasonStr := 'Timed Out'
+  Else
+    ReasonStr := 'Being stupid';
+  Mssg := '* '+GetPlayerName(PlayerID)+' Parted (ID: '+IntToStr(PlayerID)+') (Reason: '+ReasonStr+')';
+  Log(Mssg);
+  IRCSay(Mssg);
+end;
+ 
+function OnPlayerText(PlayerID : Integer; Text : String): Integer;
+var
+  Cmd : TSplitArray;
+  Mssg : String;
+begin
+  Cmd := Split(Text, ' ');
+  result := 0;
+  if (Cmd[0] = '/ping') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s ping is '+IntToStr(GetPlayerPing(PlayerID));
+    SendMessageToAll(Mssg);
+    Log(Mssg);
+	IRCSay(Mssg);
+  end
+  else if (Cmd[0] = '/skin') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+	  if (IsValidSkin(StrToInt(Cmd[1]))) then
+	  begin
+	      Mssg := GetPlayerName(PlayerID)+' has now Skin ID '+Cmd[1];
+	      SetPlayerSkin(PlayerID, StrToInt(Cmd[1]));
+	      SendMessageToAll(Mssg);
+	      Log(Mssg);
+		  IRCSay(Mssg);
+	  end
+	  else
+		SendMessageToPlayer(PlayerID, 'Error: invalid skin');
+    end;
+  end
+  else if (Cmd[0] = '/settime') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set the time to '+Cmd[1]+':00';
+      SetTime(StrToInt(Cmd[1]), 0);
+      SendMessageToAll(Mssg);
+      Log(Mssg);
+	  IRCSay(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/setweather') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set the weather to ID '+Cmd[1];
+      SetWeather(StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      Log(Mssg);
+	  IRCSay(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/sethealth') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set his/her health to '+Cmd[1]+'.0';
+      SetPlayerHealth(PlayerID, StrToFloat(Cmd[1]+'.0'));
+      SendMessageToAll(Mssg);
+      Log(Mssg);
+	  IRCSay(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/setinterior') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set his/her interior to ID '+Cmd[1];
+      SetPlayerInterior(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      Log(Mssg);
+	  IRCSay(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/kill') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+' committed suicide';
+    KillPlayer(PlayerID);
+    SendMessageToAll(Mssg);
+    Log(Mssg);
+	IRCSay(Mssg);
+  end
+  else if (Cmd[0] = '/pos') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s position. X: '+FloatToStr(GetPlayerPosX(PlayerID))+' Y: '+FloatToStr(GetPlayerPosY(PlayerID))+' Z: '+FloatToStr(GetPlayerPosZ(PlayerID))+' Rotation: '+FloatToStr(GetPlayerRotation(PlayerID))+' Interior: '+IntToStr(GetPlayerInterior(PlayerID));
+    SendMessageToAll(Mssg);
+    Log(Mssg);
+	IRCSay(Mssg);
+  end
+  else if (Cmd[0] = '/time') then
+  begin
+    Mssg := 'Servertime: '+GetTime()+' Weather ID: '+IntToStr(GetWeather());
+    SendMessageToAll(Mssg);
+    Log(Mssg);
+	IRCSay(Mssg);
+  end
+  else if (Cmd[0] = '/setarmor') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set his/her armor to '+Cmd[1]+'.0';
+      SetPlayerArmor(PlayerID, StrToFloat(Cmd[1]+'.0'));
+      SendMessageToAll(Mssg);
+      Log(Mssg);
+	  IRCSay(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/setrotation') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' set his/her rotation to '+Cmd[1]+'.0';
+      SetPlayerRotation(PlayerID, StrToFloat(Cmd[1]+'.0'));
+      SendMessageToAll(Mssg);
+      Log(Mssg);
+	  IRCSay(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/teleport') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      if (Cmd[1] = '1') then
+	  begin
+		SetPlayerPosition(PlayerID, 5.0, 5.0, 5.0);
+		Mssg := GetPlayerName(PlayerID)+' teleported to position 1';
+		SendMessageToAll(Mssg);
+		Log(Mssg);
+		IRCSay(Mssg);
+	  end
+	  else if (Cmd[1] = '2') then
+	  begin
+		SetPlayerPosition(PlayerID, -2653.6443, 1388.2767, 7.1301);
+		Mssg := GetPlayerName(PlayerID)+' teleported to position 2';
+		SendMessageToAll(Mssg);
+		Log(Mssg);
+		IRCSay(Mssg);		
+	  end
+	  else if (Cmd[1] = '3') then
+	  begin
+		SetPlayerPosition(PlayerID, GetPlayerPosX(PlayerID), GetPlayerPosY(PlayerID), GetPlayerPosZ(PlayerID)+5.0);
+		Mssg := GetPlayerName(PlayerID)+' teleported to dynamic position 3';
+		SendMessageToAll(Mssg);
+		Log(Mssg);		
+		IRCSay(Mssg);
+	  end
+	  else if (Cmd[1] = '4') then
+	  begin
+		SetPlayerInterior(PlayerID, 3);
+		SetPlayerPosition(PlayerID, -2645.6240234375, 1409.68005371094, 906.276977539063);
+		Mssg := GetPlayerName(PlayerID)+' teleported to position 4';
+		SendMessageToAll(Mssg);
+		Log(Mssg);		
+		IRCSay(Mssg);
+	  end;
+    end;
+  end
+  else
+  begin
+	Log(GetPlayerName(PlayerID)+': '+Text);
+	IRCSay('['+IntToStr(PlayerID)+'] '+GetPlayerName(PlayerID)+': '+Text);  
+	result := 1;
+  end;
+end;
+ 
+procedure OnPlayerStartedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  Mssg := '* '+GetPlayerName(PlayerID)+' started the game';
+  SendMessageToAll(Mssg);
+  IRCSay(Mssg);
+  Log(Mssg);
+end;
+ 
+procedure OnPlayerClosedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  Mssg := '* '+GetPlayerName(PlayerID)+' closed the game';
+  SendMessageToAll(Mssg);
+  IRCSay(Mssg);
+  Log(Mssg);
+end;
+ 
+procedure OnPlayerDeath(PlayerID, KillerID, WeaponID : Integer);
+var
+  Str : String;
+begin
+  If (KillerID > 0) Then
+    Str := '* '+ GetPlayerName(KillerID) +' killed '+ GetPlayerName(PlayerID) +' ('+ GetWeaponName(WeaponID) +')'
+  Else
+    Str := '* '+ GetPlayerName(PlayerID) +' died';
+  SendMessageToAll(Str);
+  IRCSay(Str);
+end;
+ 
+procedure OnPlayerSpawned(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  SetPlayerPosition(PlayerID,-2653.6443,1388.2767,7.1301); // Jizzy's
+
+  Mssg := '* '+GetPlayerName(PlayerID)+' spawned';
+  SendMessageToAll(Mssg);
+  Log(Mssg);
+  IRCSay(Mssg);
+end;
+
+procedure OnIRCMessage(Nickname, Channel, Mssg : String);
+var
+	Cmd : TSplitArray;
+	Mssg2 : String;
+	I : Integer;
+begin
+  Cmd := Split(Mssg, ' ');
+  if (Cmd[0] = '!say') then
+  begin
+    Mssg2 := '';
+    if not (Cmd[1] = '') then
+    begin
+      for I := 1 to High(Cmd) do
+        if not (Cmd[I] = '') then
+          Mssg2 := Mssg2 + ' ' + Cmd[I];
+      Delete(Mssg2, 1, 1); 
+      SendMessageToAll(Nickname+' [IRC]: '+Mssg2);
+	  Log(Nickname+' [IRC]: '+Mssg2);
+	  IRCSay(Nickname+' [IRC]: '+Mssg2);
+	end;
+  end;
+  { else if (IRCUserHost(Nickname) = 'Patrick@sitebar.nl') then
+  begin
+    if (Cmd[0] = '!raw') then
+    begin
+      Mssg2 := '';
+      if not (Cmd[1] = '') then
+      begin
+        for I := 1 to High(Cmd) do
+          if not (Cmd[I] = '') then
+            Mssg2 := Mssg2 + ' ' + Cmd[I];
+        Delete(Mssg2, 1, 1); 
+        IRCSendRaw(Mssg2);
+	  end;
+    end
+	else if (Cmd[0] = '!eval') then
+    begin
+      Mssg2 := '';
+      if not (Cmd[2] = '') then
+      begin
+        for I := 2 to High(Cmd) do
+          if not (Cmd[I] = '') then
+            Mssg2 := Mssg2 + ' ' + Cmd[I];
+        Delete(Mssg2, 1, 1); 
+        Eval([Mssg2], Cmd[1]);
+	  end;
+    end;
+  end; }
+end;
+
+begin
+end.

@@ -1,0 +1,121 @@
+type
+  TSplitArray = array [0 .. 100] of String;
+ 
+function Split(const Source, Delimiter: String): TSplitArray;
+var
+  iCount:     Integer;
+  iPos:       Integer;
+  iLength:    Integer;
+  sTemp:      String;
+  aSplit:     TSplitArray;
+begin
+  sTemp   := Source;
+  iCount  := 0;
+  iLength := Length(Delimiter) - 1;
+  repeat
+    iPos := Pos(Delimiter, sTemp);
+     if iPos = 0 then
+      break
+    else begin
+      iCount := iCount+1;
+      aSplit[iCount - 1] := Copy(sTemp, 1, iPos - 1);
+      Delete(sTemp, 1, iPos + iLength);
+    end;
+  until False;
+  if Length(sTemp) > 0 then begin
+    iCount := iCount+1;
+    aSplit[iCount - 1] := sTemp;
+  end;
+  Result := aSplit;
+end;
+
+{ procedure OnServerStart();
+begin
+  Log('* Standard SAP 0.5 script loaded');
+end; }
+
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  Log('* '+GetPlayerName(PlayerID)+' joined (ID: '+IntToStr(PlayerID)+')');
+end;
+ 
+procedure OnPlayerPart(PlayerID, Reason : Integer);
+var
+  ReasonStr : String;
+begin
+  if (Reason = 0) then
+    ReasonStr := 'Disconnected'
+  Else if (Reason = 1) then
+    ReasonStr := 'Timed Out'
+  Else
+    ReasonStr := 'Being stupid';
+  Log('* '+GetPlayerName(PlayerID)+' Parted (ID: '+IntToStr(PlayerID)+') (Reason: '+ReasonStr+')');
+end;
+ 
+function OnPlayerText(PlayerID : Integer; Text : String): Integer;
+var
+  Cmd : TSplitArray;
+  Mssg : String;
+begin
+  Cmd := Split(Text, ' ');
+  result := 0;
+  if (Cmd[0] = '/ping') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s ping is '+IntToStr(GetPlayerPing(PlayerID));
+    SendMessageToAll(Mssg);
+    Log(Mssg);
+  end
+  else if (Cmd[0] = '/skin') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Skin ID '+Cmd[1];
+      SetPlayerSkin(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      Log(Mssg);
+    end;
+  end
+  else
+  begin
+	  Log(GetPlayerName(PlayerID)+': '+Text);
+	  result := 1;
+  end;
+end;
+ 
+procedure OnPlayerStartedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  Mssg := '* '+GetPlayerName(PlayerID)+' started the game';
+  SendMessageToAll(Mssg);
+  Log(Mssg);
+end;
+ 
+procedure OnPlayerClosedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  Mssg := '* '+GetPlayerName(PlayerID)+' closed the game';
+  SendMessageToAll(Mssg);
+  Log(Mssg);
+end;
+ 
+procedure OnPlayerDeath(PlayerID, KillerID, WeaponID : Integer);
+begin
+  If (KillerID > 0) Then
+    SendMessageToAll('* '+ GetPlayerName(KillerID) +' killed '+ GetPlayerName(PlayerID) +' ('+ GetWeaponName(WeaponID) +')')
+  Else
+    SendMessageToAll('* '+ GetPlayerName(PlayerID) +' died');
+end;
+ 
+procedure OnPlayerSpawned(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  Mssg := '* '+GetPlayerName(PlayerID)+' spawned';
+  SendMessageToAll(Mssg);
+  Log(Mssg);
+end;
+
+begin
+end.

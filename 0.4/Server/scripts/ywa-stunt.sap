@@ -1,0 +1,340 @@
+type
+  TSplitArray = array [0 .. 100] of String;
+ 
+var
+  NeedSpawn : array[0 .. 32] of Boolean;
+ 
+ 
+ 
+function Split(const Source, Delimiter: String): TSplitArray;
+var
+  iCount:     Integer;
+  iPos:       Integer;
+  iLength:    Integer;
+  sTemp:      String;
+  aSplit:     TSplitArray;
+begin
+  sTemp   := Source;
+  iCount  := 0;
+  iLength := Length(Delimiter) - 1;
+  repeat
+    iPos := Pos(Delimiter, sTemp);
+     if iPos = 0 then
+      break
+    else begin
+      iCount := iCount+1;
+      aSplit[iCount - 1] := Copy(sTemp, 1, iPos - 1);
+      Delete(sTemp, 1, iPos + iLength);
+    end;
+  until False;
+  if Length(sTemp) > 0 then begin
+    iCount := iCount+1;
+    aSplit[iCount - 1] := sTemp;
+  end;
+  Result := aSplit;
+end;
+ 
+ 
+procedure OnServerStart();
+begin
+	SetGravity(0.006);
+	CreateVehicle(429,2040.5331,1359.2773,10.3273,177.1295,-1,-1); // goed
+	CreateVehicle(522,2029.5024,1384.1204,10.3906,273.3070,-1,-1); // Goed
+	CreateVehicle(522,2028.8312,1381.9822,10.3838,264.2395,-1,-1); // Goed
+	CreateVehicle(522,2029.7585,1378.6934,10.3851,265.5761,-1,-1); // Goed
+	CreateVehicle(522,2024.4132,1339.8881,10.3924,267.7115,-1,-1); // Goed
+	CreateVehicle(522,2026.4056,1345.7675,10.3840,266.0605,-1,-1); // Goed
+	CreateVehicle(451,2040.0518,1319.1001,10.3645,181.7074,-1,-1); // goed
+	CreateVehicle(402,1944.1003,1344.7721,8.9857,0.8168,-1,-1); // Goed
+	CreateVehicle(402,1944.2839,1308.1238,8.9412,358.9290,-1,-1); // Goed
+	CreateVehicle(443,2074.5325,1405.0123,11.3086,0.3938,-1,-1); //
+	CreateVehicle(443,2074.1851,1456.5876,11.3063,0.3896,-1,-1); //
+	CreateVehicle(471,2074.8606,1279.8093,10.1860,180.3441,-1,-1); // Goed
+	CreateVehicle(471,2074.9304,1269.0909,10.1480,180.3791,-1,-1); // Goed
+	CreateVehicle(471,2074.9836,1260.8756,10.1493,180.3800,-1,-1); // Goed
+	CreateVehicle(471,2074.9575,1253.8938,10.1540,183.8009,-1,-1); // Goed
+	CreateVehicle(571,2074.7571,1149.1348,9.9556,177.8912,-1,-1); // Goed
+	CreateVehicle(571,2075.0891,1136.0516,9.9550,179.9990,-1,-1); // Goed
+	CreateVehicle(571,2075.0891,1128.8823,9.9551,180.0048,-1,-1); // Goed
+	CreateVehicle(457,2075.0847,1123.1593,10.2956,180.1656,-1,-1); // Goed
+	CreateVehicle(457,2075.1062,1115.6132,10.2981,180.1653,-1,-1); // Goed
+	CreateVehicle(495,-674.3992,2317.3433,134.9439,178.2771,-1,-1); // Goed
+	CreateVehicle(495,-659.3354,2323.6877,138.9430,84.9980,-1,-1); // Goed
+	CreateVehicle(411,2039.8936,1394.7792,10.3992,179.3121,-1,-1); // Goed
+	CreateVehicle(411,2039.7491,1382.7770,10.3989,179.3110,-1,-1); // Goed
+	CreateVehicle(411,2039.5830,1368.9386,10.3989,179.3111,-1,-1); // Goed
+	CreateVehicle(457,2039.9528,1618.5686,10.3364,0.3942,-1,-1); // Goed
+	CreateVehicle(457,2040.0300,1607.2864,10.2979,0.3944,-1,-1); // Goed
+	CreateVehicle(500,2039.9199,1579.3530,10.7630,359.3758,-1,-1); // Goed
+	CreateVehicle(500,2039.9097,1564.2452,10.7703,179.3076,-1,-1); // Goed
+	CreateVehicle(535,2017.5839,1533.4294,10.4796,272.1286,-1,-1); // Goed
+	CreateVehicle(446,1997.8995,1504.3322,8.0485,94.6287,-1,-1); // Goed
+	CreateVehicle(446,1961.0674,1482.6843,8.0455,356.8495,-1,-1); // Goed
+	CreateVehicle(568,2039.0576,1492.2963,10.7737,199.2610,-1,-1); // Niet goed (bandito)
+	CreateVehicle(495,2039.4801,1471.0698,10.7861,178.4786,-1,-1); // niet goed (sandking)
+	CreateVehicle(444,2009.8553,1462.9142,10.9211,92.0695,-1,-1); // Niet goed (monster)
+	CreateVehicle(444,2001.9087,1439.0745,10.9245,185.3349,-1,-1); // Niet goed (monster)
+	CreateVehicle(444,2103.7930,1439.2465,11.1896,89.9592,-1,-1); // Goed
+	CreateVehicle(444,2100.8916,1409.3575,11.1916,182.2621,-1,-1); // Goed
+	CreateVehicle(444,2110.5955,1409.7618,11.1920,181.0674,-1,-1); // Goed
+	CreateVehicle(444,2125.9583,1410.3461,11.1898,179.4114,-1,-1); // Goed
+	CreateVehicle(560,2142.4026,1408.5686,10.5357,0.3661,-1,-1); // Goed
+	CreateVehicle(560,2148.7781,1398.4144,10.5178,181.4973,-1,-1); // Goed
+	CreateVehicle(560,2117.1621,1397.9503,10.5209,359.6484,-1,-1); // Goed
+	CreateVehicle(477,2075.6040,1666.9750,10.4310,359.7502,-1,-1); // Goed
+	CreateVehicle(477,2075.6694,1682.1385,10.4222,359.7502,-1,-1); // Goed
+	CreateVehicle(409,2162.1165,1681.2097,10.5099,178.9197,-1,-1); // Niet goed (limo)
+	CreateVehicle(571,2040.3324,1695.1493,10.4242,4.7863,-1,-1); // Niet goed (kart)
+	CreateVehicle(571,2053.3960,1730.0244,10.4259,330.1877,-1,-1); // Niet goed (kart)
+	CreateVehicle(522,2061.6704,1745.6458,10.4250,332.3784,-1,-1); // Niet goed (NRG)
+	CreateVehicle(522,2073.1968,1768.6937,10.4269,332.3635,-1,-1); // Niet goed (NRG)
+	CreateVehicle(522,2019.9435,1296.6969,10.3874,192.3165,-1,-1); // Goed
+	CreateVehicle(522,2029.3647,985.5748,10.3910,267.3492,-1,-1); // Goed
+	CreateVehicle(522,2030.0450,989.1769,10.3902,268.7542,-1,-1); // Goed
+	CreateVehicle(522,2030.3575,995.5975,10.3832,268.1790,-1,-1); // Goed
+	CreateVehicle(539,1537.5059,-1365.3704,328.8210,356.7370,-1,-1); // goed
+	CreateVehicle(539,1532.9521,-1365.7108,328.8210,343.1648,-1,-1); // goed
+	CreateVehicle(522,1541.6434,-1369.8138,329.0291,41.0192,-1,-1); // Goed
+	CreateVehicle(522,1547.1501,-1370.1182,329.0288,311.3306,-1,-1); // Goed
+	CreateVehicle(522,1552.9156,-1366.7585,329.0124,6.0934,-1,-1); // Goed
+	CreateVehicle(522,1555.0408,-1367.1888,329.0239,356.0135,-1,-1); // Goed
+	CreateVehicle(522,1556.6643,-1366.5948,329.0258,1.5703,-1,-1); // Goed
+	CreateVehicle(420,1557.5743,-1349.1838,329.2450,290.3521,-1,-1); // Goed
+	CreateVehicle(481,1529.1299,-1358.5414,328.9705,103.5128,-1,-1); // Goed
+	CreateVehicle(411,1531.9404,-1349.7126,329.1906,58.8644,-1,-1); // Goed
+	CreateVehicle(495,-709.8203,2349.6624,127.5213,42.7739,-1,-1); // Goed
+	CreateVehicle(444,-703.9131,2369.6982,128.7501,45.8855,-1,-1); // Goed
+	CreateVehicle(568,-700.5100,2387.6345,130.0035,45.2017,-1,-1); // Goed
+	CreateVehicle(444,-732.6242,2379.3511,126.7206,145.3267,-1,-1); // Goed
+	CreateVehicle(568,-754.3464,2317.0359,131.7475,87.5966,-1,-1); // Goed
+	CreateVehicle(481,1893.1484,-1386.8995,13.0801,229.7173,-1,-1); // Goed
+	CreateVehicle(481,1893.9045,-1382.1066,13.0771,224.8595,-1,-1); // Goed
+	CreateVehicle(481,1898.1165,-1377.1805,13.0821,219.4124,-1,-1); // Goed
+	CreateVehicle(481,1902.0704,-1373.7457,13.0748,213.7918,-1,-1); // Goed
+	CreateVehicle(559,-1989.3295,270.1449,34.8193,88.6820,-1,-1); // Goed
+	CreateVehicle(560,-1993.2461,241.5333,34.8934,310.0118,-1,-1); // Goed
+	CreateVehicle(562,-1952.9247,258.8269,40.6884,49.8723,-1,-1); // Goed
+	CreateVehicle(411,-1949.8706,266.5776,40.7875,216.3951,-1,-1); // Goed
+	CreateVehicle(558,-1956.8292,271.4954,35.1326,71.7500,-1,-1); // Goed
+	CreateVehicle(559,-1946.2448,273.2455,35.1176,126.4246,-1,-1); // Goed
+	CreateVehicle(562,2394.0957,989.4891,10.4662,89.5080,-1,-1); // Goed
+	CreateVehicle(522,2026.4238,1369.6638,10.3833,260.0354,-1,-1); // Goed
+	CreateVehicle(522,2028.4591,1307.3436,10.3845,255.2722,-1,-1); // Goed
+	CreateVehicle(522,-694.3799,2294.9971,131.1590,6.5071,-1,-1); // Goed
+	CreateVehicle(522,-704.9395,2293.5803,129.8023,22.0764,-1,-1); // Goed
+	CreateVehicle(522,-716.6415,2292.9375,127.5661,3.3198,-1,-1); // Goed
+	CreateVehicle(495,-1092.0319,2282.1714,86.5556,185.9303,-1,-1); // Sandking (niet goed)
+	CreateVehicle(568,-1087.3201,2262.6831,87.2287,194.1088,-1,-1); // Bandito (niet goed)
+	CreateVehicle(432,-1252.2889,2302.0327,129.5985,88.4688,-1,-1); // Tank (niet goed)
+	CreateVehicle(432,-1288.5712,2496.9651,86.5396,181.4762,-1,-1); // niet goed (tank)
+	CreateVehicle(539,-2347.6792,-1614.2853,483.1985,229.9907,-1,-1); // niet goed (vortex)
+	CreateVehicle(539,-2346.3821,-1630.9714,483.2505,248.3343,-1,-1); // niet goed (vortex)
+	CreateVehicle(437,-2332.4199,-1669.7604,482.7708,239.0630,-1,-1); // Coach (niet goed)
+	CreateVehicle(522,-2306.5911,-1604.1265,483.5342,132.6635,-1,-1); // Goed
+	CreateVehicle(522,-2320.3716,-1590.0477,483.3420,115.8944,-1,-1); // Goed
+	CreateVehicle(522,-2290.1819,-1624.1011,483.3513,135.9331,-1,-1); // Goed
+	CreateVehicle(451,2074.9651,1314.2085,10.3794,179.6708,-1,-1); // Goed
+	CreateVehicle(451,2074.8730,1336.1439,10.3795,359.0041,-1,-1); // Goed
+	CreateVehicle(451,2135.8936,1397.3492,10.5279,358.9156,-1,-1); // Goed
+	CreateVehicle(451,2139.1990,1397.9459,10.5197,358.0859,-1,-1); // Goed
+	CreateVehicle(437,2039.2645,1193.7861,10.8052,180.0153,-1,-1); // Goed
+	CreateVehicle(487,1662.7816,1554.0808,10.3842,24.8260,-1,-1); // niet goed (heli)
+	CreateVehicle(487,1630.9070,1543.8971,10.3583,28.4427,-1,-1); // niet goed (heli)
+	CreateVehicle(487,1610.3463,1625.7362,10.3926,179.9612,-1,-1); // niet goed (heli)
+	CreateVehicle(487,1560.6799,1637.6406,10.3852,156.8044,-1,-1); // niet goed (heli)
+	CreateVehicle(522,1306.4989,1278.3153,10.3967,356.5832,-1,-1); // goed
+	CreateVehicle(522,1309.4510,1279.6803,10.3912,359.4966,-1,-1); // goed
+	CreateVehicle(522,1312.8539,1278.1849,10.3944,4.8160,-1,-1); // goed
+	CreateVehicle(476,1280.1121,1324.8344,10.3922,264.3661,-1,-1); // niet goed (rustler)
+	CreateVehicle(476,1278.5073,1362.6532,10.3901,270.9713,-1,-1); // niet goed (rustler)
+	CreateVehicle(513,1278.0618,1395.4121,10.3931,271.4956,-1,-1); // niet goed (smokeplane)
+	CreateVehicle(513,1282.1111,1431.4561,10.3938,262.5019,-1,-1); // niet goed (smokeplane)
+	CreateVehicle(519,1388.8925,1315.8815,10.3919,3.7147,-1,-1); // Shamal
+	CreateVehicle(519,1477.6981,1313.3319,10.3933,0.6118,-1,-1); // Shamal
+	//CreateVehicle(522,1704.5189,1589.0972,10.0129,82.8182,-1,-1); // Goed (vervangen door whoopee... zie hieronder :o
+	CreateVehicle(423,1704.5189,1589.0972,10.0129,82.8182,-1,-1); // Whoopee
+	CreateVehicle(522,1853.9537,1895.9109,8.5801,180.6449,-1,-1); // Goed
+	CreateVehicle(522,1853.7828,1879.5077,9.2482,179.5498,-1,-1); // Goed
+	CreateVehicle(522,1853.7848,1810.1869,12.1012,180.7592,-1,-1); // Goed
+	CreateVehicle(522,2442.5908,1629.2783,10.3699,359.4095,-1,-1); // Goed
+	CreateVehicle(522,2470.1726,1669.0288,10.3894,195.0416,-1,-1); // Goed
+	CreateVehicle(451,2132.9146,1028.7410,10.5272,268.6097,-1,-1); // Goed
+	CreateVehicle(522,2132.8801,1009.5969,10.5283,269.1609,-1,-1); // Niet goed (NRG)
+	CreateVehicle(451,2162.6582,1009.4268,10.5259,273.0501,-1,-1); // Goed
+	CreateVehicle(411,2171.9880,1022.6431,10.5262,89.9177,-1,-1); // Niet goed (Infernus)
+	CreateVehicle(506,2151.9502,929.6918,10.4511,178.7348,-1,-1); // Niet goed (SuperGT)
+	CreateVehicle(506,2152.3206,955.4384,10.4729,178.7885,-1,-1); // Niet goed (SuperGT)
+	CreateVehicle(444,2190.8318,916.5984,10.5260,181.5875,-1,-1); // niet goed (nitro)
+
+	CreateVehicle(434,2076.2676,1776.2742,10.4273,154.1665,-1,-1); // Hotknife (niet goed)
+	CreateVehicle(506,2216.2090,1787.8296,10.5746,180.6058,-1,-1); // Goed
+	CreateVehicle(434,2195.1350,1800.0315,10.5723,180.0126,-1,-1); // Hotknife (niet goed)
+	CreateVehicle(522,2159.8394,1799.6753,10.5739,0.1035,-1,-1); // NRG (niet goed)
+	CreateVehicle(457,2199.6106,1821.9028,10.5758,358.9750,-1,-1); // Caddy (niet goed)
+	CreateVehicle(420,2206.4941,1878.7615,10.5745,359.0616,-1,-1); // taxi (niet goed)
+	CreateVehicle(420,2184.6348,1856.3218,10.5774,178.8452,-1,-1); // taxi (niet goed)
+	CreateVehicle(477,2179.8743,1878.8367,10.5718,359.0113,-1,-1); // goed
+	CreateVehicle(409,2033.3774,1915.4855,11.9950,359.6254,-1,-1); // stretch (niet goed)
+	CreateVehicle(411,2186.1458,2004.2468,10.5766,268.3540,-1,-1); // niet goed (infernus)
+	CreateVehicle(415,2171.9729,1973.7349,10.5732,88.8663,-1,-1); // goed
+	CreateVehicle(477,2171.9954,2000.8029,10.5755,89.2345,-1,-1); // niet goed (nrg)
+	CreateVehicle(420,2163.0015,1025.6411,10.5733,268.3031,-1,-1); // taxi (niet goed)
+	CreateVehicle(415,2142.3103,1019.5577,10.5729,91.3169,-1,-1); // goed
+	CreateVehicle(420,2142.1553,1009.7022,10.5748,90.0450,-1,-1); // niet goed (taxi)
+end;
+ 
+ 
+ 
+procedure OnPlayerJoin(PlayerID : Integer);
+begin
+  print('* '+GetPlayerName(PlayerID)+' Joined (ID: '+IntToStr(PlayerID)+')');
+end;
+ 
+procedure OnPlayerPart(PlayerID, Reason : Integer);
+var
+  ReasonStr : String;
+begin
+  if (Reason = 0) then
+    ReasonStr := 'Disconnected'
+  Else if (Reason = 1) then
+    ReasonStr := 'Timed Out'
+  Else
+    ReasonStr := 'Unknown Reason'
+  print('* '+GetPlayerName(PlayerID)+' Parted (ID: '+IntToStr(PlayerID)+') (Reason: '+ReasonStr+')');
+end;
+ 
+function OnPlayerText(PlayerID : Integer; Text : String): Integer;
+begin
+  print(GetPlayerName(PlayerID)+': '+Text);
+  result := 1;
+end;
+
+function GetXInfrontOfPlayer(PlayerID : Integer): Single;
+begin
+//  GetVehicleZAngle();
+end;
+ 
+procedure OnPlayerCommand(PlayerID : Integer; Command : String);
+var
+  Cmd : TSplitArray;
+  Mssg : String;
+  i : integer;
+  PosX, PosY, PosZ : Single;
+begin
+  //print('COMMAND: '+GetPlayerName(PlayerID)+': '+Command);
+ 
+  Cmd := Split(Command, ' ');
+  if (Cmd[0] = '/ping') then
+  begin
+    Mssg := GetPlayerName(PlayerID)+'''s ping is '+IntToStr(GetPlayerPing(PlayerID));
+    SendMessageToAll(Mssg);
+    print(Mssg);
+  end
+  else if (Cmd[0] = '/skin') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' has now Skin ID '+Cmd[1];
+      //SetPlayerSkin(PlayerID, StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/weather') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      Mssg := GetPlayerName(PlayerID)+' setted the weather to ID '+Cmd[1];
+      SetGameWeather(StrToInt(Cmd[1]));
+      SendMessageToAll(Mssg);
+      print(Mssg);
+    end;
+  end
+  else if (Cmd[0] = '/kill') then
+  begin
+    SetPlayerHealth(PlayerID, 0.0);
+  end
+ else if (Cmd[0] = '/to') then
+  begin
+    if (IsInteger(Cmd[1])) then
+    begin
+      i := StrToInt(Cmd[1]);
+      if (i = PlayerID) Then
+        SendMessageToPlayer(PlayerID,'*** You can''t teleport to yourself')
+      else if (IsPlayerConnected(i)) AND (IsPlayerIngame(i)) then
+      begin
+        Mssg := GetPlayerName(PlayerID)+' teleported to '+GetPlayerName(i);
+        SetPlayerPos(PlayerID, GetPlayerPosX(i), GetPlayerPosY(i), GetPlayerPosZ(i)+2.0);
+        SendMessageToAll(Mssg);
+        print(Mssg);
+      end;
+    end;
+  end;
+end;
+
+procedure OnPlayerLoaded(PlayerID : Integer);
+begin
+// Unused
+end;
+ 
+procedure OnPlayerStartedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := false;
+  Mssg := '* '+GetPlayerName(PlayerID)+' started the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+ 
+procedure OnPlayerClosedGame(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  NeedSpawn[PlayerID] := False;
+  Mssg := '* '+GetPlayerName(PlayerID)+' closed the game';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+end;
+ 
+procedure OnPlayerDeath(PlayerID, KillerID, WeaponID : Integer);
+begin
+  If (KillerID > 0) Then
+    SendMessageToAll('* '+ GetPlayerName(KillerID) +' killed '+ GetPlayerName(PlayerID) +' ('+ GetDeathReason(WeaponID) +')')
+  Else
+    SendMessageToAll('* '+ GetPlayerName(PlayerID) +' died');
+  //SetCamera(PlayerID,0.0,0.0,10.0);
+end;
+ 
+procedure OnPlayerSpawned(PlayerID : Integer);
+var
+  Mssg : String;
+begin
+  //SetPlayerSkin(PlayerID, 0);
+  SetPlayerPos(PlayerID,1957.1268,1342.8883,15.3746);
+  Mssg := '* '+GetPlayerName(PlayerID)+' spawned';
+  SendMessageToAll(Mssg);
+  print(Mssg);
+  NeedSpawn[PlayerID] := True;
+//  Timer(3,'UnfreezeAll');
+//SendMessageToPlayer(PlayerID,'Type /worker to spawn as worker!');
+//SendMessageToPlayer(PlayerID,'Type /triad to spawn as Triad!');
+//SendMessageToPlayer(PlayerID,'Type /pimp to spawn as Pimp!');
+//SendMessageToPlayer(PlayerID,'Type /mechanic to spawn as mechanic!');
+//SendMessageToPlayer(PlayerID,'Type /medic to spawn as medic!');
+//SendMessageToPlayer(PlayerID,'Type /FBI to spawn as FBI!');
+//SendMessageToPlayer(PlayerID,'Type /golfer to spawn as golfer!');
+//SendMessageToPlayer(PlayerID,'Type /valet to spawn as worker!');
+      
+end;
+ 
+procedure OnIRCConnected();
+begin
+  Print('m00');
+  //IRCJoin('#sap','');
+  IRCRaw('JOIN #sap');
+  //IRCSay('#sap', 'San Andreas Party server loaded');
+end;
+
+begin
+end.

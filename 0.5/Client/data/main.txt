@@ -1,0 +1,743 @@
+DEFINE OBJECTS 18
+DEFINE OBJECT SAP0400
+DEFINE OBJECT CRACKFACT_SFS
+DEFINE OBJECT CF_EXT_DEM_SFS
+DEFINE OBJECT LODCRACKFACT_SFS
+DEFINE OBJECT LODEXT_DEM_SFS
+DEFINE OBJECT VENDMACHFD
+DEFINE OBJECT VENDMACH
+DEFINE OBJECT VENDIN3
+DEFINE OBJECT CJ_SPRUNK1
+DEFINE OBJECT CJ_CANDYVENDOR
+DEFINE OBJECT CJ_EXT_CANDY
+DEFINE OBJECT CJ_EXT_SPRUNK
+DEFINE OBJECT KB_BEER                     
+DEFINE OBJECT CJ_JUICE_CAN
+DEFINE OBJECT KMB_PARACHUTE
+DEFINE OBJECT PARACHUTE
+DEFINE OBJECT PARA_COLLISION
+DEFINE OBJECT PARA_PACK
+
+DEFINE MISSIONS  0
+
+DEFINE EXTERNAL_SCRIPTS  -1
+
+DEFINE UNKNOWN_EMPTY_SEGMENT  0
+
+DEFINE UNKNOWN_THREADS_MEMORY  2146
+
+//-------------MAIN---------------
+
+
+:MAIN_1
+thread 'MAIN'
+var
+    1@ : Integer
+    $PLAYER_CHAR : Player
+    $PLAYER_ACTOR : Actor
+    
+    $LoadStatus : Integer  
+
+    $PLAYERS : Array 32 of Actor
+    $PlrMarkers : Array 32 of Marker
+
+    $WpMdl : Array 49 of Integer
+    $PIcon : Array 25 of Marker
+    
+    $PlrActive : Array 32 of Integer
+    $PlrActive2 : Array 32 of Integer
+    $PlrNow : Array 32 of Integer
+    $PlrCrouch : Array 32 of Integer
+    $PlrArmed : Array 32 of Integer
+    $PlrArmed2 : Array 32 of Integer
+    $PlrShoot : Array 32 of Integer
+    $PlrShootLast : Array 32 of Integer
+    $PlrShootX : Array 32 of Float
+    $PlrShootY : Array 32 of Float
+    $PlrShootZ : Array 32 of Float
+        
+    $Status : Integer
+    $Skin : Integer
+    $SkinLast : Integer
+    $MyNewRot : Float
+    $MyNewRotL : Float
+    $MyInt : Integer
+    $NewInt : Integer
+    $NewIntL : Integer
+    $ShootX : Float
+    $ShootY : Float
+    $ShootZ : Float
+    
+    $HPPP : Float
+
+  $LoadCommand : Integer
+  $LoadFloat1 : Float
+  $LoadFloat2 : Float
+  $LoadFloat3 : Float
+  $LoadFloat4 : Float
+  $LoadFloat5 : Float
+  $LoadFloat6 : Float
+  $LoadInt1 : Integer
+  $LoadInt2 : Integer
+  $LoadInt3 : Integer
+  $LoadInt4 : Integer
+  
+  $CurWep : Integer
+  
+  $NumOfObjects : Integer 
+
+  $Object : Array 900 of Object
+  $ObjectUse : Array 900 of Integer
+  $ObjectActive : Array 900 of Integer
+  $ObjectModel : Array 900 of Integer
+  $ObjectPosX : Array 900 of Float
+  $ObjectPosY : Array 900 of Float
+  $ObjectPosZ : Array 900 of Float
+  $ObjectRotX : Array 900 of Float
+  $ObjectRotY : Array 900 of Float
+  $ObjectRotZ : Array 900 of Float
+end
+
+$WpMdl[0] = 0
+$WpMdl[1] = 331
+$WpMdl[2] = 333
+$WpMdl[3] = 334
+$WpMdl[4] = 335
+$WpMdl[5] = 336
+$WpMdl[6] = 337
+$WpMdl[7] = 338
+$WpMdl[8] = 339
+$WpMdl[9] = 341
+$WpMdl[10] = 321
+$WpMdl[11] = 322
+$WpMdl[12] = 323
+$WpMdl[13] = 324
+$WpMdl[14] = 325
+$WpMdl[15] = 326
+$WpMdl[16] = 342
+$WpMdl[17] = 343
+$WpMdl[18] = 344
+$WpMdl[19] = 0 // Rocket Launcher(RPG)
+$WpMdl[20] = 0 // Heat-seeking Rocket
+$WpMdl[21] = 0 // Hydra rocket
+$WpMdl[22] = 346
+$WpMdl[23] = 347
+$WpMdl[24] = 348
+$WpMdl[25] = 349
+$WpMdl[26] = 350
+$WpMdl[27] = 351
+$WpMdl[28] = 352
+$WpMdl[29] = 353 // MP5
+$WpMdl[30] = 355
+$WpMdl[31] = 356
+$WpMdl[32] = 372
+$WpMdl[33] = 357
+$WpMdl[34] = 358
+$WpMdl[35] = 359
+$WpMdl[36] = 360
+$WpMdl[37] = 361
+$WpMdl[38] = 362
+$WpMdl[39] = 363
+$WpMdl[40] = 364
+$WpMdl[41] = 365
+$WpMdl[42] = 366
+$WpMdl[43] = 367
+$WpMdl[44] = 368
+$WpMdl[45] = 369
+$WpMdl[46] = 371
+
+$Status = 1 // Welcome
+$LoadStatus = 1
+$Skin = 0
+$SkinLast = 0
+$RotZ = 0.0
+$ShootX = 0.0
+$ShootY = 0.0
+$ShootZ = 0.0
+
+$LoadCommand = 1337
+$LoadFloat1 = 0.0
+$LoadFloat2 = 0.0
+$LoadFloat3 = 0.0
+$LoadFloat4 = 0.0
+$LoadFloat5 = 0.0
+$LoadFloat6 = 0.0
+$LoadInt1 = 0.0
+$LoadInt2 = 0.0
+$LoadInt3 = 0.0
+$LoadInt4 = 0.0
+
+alloc($PLAYERS)
+
+alloc($Status,100)
+alloc($Skin,101)
+//alloc($RotZ,102)
+alloc($MyNewRot,103)
+alloc($MyInt,104)
+alloc($NewInt,105)
+alloc($CurWep,106)
+alloc($ShootX,107)
+alloc($ShootY,108)
+alloc($ShootZ,109)
+
+alloc($PlrActive,200)
+//alloc($PlrRot,300)
+
+alloc($LoadStatus,300)
+alloc($LoadCommand,301)
+alloc($LoadFloat1,302)
+alloc($LoadFloat2,303)
+alloc($LoadFloat3,304)
+alloc($LoadFloat4,305)
+alloc($LoadFloat5,306)
+alloc($LoadFloat6,307)
+alloc($LoadInt1,308)
+alloc($LoadInt2,309)
+alloc($LoadInt3,310)
+alloc($LoadInt4,311)
+
+alloc($PlrCrouch,400)
+
+{     $PlrArmed : Array 32 of Integer
+    $PlrArmed2 : Array 32 of Integer
+    $PlrShoot : Array 32 of Integer
+    $PlrShootLast : Array 32 of Integer
+    $PlrShootX : Array 32 of Float
+    $PlrShootY : Array 32 of Float
+    $PlrShootZ : Array 32 of Float }
+alloc($PlrArmed,500)
+alloc($PlrShoot,600)
+alloc($PlrShootX,700)
+alloc($PlrShootY,800)
+alloc($PlrShootZ,900)
+
+//fade 0 0
+0776: init_objects_in_object_group "CARTER"
+0776: init_objects_in_object_group "CRACK" 
+0363: toggle_model_render_at -2166.86 -236.5  40.86 radius  40.0 object #CRACKFACT_SFS  1
+0363: toggle_model_render_at -2185.49 -215.55  34.31 radius  40.0 object #CF_EXT_DEM_SFS  0
+0363: toggle_model_render_at -2166.86 -236.5  40.86 radius  40.0 object #LODCRACKFACT_SFS  1
+0363: toggle_model_render_at -2185.49 -215.55  34.31 radius  40.0 object #LODEXT_DEM_SFS  0
+07FB: set_interior 'FDREST1' accessible  0
+07FB: set_interior 'REST2' accessible  0
+07FB: set_interior 'DINER1' accessible  0
+07FB: set_interior 'DINER2' accessible  0
+07FB: set_interior 'TSDINER' accessible  0
+07FB: set_interior 'GF1' accessible  0
+07FB: set_interior 'GF2' accessible  0
+07FB: set_interior 'GF3' accessible  0
+07FB: set_interior 'GF4' accessible  0
+07FB: set_interior 'GF5' accessible  0
+07FB: set_interior 'GF6' accessible  0
+07FB: set_interior 'CARLS' accessible  1
+07FB: set_interior 'AMMUN1' accessible  1
+07FB: set_interior 'AMMUN2' accessible  1
+07FB: set_interior 'AMMUN3' accessible  1
+07FB: set_interior 'AMMUN4' accessible  1
+07FB: set_interior 'AMMUN5' accessible  1
+07FB: set_interior 'BARBERS' accessible  1
+07FB: set_interior 'BARBER2' accessible  1
+07FB: set_interior 'BARBER3' accessible  1
+07FB: set_interior 'FDPIZA' accessible  1
+07FB: set_interior 'FDCHICK' accessible  1
+07FB: set_interior 'FDBURG' accessible  1
+07FB: set_interior 'TATTOO' accessible  1
+07FB: set_interior 'CSCHP' accessible  1
+07FB: set_interior 'CSSPRT' accessible  1
+07FB: set_interior 'LACS1' accessible  1
+07FB: set_interior 'CLOTHGP' accessible  1
+07FB: set_interior 'CSDESGN' accessible  1
+07FB: set_interior 'CSEXL' accessible  1
+07FB: set_interior 'GYM1' accessible  1
+07FB: set_interior 'GYM2' accessible  1
+07FB: set_interior 'GYM3' accessible  1
+07FB: set_interior 'PDOMES' accessible  1
+07FB: set_interior 'PDOMES2' accessible  1
+07FB: set_interior 'MADDOGS' accessible  1
+07FB: set_interior 'MDDOGS' accessible  1
+07FB: set_interior 'GANG' accessible  1
+07FB: set_interior 'RCPLAY' accessible  1
+07FB: set_interior 'PAPER' accessible  1
+07FB: set_interior 'ABATOIR' accessible  1
+07FB: set_interior 'LACRAK' accessible  1
+07FB: set_interior 'DAMIN' accessible  1
+07FB: set_interior 'DAMOUT' accessible  1
+04E4: unknown_refresh_game_renderer_at -3500.0 3500.0 
+03DE: set_pedestrians_density_multiplier_to  0.0 
+01EB: set_traffic_density_multiplier_to 0.0  
+01E8: create_forbidden_for_cars_cube  10000.0  10000.0  10000.0 -10000.0 -10000.0 -10000.0
+022B: create_forbidden_for_peds_cube  10000.0  10000.0  10000.0 -10000.0 -10000.0 -10000.0 
+062A: change_stat  165 (energy) to  1000.0  // float
+062A: change_stat  23 (muscle) to  1000.0  // float 
+//062A: change_stat  24 (max health) to  1000.0  // float 
+062A: change_stat 21 (fat) to 0.0  // float
+062A: change_stat 22 (stamina) to 1000.0  // float
+062A: change_stat 225 (lung capasity) to 1000.0  // float
+062A: change_stat 229 (bike skill) to 1000.0  // float
+062A: change_stat 230 (cycling skill) to 1000.0  // float
+062A: change_stat 223 (pilot skill) to 1000.0  // float
+062A: change_stat 160 (driving skill) to 1000.0  // float
+0629: change_stat 80 () to  2000  // integer see statdisp.dat
+0629: change_stat 68 () to  2000  // integer see statdisp.dat
+0629: change_stat 181 (islands unlocked) to 4  // integer see statdisp.dat
+062A: change_stat 69 (Weap skill: pistol) to 1000.0  // float
+062A: change_stat 70 (Weap skill: silence) to 1000.0  // float
+062A: change_stat 71 (Weap skill: desert ) to 1000.0  // float
+062A: change_stat 72 (Weap skill: shotgun) to 1000.0  // float
+062A: change_stat 73 (Weap skill: sawn of) to 1000.0  // float
+062A: change_stat 74 (Weap skill: combat ) to 1000.0  // float
+062A: change_stat 75 (Weap skill: machine) to 1000.0  // float
+062A: change_stat 76 (Weap skill: smg) to 1000.0  // float
+062A: change_stat 77 (Weap skill: ak-47) to 1000.0  // float
+062A: change_stat 78 (Weap skill: m4) to 1000.0  // float
+06D7: toggle_train_traffic 0 
+0A24: toggle_military_zones_wanted_level 0
+09E4: toggle_aircraftcarrier_sam 0 
+07A8: toggle_area69_sam 0  
+08E7: set_entrance_markers 0 
+08DD: keep_stuff_after_wasted 0 
+0335: set_free_paynspray_to 1 
+0A48: set_menu_access_in_widescreen_mode_enabled 1
+// ------
+// Player
+// ------
+$PLAYER_CHAR.Create(#NULL, -3500.0, 3500.0, 1000.0)
+$PLAYER_ACTOR.EmulateFromPlayer($PLAYER_CHAR)
+$PLAYER_CHAR.SetClothes("PLAYER_FACE", "HEAD", Head)
+$PLAYER_CHAR.SetClothes("JEANSDENIM", "JEANS", Legs)
+$PLAYER_CHAR.SetClothes("SNEAKERBINCBLK", "SNEAKER", Shoes)
+$PLAYER_CHAR.SetClothes("VEST", "VEST", Torso)
+//$PLAYER_CHAR.SetClothes("MOTO", "MOTO", 16)
+$PLAYER_CHAR.Build 
+$PLAYER_ACTOR.WeaponAccuracy = 100
+$PLAYER_CHAR.CanMove(False)
+$PLAYER_CHAR.InfiniteRun(True) 
+$PLAYER_ACTOR.PutAt(0.0,0.0,3.0)
+0960: toggle_player $PLAYER_CHAR stats_box_enabled 0
+Model.Destroy(#NULL)
+for 1@ = 0 to 31
+  $PlrActive[1@] = -1
+  $PlrActive2[1@] = -1
+  $PlrNow[1@] = 0
+end
+// ----------------
+// Time and weather
+// ----------------
+00C0: set_current_time 12 0
+set_weather 1
+// -------------------
+// Wasted/Busted stuff
+// -------------------
+016C: restart_if_wasted at 0.0 0.0 3.0 angle  0.0 unknown  0
+016D: restart_if_busted at 0.0 0.0 3.0 angle  0.0 unknown  0 // -3500.0 3500.0 100.0
+// -----------
+// Player misc      
+// -----------
+01F0: set_max_wanted_level_to  0
+set_wb_check_to 0
+08DD: keep_stuff_after_wasted 1 // Nu raken we het kwijt :o 
+// -----------------
+// Pay 'n Spray icons
+// ------------------
+1@ = 1
+$PIcon[1@].CreateIconWithoutSphere(63, 2067.3999, -1831.2, 13.5)
+1@ = 2
+$PIcon[1@].CreateIconWithoutSphere(63, 2067.3999, -1831.2, 13.5)
+1@ = 3
+$PIcon[1@].CreateIconWithoutSphere(63, 488.0, -1734.0, 34.4)
+1@ = 4
+$PIcon[1@].CreateIconWithoutSphere(63, 720.016, -454.625, 15.328)
+1@ = 5
+$PIcon[1@].CreateIconWithoutSphere(63, -1420.547, 2583.9451, 58.031)
+1@ = 6
+$PIcon[1@].CreateIconWithoutSphere(63, 1966.532, 2162.6499, 10.995)
+1@ = 7
+$PIcon[1@].CreateIconWithoutSphere(63, -2425.46, 1020.83, 49.39)
+1@ = 8
+$PIcon[1@].CreateIconWithoutSphere(63, 1021.8, -1018.7, 30.9)
+1@ = 9
+$PIcon[1@].CreateIconWithoutSphere(63, -1908.9, 292.3, 40.0)
+1@ = 10
+$PIcon[1@].CreateIconWithoutSphere(63, -103.6, 1112.4, 18.7)
+1@ = 11
+$PIcon[1@].CreateIconWithoutSphere(27, -2728.4999, 212.2, 3.4001)
+1@ = 12
+$PIcon[1@].CreateIconWithoutSphere(27, 2382.2, 1044.0, 9.8001)
+1@ = 13
+$PIcon[1@].CreateIconWithoutSphere(27, 2644.2525, -2028.2457, 12.5547)
+1@ = 14
+$PIcon[1@].CreateIconWithoutSphere(27, 1043.4001, -1025.3, 34.4001)
+1@ = 15
+$PIcon[1@].CreateIconWithoutSphere(27, -1940.9999, 251.7, 33.4001)
+1@ = 0
+// ----
+// Misc
+// ----
+03F4:  0 (clear) cars_can_be_damaged
+03E6: remove_text_box
+00BE: text_clear_all
+$PLAYER_ACTOR.PutAt(1000.0,1000,0,1000.0)
+//$PLAYER_ACTOR.PutAt(-2653.6443, 1388.2767, 7.1301)
+$PLAYER_CHAR.CanMove(False)
+$PLAYER_ACTOR.LockInCurrentPosition(True)
+Model.Load($WpMdl[29])
+While not Model.Available($WpMdl[29])
+  wait 0
+end
+01B2: give_actor $PLAYER_ACTOR weapon 29 ammo 99999 // 99999 is unlimited
+Model.Destroy($WpMdl[29])
+
+Model.Load($WpMdl[35])
+While not Model.Available($WpMdl[35])
+  wait 0
+end
+01B2: give_actor $PLAYER_ACTOR weapon 35 ammo 99999 // 99999 is unlimited
+Model.Destroy($WpMdl[35])
+
+Model.Load($WpMdl[25])
+While not Model.Available($WpMdl[25])
+  wait 0
+end
+01B2: give_actor $PLAYER_ACTOR weapon 25 ammo 99999 // 99999 is unlimited
+Model.Destroy($WpMdl[25])    
+wait 50
+while not $Status == 2
+  wait 5
+end
+$NumOfObjects = 0
+$LoadStatus = 2 // Client mag data doorgeven naar SCM
+//fade 1 1000
+$Status = 3 // Spawned
+$PLAYER_CHAR.CanMove(True)
+$PLAYER_ACTOR.LockInCurrentPosition(False)
+create_thread @MAIN_Loop // Basis boven baas
+create_thread @PlrSyncA // Main player sync
+//create_thread @ObjectPlacementA // Objects
+//create_thread @LOADLOOP_A
+
+:LOADLOOP_B
+wait 500
+if
+  $LoadStatus == 3
+jf @LOADLOOP_B
+//018C: play_sound 1183 at 0.0 0.0 0.0
+if
+  $LoadCommand == 1
+then // CreateObject
+  if
+    $ObjectUse[$LoadInt1] == 1
+  then
+    $ObjectUse[$LoadInt1] = 0
+    if
+      $ObjectActive[$LoadInt1] == 1
+    then
+      Object.Destroy($Object[$LoadInt1])
+    end
+    $ObjectUse[$LoadInt1] = 0
+    $ObjectActive[$LoadInt1] = 0
+  end
+  $ObjectModel[$LoadInt1] = $LoadInt2
+  $ObjectPosX[$LoadInt1] = $LoadFloat1
+  $ObjectPosY[$LoadInt1] = $LoadFloat2
+  $ObjectPosZ[$LoadInt1] = $LoadFloat3
+  $ObjectRotX[$LoadInt1] = $LoadFloat4
+  $ObjectRotY[$LoadInt1] = $LoadFloat5
+  $ObjectRotZ[$LoadInt1] = $LoadFloat6 
+  $ObjectUse[$LoadInt1] = 1
+  $ObjectActive[$LoadInt1] = 0
+  if
+    $LoadInt1 > $NumOfObjects
+  then
+    $NumOfObjects = $LoadInt1
+  end   
+  03C4: set_status_text $NumOfObjects type 0 GXT 'ZER2_43' // global_variable  // Score ~1~             
+end
+//03C4: set_status_text $LoadCommand type 0 GXT 'ZER2_43' // global_variable  // Score ~1~
+$LoadStatus = 2
+jump @LOADLOOP_B
+
+:MAIN_Loop
+wait 20
+0470: $CurWep = actor $PLAYER_ACTOR current_weapon
+//$RotZ = $PLAYER_ACTOR.Angle()
+09E8: $MyInt = actor $PLAYER_ACTOR active_interior 
+//0172: $RotZ = actor $PLAYER_ACTOR z_angle
+if and
+  not $NewInt == $NewIntL
+  $NewInt > -1
+then
+  0860: link_actor $PLAYER_ACTOR to_interior $NewInt
+  select_interior $NewInt 
+  $NewInt = -1
+  $NewIntL = $NewInt  
+end
+if and
+  not $MyNewRot == $MyNewRotL
+  $MyNewRot > -1337.0
+then
+  0173: set_actor $PLAYER_ACTOR Z_angle_to $MyNewRot
+  $MyNewRot = -1337.0
+  $MyNewRotL = $MyNewRot
+end
+if and
+  not $Skin == $SkinLast
+  $Skin > -1
+then      
+  if
+    not $PLAYER_ACTOR.Driving()
+  then 
+    $PLAYER_CHAR.CanMove(False)
+    $SkinLast = $Skin                   
+    Model.Load($SkinLast)             
+    while not Model.Available($SkinLast)
+      wait 0
+    end
+    062A: change_stat  23 (muscle) to  0.0  // float
+    062A: change_stat 21 (fat) to 0.0  // float
+    01B9: set_actor $PLAYER_ACTOR armed_weapon_to 0 
+    0687: clear_actor $PLAYER_ACTOR task 
+    09C7: change_player_skin $PLAYER_CHAR to $SkinLast
+    0687: clear_actor $PLAYER_ACTOR task   
+    $PLAYER_CHAR.CanMove(True)
+    Model.Destroy($SkinLast)
+    //062A: change_stat  23 (muscle) to  1000.0  // float
+  end
+end
+jump @MAIN_Loop
+
+//-------------Player Sync---------------
+:PlrSyncA
+thread 'PLRSYNC'
+var
+  1@ : Integer
+  2@ : Car
+  3@ : Float
+  4@ : Float
+  5@ : Float
+  6@ : Integer
+  7@ : Float
+  8@ : Float
+  9@ : Float
+  10@ : Float
+end
+
+:PlrSyncB
+wait 50
+068D: get_camera_position_to 7@ 8@ 9@ 
+068E: get_camera_target_point_to 3@ 4@ 5@ 
+//0063: 3@ -= 7@ // (float) 
+//0063: 4@ -= 8@ // (float) 
+//0063: 5@ -= 9@ // (float) 
+//050A: 10@ = distance_between_XYZ 3@ 4@ 5@ and_XYZ 0.0 0.0 0.0 
+//0073: 3@ /= 10@ // (float) 
+//0073: 4@ /= 10@ // (float) 
+//0073: 5@ /= 10@ // (float)
+$ShootX = 3@
+$ShootY = 4@
+$ShootZ = 5@ 
+for 1@ = 0 to 31
+  if
+    not $PlrActive[1@] == $PlrActive2[1@]
+  then
+    if and
+      $PlrActive[1@] > -1
+      $PlrActive2[1@] > -1
+    then
+      $PlrNow[1@] = 0
+      if
+        Actor.Driving($PLAYERS[1@])
+      then
+        0811: 2@ = actor $PLAYERS[1@] car
+        2@.StorePos(3@,4@,5@)       
+        0362: remove_actor $PLAYERS[1@] from_car_and_place_at 3@ 4@ 5@
+      end
+      $PlrMarkers[1@].Disable()
+      $PLAYERS[1@].DestroyInstantly()
+    end
+    if and
+      $PlrActive[1@] == -1
+      $PlrActive2[1@] > -1
+    then
+      $PlrNow[1@] = 0
+      if
+        Actor.Driving($PLAYERS[1@])
+      then
+        0811: 2@ = actor $PLAYERS[1@] car
+        2@.StorePos(3@,4@,5@)       
+        0362: remove_actor $PLAYERS[1@] from_car_and_place_at 3@ 4@ 5@
+      end
+      $PlrMarkers[1@].Disable()
+      $PLAYERS[1@].DestroyInstantly()
+    else
+      if
+        $PlrNow[1@] == 0
+      then
+        Model.Load($PlrActive[1@])
+        while not Model.Available($PlrActive[1@])
+          wait 0
+        end
+        $PLAYERS[1@].Create(CivMale,$PlrActive[1@],0.0,0.0,1000.0)
+        060B: set_actor $PLAYERS[1@] decision_maker_to 65543 
+        0245: set_actor $PLAYERS[1@] walk_style_to "PLAYER" 
+        02AB: set_actor $PLAYERS[1@] immunities BP 0 FP 0 EP 1 CP 1 MP 1 
+        0350: set_actor $PLAYERS[1@] maintain_position_when_attacked 1 
+        04D8: set_actor $PLAYERS[1@] drowns_in_water 0  
+        02A9: set_actor $PLAYERS[1@] immune_to_nonplayer  1
+        0446: set_actor $PLAYERS[1@] immune_to_headshots 1
+        //$PLAYERS[1@].LockInCurrentPosition(True) 
+        //0619: set_actor $PLAYERS[1@] collision_detection 0
+        //0638: AS_actor $PLAYERS[1@] stay_put 1
+        //0619: toggle_actor $PLAYERS[1@] collision_detection 0 
+        //0337: toggle_actor $PLAYERS[1@] visibility 0 
+        02E2: set_actor $PLAYERS[1@] weapon_accuracy_to 100
+        081A: set_actor $PLAYERS[1@] weapon_skill 2  
+        0946: set_actor $PLAYERS[1@] actions_uninterupted_by_weapon_fire 1
+        093B: set_actor $PLAYERS[1@] actions_uninterupted_by_weapon_hits 1
+        01B9: set_actor $PLAYERS[1@] armed_weapon_to 0 
+        060F: set_actor $PLAYERS[1@] melee_accuracy_to 100.0
+        09F6: set_actor $PLAYERS[1@] unjackable_through_driver_seat 1 
+        0489: set_actor $PLAYERS[1@] muted 1   
+        $PlrMarkers[1@].CreateAboveActor($PLAYERS[1@])
+        0165: set_marker $PlrMarkers[1@] color_to 0
+        018B: set_marker $PlrMarkers[1@] radar_mode 2 
+        //07E0: set_marker $PlrMarkers[1@] type_to 1 
+        //0687: set_actor $PLAYERS[1@] clear_tasks  }
+        Model.Destroy($PlrActive[1@]) 
+        $PlrNow[1@] = 1 
+      end         
+    end
+    $PlrActive2[1@] = $PlrActive[1@]    
+  end
+  if
+    $PlrNow[1@] == 1
+  then
+    if
+      not $PlrArmed[1@] == $PlrArmed2[1@]
+    then 
+      0687: set_actor $PLAYERS[1@] clear_tasks   
+      wait 5
+      if
+        $PlrArmed[1@] > 0
+      then
+        6@ = $PlrArmed[1@]
+        if
+          not Model.Available($WpMdl[6@])
+        then
+          Model.Load($WpMdl[6@])
+          while not Model.Available($WpMdl[6@])
+            wait 0
+          end
+        end
+        01B2: give_actor $PLAYERS[1@] weapon 6@ ammo 99999
+        01B9: set_actor $PLAYERS[1@] armed_weapon_to 6@
+        //0687: set_actor $PLAYERS[1@] clear_tasks
+        if
+          Model.Available($WpMdl[6@])
+        then
+          Model.Destroy($WpMdl[6@])
+        end
+      else
+        01B9: set_actor $PLAYERS[1@] armed_weapon_to $PlrArmed[1@]
+      end
+      $PlrArmed2[1@] = $PlrArmed[1@]
+    end
+    if
+      $PlrCrouch[1@] == 1 
+    then
+      if
+        0597:   actor $PLAYERS[1@] crouching
+      then
+      else
+        04EB: AS_actor $PLAYERS[1@] crouch 1 // Let's crouch! Have some crouchy time :')
+      end
+    end
+    if and
+      $PlrCrouch[1@] == 0
+      0597:   actor $PLAYERS[1@] crouching
+    then
+      04EB: AS_actor $PLAYERS[1@] crouch 0 // Let's stand up...
+    end
+    if
+      $PlrShoot[1@] == 1 // Targeting
+    then
+      //0173: set_actor $PLAYERS[1@] z_angle_to $PlrRotation[1@]
+      0667: AS_actor $PLAYERS[1@] aim_at $PLAYERS[1@] $PlrShootX[1@] $PlrShootY[1@] $PlrShootZ[1@] 1000 ms 
+      //$PlrShoot[1@] = 0  
+      $PlrShootLast[1@] = 1
+    else
+      if
+        $PlrShoot[1@] == 2 // Shooting
+      then
+        //05E2: AS_actor $PLAYERS[1@] kill_actor $DUMMYS[1@]
+        //0173: set_actor $PLAYERS[1@] z_angle_to $PlrRotation[1@]
+        0668: AS_actor $PLAYERS[1@] rotate_and_shoot_at $PlrShootX[1@] $PlrShootY[1@] $PlrShootZ[1@] 1000 ms 
+        //$PlrShoot[1@] = 0 
+        $PlrShootLast[1@] = 2 
+      else
+          if
+            not $PlrShoot[1@] == $PlrShootLast[1@]
+          then
+            0687: set_actor $PLAYERS[1@] clear_tasks 
+            $PlrShootLast[1@] = $PlrShoot[1@]
+          end
+      end
+    end
+  end
+end
+jump @PlrSyncB
+
+:ObjectPlacementA
+thread 'OBJPLACE'
+var
+  1@ : Integer
+  2@ : Integer
+  3@ : Float
+end
+
+:ObjectPlacementB
+wait 150
+//01E5: show_text_1number_highpriority GXT 'LOW_38' number $NumOfObjects time 5000 flag 1  // ~s~You need $~1~ to compete.
+//03C4: set_status_text $NumOfObjects type 0 GXT 'ZER2_43' // global_variable  // Score ~1~
+if
+  $NumOfObjects > 0
+jf @ObjectPlacementB
+for 2@ = 1 to $NumOfObjects
+  if
+    $ObjectUse[2@] == 1
+  then
+    $PLAYER_ACTOR.StorePos(3@, 4@, 5@)
+     
+    //0509: 3@ = distance between point $ObjectPosX[2@] $ObjectPosY[2@] and point 3@ 4@ // X en Y
+    050A: 3@ = distance_between $ObjectPosX[2@] $ObjectPosY[2@] $ObjectPosZ[2@] and point 3@ 4@ 5@ // X, Y en Z
+    if
+      3@ < 180.0  
+    then 
+      //03C4: set_status_text $ObjectModel[2@] type 0 GXT 'ZER2_43' // global_variable  // Score ~1~
+      if                                                         
+        $ObjectActive[2@] == 0
+      then        
+        if
+          not Model.Available($ObjectModel[2@])
+        then
+          Model.Load($ObjectModel[2@])
+          while not Model.Available($ObjectModel[2@])
+            wait 1
+          end
+        end
+        0107: $Object[2@] = create_object $ObjectModel[2@] at $ObjectPosX[2@] $ObjectPosY[2@] $ObjectPosZ[2@]    
+        0453: object $Object[2@] set_rotation $ObjectRotX[2@] $ObjectRotY[2@] $ObjectRotZ[2@]
+        Object.PutAt($Object[2@],$ObjectPosX[2@],$ObjectPosY[2@],$ObjectPosZ[2@]) 
+        Model.Destroy($ObjectModel[2@])
+        $ObjectActive[2@] = 1        
+      end
+    else
+      if
+        $ObjectActive[2@] == 1
+      then     
+        Object.Destroy($Object[2@])
+        $ObjectActive[2@] = 0 
+      end    
+    end 
+  end
+end
+jump @ObjectPlacementB

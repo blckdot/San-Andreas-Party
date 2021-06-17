@@ -1,0 +1,503 @@
+var
+	CPS : Array[0..100] of String;
+	Pos : Array[1..21] of Integer;
+	BombX : Array[1..21] of Single;
+	VehiclesC : Integer;
+	BombY : Array[1..21] of Single;
+	BombZ : Array[1..21] of Single;
+	BomX, BomY, BomZ : Single;
+	Ingame : Array[1..21] of Boolean;
+	Checkpoints, Countdown : Integer;
+	Started : Boolean;
+	WaterWalk : Boolean;
+
+procedure OnPlayerSpawn(PlayerID, SpawnID : Integer);
+begin
+	SetPlayerColor(PlayerID,4);
+end;
+
+function GetXPos(Str : String): Single;
+var
+	Tmp1, Tmp2, Tmp3, Tmp4 : String;
+begin
+	Tmp2 := CopyBefore(Str,'='); // Pos X
+
+
+	Tmp1 := CopyAfter(Str,'=');
+	Tmp4 := CopyBefore(Tmp1,','); // Pos Y
+
+
+	Tmp3 := CopyAfter(Tmp1,',');
+
+	Result := StrToFloat(Tmp2);
+	//Result := StrToFloat(Tmp4);
+	///Result := StrToFloat(Tmp3);
+end;
+
+function GetYPos(Str : String): Single;
+var
+	Tmp1, Tmp2, Tmp3, Tmp4 : String;
+begin
+	Tmp2 := CopyBefore(Str,'='); // Pos X
+
+
+	Tmp1 := CopyAfter(Str,'=');
+	Tmp4 := CopyBefore(Tmp1,','); // Pos Y
+
+
+	Tmp3 := CopyAfter(Tmp1,',');
+
+	//Result := StrToFloat(Tmp2);
+	Result := StrToFloat(Tmp4);
+	//Result := StrToFloat(Tmp3);
+end;
+
+function GetZPos(Str : String): Single;
+var
+	Tmp1, Tmp2, Tmp3, Tmp4 : String;
+begin
+	Tmp2 := CopyBefore(Str,'='); // Pos X
+
+
+	Tmp1 := CopyAfter(Str,'=');
+	Tmp4 := CopyBefore(Tmp1,','); // Pos Y
+
+
+	Tmp3 := CopyAfter(Tmp1,',');
+
+	//Result := StrToFloat(Tmp2);
+	//Result := StrToFloat(Tmp4);
+	Result := StrToFloat(Tmp3);
+end;
+
+procedure OnStart();
+begin
+	Log('*** Initializing race mode');
+	Log('*** Loading race: Riverside Run');
+
+	CPS[0] := '1557.117187=26.855699,23.884500';
+	CPS[1] := '1560.000000=-45.581298,20.845800';
+	CPS[2] := '1551.515625=-137.928497,17.427400';
+	CPS[3] := '1497.231201=-198.229598,11.638600';
+	CPS[4] := '1409.621582=-213.173004,6.283699';
+	CPS[5] := '1323.736572=-195.969894,15.832099';
+	CPS[6] := '1280.091674=-165.072998,32.905200';
+	CPS[7] := '1228.620605=-119.976097,39.044498';
+	CPS[8] := '1195.272583=-85.818199,37.471298';
+	CPS[9] := '1122.453002=-60.026599,19.893400';
+	CPS[10] := '1016.431823=-72.837997,22.066699';
+	CPS[11] := '917.108886=-90.521301,19.033899';
+	CPS[12] := '862.506896=-95.965400,26.798799';
+	CPS[13] := '808.311828=-115.893096,23.133300';
+	CPS[14] := '724.439514=-175.511901,20.540199';
+	CPS[15] := '661.619323=-196.799301,12.748299';
+	CPS[16] := '579.278320=-201.213897,13.668899';
+	CPS[17] := '524.913085=-214.650695,15.528400';
+	CPS[18] := '484.824493=-254.198898,10.578700';
+	CPS[19] := '402.558288=-309.404998,11.101200';
+	CPS[20] := '357.091094=-332.487487,12.251799';
+	CPS[21] := '319.819885=-360.065185,9.088399';
+	CPS[22] := '281.867309=-378.554687,8.638899';
+	CPS[23] := '217.614593=-344.199096,3.858799';
+	CPS[24] := '208.455703=-301.543212,1.158300';
+	CPS[25] := '231.620895=-260.294586,1.156700';
+	CPS[26] := '232.740203=-177.142807,1.156800';
+	CPS[27] := '231.772796=-110.883003,1.156800';
+	CPS[28] := '250.241897=-72.577598,1.156200';
+	CPS[29] := '317.251708=-73.746299,1.156700';
+	CPS[30] := '352.436798=-94.318702,1.062800';
+	CPS[31] := '388.295806=-85.340400,2.498100';
+	CPS[32] := '392.304901=-22.811500,3.563600';
+	CPS[33] := '448.394287=23.394100,9.524100';
+	CPS[34] := '497.510498=49.598999,18.275899';
+	CPS[35] := '526.653869=72.094200,20.826499';
+	CPS[36] := '537.919128=155.728195,24.242200';
+	CPS[37] := '609.374816=205.958297,21.627000';
+	CPS[38] := '685.590576=221.344497,26.082199';
+	CPS[39] := '788.901794=212.482696,33.760398';
+	CPS[40] := '904.304992=203.225799,31.344600';
+	CPS[41] := '944.668518=177.474304,31.569700';
+	CPS[42] := '997.197570=168.058303,28.228500';
+	CPS[43] := '1057.14587=191.736694,32.606998';
+	CPS[44] := '1106.19641=223.562896,30.149900';
+	CPS[45] := '1163.444702=301.451812,18.049999';
+	CPS[46] := '1222.117797=280.415405,19.133300';
+	CPS[47] := '1306.946289=240.375595,19.136199';
+	CPS[48] := '1403.184326=197.942199,19.244600';
+	CPS[49] := '1492.529907=158.502304,30.318399';
+	CPS[50] := '1533.342041=90.582801,28.922399';
+	CPS[51] := '1552.833374=39.039501,23.897600';
+
+	Checkpoints := 51;
+
+ 	CreateSpawn(1550.117187,26.855699,23.884500,0.0);
+	WaterWalk := False;
+  	Log('*** Loading completed. Ready for connections.');
+end;
+
+procedure OnPlayerLeaveCheckpoint(PlayerID, CPID : Integer);
+begin
+  If (Countdown > 0) and not (Countdown > 4) and (Started = True) Then
+  Begin
+	KillPlayer(PlayerID);
+  End;
+end;
+
+procedure OnPlayerEnterCheckpoint(PlayerID, CPID : Integer);
+var
+	PosX, PosY, PosZ : Single;
+begin
+	If (Started = False) Then
+	Begin
+		Ingame[PlayerID] := True;
+		SendTextToPlayer(PlayerID,'*** Please wait until an admin starts the race');
+		DisplayTextPlayer(PlayerID,2,'Please wait',4000);
+		DeleteCheckpoint(PlayerID,CPID);
+		SetPlayerFreeze(PlayerID,True);
+		Exit;
+	End;
+	PlaySound(PlayerID,1058);
+	If (Pos[PlayerID] = 0) Then
+	Begin
+		DisplayTextPlayer(PlayerID,4,'GO GO GO',2000);
+	End;
+	If (Pos[PlayerID] = Checkpoints) Then
+	Begin
+		SendTextToPlayer(PlayerID,'*** Finished. ');
+		DisplayTextPlayer(PlayerID,4,'FINISHED',4000);
+		Pos[PlayerID] := 0;
+	End;
+	Pos[PlayerID] := Pos[PlayerID] + 1;
+
+	PosX := GetXPos(CPS[Pos[PlayerID]]);
+	PosY := GetYPos(CPS[Pos[PlayerID]]);
+	PosZ := GetZPos(CPS[Pos[PlayerID]]);
+	DeleteCheckpoint(PlayerID,CPID);
+	CreateCheckpoint(PlayerID,PosX,PosY,PosZ,8.0);
+	If (Started = True) and not (Pos[PlayerID] = 1) Then
+        	DisplayTextPlayer(PlayerID,5,IntToStr(Pos[PlayerID]-1) +'/'+ IntToStr(Checkpoints),2000);
+end;
+
+procedure OnPlayerEnterVehicle(PlayerID, CarID : Integer);
+var
+	PosX, PosY, PosZ : Single;
+begin
+	If (Pos[PlayerID] > 0) Then
+		Exit;
+
+	PosX := GetXPos(CPS[0]);
+	PosY := GetYPos(CPS[0]);
+	PosZ := GetZPos(CPS[0]);
+
+	//Pos[PlayerID] := 0;
+	DeleteCheckpoint(PlayerID,1);
+	CreateCheckpoint(PlayerID,PosX,PosY,PosZ,8.0);
+        DisplayTextPlayer(PlayerID,4,'Get to the startpoint!',5000);
+	//SendTextToPlayer(PlayerID,'*** Get to the startline a.s.a.p!');
+end;
+
+procedure OnPlayerLeaveVehicle(PlayerID, CarID : Integer);
+begin
+  If (Started = False) Then
+  Begin
+	Ingame[PlayerID] := False;
+  End;
+//  DeleteCheckpoint(PlayerID,1);
+//  DisplayTextPlayer(PlayerID,3,'Game over',5000);
+//  SendTextToPlayer(PlayerID,'*** Find a new vehicle or re-enter the current to be in the race again!');
+end;
+
+procedure OnPlayerText(PlayerID : Integer; Text : String);
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+    IRCSay('[ACHAT] '+ GetPlayerNick(PlayerID) +': '+Text)
+  Else
+    IRCSay('[CHAT] '+ GetPlayerNick(PlayerID) +': '+Text)
+end;
+
+procedure OnPlayerCommand(PlayerID : Integer; Message : String);
+var
+  Tmp, Msg, Cmd, Str : String;
+  PosX, PosY, PosZ : Single;
+  Val, i : Integer;
+begin
+  Cmd := CopyBefore(Message, ' ');
+  If (Cmd = '/spawn') Then
+  Begin
+    Tmp := CopyAfter(Message,' ');
+    PosX := GetPlayerPosX(PlayerID);
+    PosY := GetPlayerPosY(PlayerID);
+    PosZ := GetPlayerPosZ(PlayerID);
+    PosZ := PosZ + 2.5;
+    Val := StrToInt(Tmp);
+    CreateVehicle(Val,PosX,PosY,PosZ,0.0,-1,-1);
+    VehiclesC := VehiclesC+1;
+    SendTextToAll('* '+ GetPlayerNick(PlayerID) +' spawned a '+ GetVehicleName(Val)+' #'+IntToStr(VehiclesC));
+  End
+  Else If (Message = '/start') Then
+  Begin
+    For i := 1 To 20 Do
+    Begin
+	If (Ingame[i] = True) Then
+	Begin
+		SetPlayerFreeze(i,True);
+	End;
+	DeleteCheckpoint(i,1);
+    End;
+    SendTextToAll('* Starting race in 10 seconds!');
+    DisplayTextAll(4,'Starting in 10 seconds',7000);
+    CountDown := 0;
+    Timer(7,'Ctdown');
+  End
+  Else If (Message = '/put') Then
+  Begin
+    BombX[PlayerID] := GetPlayerPosX(PlayerID);
+    BombY[PlayerID] := GetPlayerPosY(PlayerID);
+    BombZ[PlayerID] := GetPlayerPosZ(PlayerID);
+    SendTextToPlayer(PlayerID, '* Bomb planted!');
+  End
+  Else If (Message = '/boom') Then
+  Begin
+    CreateExplosion(BombX[PlayerID], BombY[PlayerID], BombZ[PlayerID]);
+    SendTextToPlayer(PlayerID, '* Bomb exploded!');
+  End
+  Else If (Message = '/') Then
+  Begin
+    BomX := GetPlayerPosX(PlayerID);
+    BomY := GetPlayerPosY(PlayerID);
+    BomZ := GetPlayerPosZ(PlayerID);
+    
+    Timer(1, 'Bomb');
+    SendTextToPlayer(PlayerID, '* GTFO!');
+  End
+  Else if(Cmd = '/me') Then
+  begin
+    Str := CopyAfter(Message,' ');
+    Msg := '* '+GetPlayerNick(PlayerID)+' '+Str;
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  Else if(Message = '/ww') Then
+  begin
+    if (WaterWalk = False) Then
+    begin
+      WaterWalk := True;
+      UnderWaterWalk(WaterWalk);
+      Msg := '* Under water walk enabled';
+    end
+    Else
+    begin
+      WaterWalk := False;
+      UnderWaterWalk(WaterWalk);
+      Msg := '* Under water walk disabled';    
+    end
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  Else if(Cmd = '/time') Then
+  begin
+    i := StrToInt(CopyAfter(Message,' '));
+    SetTime(i, 0);
+    Msg := '* Time set to '+IntToStr(i)+':00';
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  Else if(Cmd = '/weather') Then
+  begin
+    i := StrToInt(CopyAfter(Message,' '));
+    SetWeather(i);
+    Msg := '* Weather set to '+IntToStr(i);
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end
+  Else if(Cmd = '/dvehicle') Then
+  begin
+    Str := CopyAfter(Message,' ');
+    DestroyVehicle(StrToInt(Str));
+    Msg := '* '+ GetPlayerNick(PlayerID) +' destroyed vehicle '+ Str;
+    SendTextToAll(Msg); 
+    IRCSay(Msg);  
+  end
+  Else if(Cmd = '/weapon') Then
+  begin
+    Str := CopyAfter(Message,' ');
+    i := StrToInt(Str);
+    GivePlayerWeapon(PlayerID, i);
+    Msg := '* '+ GetPlayerNick(PlayerID) +' gave him/herself an '+ GetDeathReason(i);
+    SendTextToAll(Msg); 
+    IRCSay(Msg)
+  end
+  Else if(Cmd = '/to') Then
+  begin
+    i := StrToInt(CopyAfter(Message,' '));
+    PosX := GetPlayerPosX(i);
+    PosY := GetPlayerPosY(i);
+    PosZ := GetPlayerPosZ(i);
+    PosZ := PosZ + 2.0;
+    SetPlayerPos(PlayerID, PosX, PosY, PosZ);
+    Msg := '* '+ GetPlayerNick(PlayerID) +' teleported to '+ GetPlayerNick(i);
+    SendTextToAll(Msg); 
+    IRCSay(Msg); 
+  end; 
+end;
+
+
+
+procedure Ctdown();
+var
+	i : Integer;
+	PosX, PosY, PosZ : Single;
+begin
+  CountDown := Countdown + 1;
+  If (CountDown = 1) Then
+    DisplayTextAll(4,'3',1000)
+  If (CountDown = 2) Then
+    DisplayTextAll(4,'2',1000)
+  If (CountDown = 3) Then
+    DisplayTextAll(4,'1',1000);
+  If (CountDown = 4) Then
+  Begin
+    Started := True;
+    For i := 1 To 20 Do
+    Begin
+	If (Ingame[i] = True) Then
+	Begin
+		Pos[i] := 1;
+		PosX := GetXPos(CPS[1]);
+		PosY := GetYPos(CPS[1]);
+		PosZ := GetZPos(CPS[1]);
+		CreateCheckpoint(i,PosX,PosY,PosZ,8.0);
+		SetPlayerFreeze(i,False);
+	End
+	Else
+	Begin
+		Pos[i] := 0;
+		PosX := GetXPos(CPS[0]);
+		PosY := GetYPos(CPS[0]);
+		PosZ := GetZPos(CPS[0]);
+		CreateCheckpoint(i,PosX,PosY,PosZ,8.0);
+		SetPlayerFreeze(i,False);
+	End;
+    End;
+    DisplayTextAll(4,'GO GO GO',2000);
+  End;
+  If not (CountDown > 4) Then
+    Timer(1,'Ctdown');
+end;
+
+
+
+procedure OnIRCMessage(Nickname, Message : String);
+var
+  Tmp, PlayerList, MaxSlots : String;
+  i, count : Integer;
+begin
+  if (Message = '!players') Then
+  begin
+    count := 0;
+    PlayerList := '';
+    For i := 0 To 20 Do
+    begin
+      if (IsPlayerConnected(i) = True) Then
+      begin
+        If (PlayerList = '') Then
+          PlayerList := GetPlayerNick(i)
+        Else
+          PlayerList := PlayerList+', '+GetPlayerNick(i);
+        count := count+1;
+      end
+    end
+    MaxSlots := IntToStr(GetMaxSlots());
+    if (count = 0) Then
+      IRCSay('*** 0/'+MaxSlots+' Players')
+    Else if (count = 1) Then
+      IRCSay('*** 1/'+MaxSlots+' Player: '+PlayerList)
+    Else
+      IRCSay('*** '+IntToStr(count)+'/'+MaxSlots+' Players: '+PlayerList);
+  end
+  Else if (Message = '!about') Then
+  begin
+    IRCSay('Race script by Ywa*NL');
+  end
+  Else if (CopyBefore(Message,' ') = '!msg') or (CopyBefore(Message,' ') = '!say') Then
+  begin
+    Tmp := CopyAfter(Message, ' ');
+    If (Tmp = '') Then
+    begin
+      IRCSay('*** Syntax: !msg <action>');
+    end
+    Else
+    begin
+      SendTextToAll('[IRC] '+Nickname+': '+Tmp);
+      IRCSay('[IRC] '+Nickname+': '+Tmp);
+    end;
+  end;
+end;
+
+procedure OnIRCJoin(Nickname : String);
+begin
+  SendTextToAll('* '+Nickname+' joined the IRC channel.');
+end;
+
+procedure OnIRCPart(Nickname : String);
+begin
+  SendTextToAll('* '+Nickname+' left the IRC channel.');
+end;
+
+procedure OnPlayerLeft(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+    Msg := '* Admin '+ GetPlayerNick(PlayerID) +' left the server'
+  Else
+    Msg := '* '+ GetPlayerNick(PlayerID) +' left the server';
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+procedure OnPlayerJoin(PlayerID : Integer);
+var
+  Msg : String;
+begin
+  if (IsPlayerAdmin(PlayerID)) Then
+  begin
+    Msg := '* Admin '+ GetPlayerNick(PlayerID) +' joined the server';
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', you have been logged in with admin rights.');
+  end
+  Else
+  begin
+    Msg := '* '+ GetPlayerNick(PlayerID) +' joined the server';
+    SendTextToPlayer(PlayerID,'*** Hello '+ GetPlayerNick(PlayerID) +', welcome to this server.');
+  end;
+  SendTextToAllExceptPlayer(PlayerID, Msg);
+  IRCSay(Msg);
+  Log(Msg);
+end;
+
+procedure OnPlayerDeath(KillerID, PlayerID, ReasonID : Integer);
+var
+  Msg : String;
+begin
+  SetPlayerColor(PlayerID,-1);
+  DeleteCheckpoint(PlayerID,1);
+  Pos[PlayerID] := 0;
+  If (KillerID = 0) or (ReasonID = 0) Then
+   begin
+    Msg := '* '+ GetPlayerNick(PlayerID) +' died';
+  end
+  Else 
+  begin
+    Msg := '* '+GetPlayerNick(KillerID)+' killed '+GetPlayerNick(PlayerID)+' ('+GetDeathReason(ReasonID)+')';
+  end
+  SendTextToAll(Msg);
+  IRCSay(Msg);
+end;
+
+procedure Bomb();
+begin
+  CreateExplosion(BomX, BomY, BomZ);
+end;
+
+begin
+end.
